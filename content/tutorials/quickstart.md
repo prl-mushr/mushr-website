@@ -39,57 +39,56 @@ $ sudo apt install git-all
 Once you have these, you're good to go!
 
 ## Install Sim
-Now that we have the dependencies, lets get started! Note, we are assuming you have set up Docker to not need sudo with every call. You can set that up by following [these](https://docs.docker.com/install/linux/linux-postinstall/) steps. Now, open a terminal (CTRL + ALT + T) check if Docker is running:
+Now that we have the dependencies, lets get started! Note, we are assuming you have set up Docker to not need sudo with every call. You can set that up by following [these](https://docs.docker.com/install/linux/linux-postinstall/) steps. Now, open a terminal (CTRL + ALT + T on Linux) check if Docker is running:
 
+### Test docker
 {{< highlight bash >}}
 $ docker run hello-world
 {{< / highlight >}}
 
-If you get a error then run:
+If you get the error:
+```bash
+docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
+See 'docker run --help'.
+```
+
+then run:
 
 {{< highlight bash >}}
 $ systemctl start docker
 {{< / highlight >}}
 
+### Create a workspace
+
+If you do not already have a ROS workspace, you will need to create one.
+
+**Note: This assumes you are using the workspace at `~/catkin_ws`. We highly recommend you stick to this workspace. If you chose not to, adjust the commands accordingly.**
+
+```bash
+$ mkdir -p ~/catkin_ws/src
+$ cd ~/catkin_ws/src && catkin_init_workspace
+$ cd .. && catkin_make
+```
+
+### Get the simulator
+
 Let's clone the sim repo:
 
 {{< highlight bash >}}
-$ git clone https://github.com/prl-mushr/mushr_sim && cd mushr_sim/docker/
+$ cd ~/catkin_ws/src
+$ git clone https://github.com/prl-mushr/mushr_sim
+$ cd mushr_sim/docker/
 {{< / highlight >}}
 
-Alright, so you are in the Docker directory of the sim. There are two configuration changes we need to make. First let's change the uid/gid of your Docker user to match the current user. This is required for GUI apps like rviz to connect. Check your UID/GID with the following command:
+In the this directory, there is a file `setup.sh`. This will create a `Dockerfile` and `.env` file needed to run the simulator. All you have to do is run:
 
-{{< highlight bash >}}
-$ id -u $USER
-{{< / highlight >}}
+```bash
+$ ./setup.bash
+```
 
-for UID and:
+And your `docker` files should be configured. At the [bottom](#setup-sh) will be a section describing what was done. This will hopefully be helpful to those who 
 
-{{< highlight bash >}}
-$ id -g $USER
-{{< / highlight >}}
-
-for GID. They usually are the same. Now that you know these values use your favorite text editor to change line 4 in Dockerfile. We will use gedit here:
-
-{{< highlight bash >}}
-$ gedit Dockerfile
-{{< / highlight >}}
-
-And change line 4's UID/GID to match yours. The last configuration we need to do is make sure your NVIDIA driver matches the one the sim is looking for. This is required because OpenGL is needed for rviz. To see which NVIDIA driver your computer has run:
-
-{{< highlight bash >}}
-$ ls /usr/lib/ | grep nvidia
-{{< / highlight >}}
-
-The default is `nvidia-390`. If your's is not that then open `.env` and change the number to match:
-
-{{< highlight bash >}}
-$ gedit .env
-{{< / highlight >}}
-
-That's it for setting up! We're done the hard part :)
-
-## Run Sim
+## Run the Sim
 To start the sim run:
 
 {{< highlight bash >}}
@@ -104,7 +103,9 @@ $ docker ps
 
 {{< figure src="/tutorials/quickstart/rviz_docker.png" caption="The rviz window that should pop up after running `docker-compose`." width="800">}}
 
-Give the car an initial position by clicking `2D Pose Estimate` in rviz and clicking and dragging in the main window. Now you can click on the small gray window and use the WSAD keys to drive the car around!
+Give the car an initial position by clicking `2D Pose Estimate` in rviz and clicking and dragging in the main window. Now you can click on the small gray window and use the WASD keys to drive the car around!
+
+**You've just got your start in robotics!**
 
 ## Going Further
 Driving the car around is fun, but what if you want to program it? In order to do that you must enter the container and write code like you would on a normal ROS linux system. The remaining tutorials that use the simulator assume you are in the container. To enter the container while everything else is running, run:
@@ -159,3 +160,48 @@ $ rviz
 {{< / highlight >}}
 
 To learn about programming the car continue to the [Intro to ROS Tutorial](/tutorials/intro-to-ros)
+
+## EXTRA: Setup.sh
+
+### Dockerfile
+In order to get `docker` and the `rviz` GUI to work, there are two configuration changes we need to make. `setup.sh` tries to do these steps automatically. But if your system is not as the script expects, you may have to manually do these steps.
+
+`setup.sh` creates a few files, so you should manually create them:
+```bash
+$ cp Dockerfile.template Dockerfile
+$ cp .env.template .env
+```
+
+First let's change the uid/gid of your Docker user to match the current user. This is required for GUI apps (like `rviz`) to connect. Check your UID/GID with the following command:
+
+{{< highlight text >}}
+$ id
+uid=1003(...) gid=1003(...) groups=1003(...),...
+{{< / highlight >}}
+
+In this case, the `uid` and `gid` are 1003. Now that you know these values use your favorite text editor to change line 4 in Dockerfile. You will be changing `{UID}` and `{GID}` to be your `uid` and `gid`. We will use gedit here:
+
+{{< highlight bash >}}
+$ gedit Dockerfile
+{{< / highlight >}}
+
+### NVIDIA Driver
+The last configuration we need to do is make sure your NVIDIA driver matches the one the simulator is looking for. This is required because OpenGL is needed for `rviz`. To see which NVIDIA driver your computer has run:
+
+{{< highlight bash >}}
+$ ls /usr/lib/ | grep nvidia
+libnvidia-gtk2.so.418.39
+libnvidia-gtk3.so.418.39
+libvdpau_nvidia.so
+nvidia
+nvidia-384
+nvidia-384-prime
+{{< / highlight >}}
+
+The default is `nvidia-390`. But you'll notice above, the version is 384 (`nvidia-384`). Open `.env` and change `NVIDIA={NVIDIA_DRIVER}` to `NVIDIA=384`, the number you found. If you have multiple, use the most recent version.
+
+{{< highlight bash >}}
+$ gedit .env
+{{< / highlight >}}
+
+That's it for setting up! We're done the hard part :)
