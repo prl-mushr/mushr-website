@@ -112,6 +112,24 @@ $ rostopic list
 This should output a bunch of topics. If not, check your `ROS_MASTER_URI` and `ROS_IP` to ensure they are correct.
 
 ## Launch Teleop the Easy Way
+To do this you need a push button on the front of the car. First, turn on the car by plugging a battery into the top connector. Then connect to the `ROBOT_AP` WIFI network. Then ssh into the car.
+
+{{< highlight bash >}}
+$ ssh robot@10.42.0.1 -X
+{{< / highlight >}}
+
+Next, we need to uncomment the startup command for the button teleop. Open `/etc/rc.local` and uncomment line 9.
+
+{{< highlight bash >}}
+$ sudo vim /etc/rc.local
+{{< / highlight >}}
+
+Use the default password. Now you can turnoff the car by running the following and unplugging the batterie.
+
+{{< highlight bash >}}
+$ sudo shutdown now
+{{< / highlight >}}
+
 Turn on the car and vesc by plugging their batteries in. Hold down the front button as the car is starting. After a minute or so the lidar should start spinning indicating teleop is running.
 
 ## Launch Teleop the Hard Way 
