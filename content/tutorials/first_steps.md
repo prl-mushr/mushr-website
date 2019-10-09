@@ -112,7 +112,7 @@ $ rostopic list
 This should output a bunch of topics. If not, check your `ROS_MASTER_URI` and `ROS_IP` to ensure they are correct.
 
 ## Launch Teleop the Easy Way
-To do this you need a push button on the front of the car. First, turn on the car by plugging a battery into the top connector. Then connect to the `ROBOT_AP` WIFI network. Then ssh into the car.
+To do this you need a push button on the front of the car. This method turns on teleop whenever you hold the button on teleop. By default it is disable. The following will enable it. First, turn on the car by plugging a battery into the top connector. Then connect to the `ROBOT_AP` WIFI network. Then ssh into the car.
 
 {{< highlight bash >}}
 $ ssh robot@10.42.0.1 -X
