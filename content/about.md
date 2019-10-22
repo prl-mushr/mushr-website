@@ -58,4 +58,8 @@ Open-Source Robotic Racecar for Education and Research
 <img src="/imgs/hri-us-logo-2018-hd.png" style="padding-left: 25px; height: 100px;">
 <br>
 <br>
+<img src="/imgs/nvidia-logo.jpg" style="height: 100px">
+<img src="/imgs/ydlidar-logo.png" style="padding-left: 20px; height: 100px">
+<br>
+<br>
 <img src="/imgs/Allen-School-purple-RGB-lg.png" style="max-height: 70px;">

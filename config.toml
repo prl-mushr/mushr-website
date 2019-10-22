@@ -33,41 +33,41 @@ pygmentsUseClassic = false
 	name = "Quickstart"
 	url = "/tutorials/quickstart/"
     weight = 1
-    
-[[menu.main]]
-    identifier = "tutorials"
-	name = "Tutorials"
-	url = "/tutorials/"
-    weight = 1
-
-[[menu.main]]
-    name = "Docs"
-    url = "https://github.com/prl-mushr/mushr#component-documentation"
-    weight = 2
-    
-[[menu.main]]
-    identifier = "hardware"
-    name = "Hardware"
-    url = "/hardware/"
-    weight = 2
-    
-[[menu.main]]
-    identifier = "press"
-	name = "Press"
-	url = "/press/"
-	weight = 3
-    
-[[menu.main]]
-    identifier = "team"
-    name = "Team"
-    url = "/team/"
-    weight = 4
 
 [[menu.main]]
     identifier = "about"
 	name = "About"
 	url = "/about/"
-	weight = 5
+	weight = 2
+
+[[menu.main]]
+    identifier = "tutorials"
+	name = "Tutorials"
+	url = "/tutorials/"
+    weight = 2
+
+[[menu.main]]
+    name = "Docs"
+    url = "https://github.com/prl-mushr/mushr#component-documentation"
+    weight = 2
+
+[[menu.main]]
+    identifier = "hardware"
+    name = "Hardware"
+    url = "/hardware/"
+    weight = 2
+
+[[menu.main]]
+    identifier = "press"
+	name = "Press"
+	url = "/press/"
+	weight = 3
+
+[[menu.main]]
+    identifier = "team"
+    name = "Team"
+    url = "/team/"
+    weight = 4
 
 [[menu.main]]
     identifier = "forum"
@@ -86,7 +86,7 @@ pygmentsUseClassic = false
 	name = "Home"
 	url = "/"
     weight = 1
-    
+
 [[menu.footer]]
     identifier = "forum"
 	name = "Forum"
@@ -98,7 +98,7 @@ pygmentsUseClassic = false
 	name = "Contact"
 	url = "/contact/"
     weight = 3
-    
+
 [[menu.footer]]
 	name = "Newsletter"
 	url = "https://tinyletter.com/mushr"
