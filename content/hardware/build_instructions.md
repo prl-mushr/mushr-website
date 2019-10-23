@@ -336,7 +336,7 @@ ___
 
 In this section, we will install the car's lower platform, which will serve as a foundation for mounting additional electronics. This involves attaching the VESC to the bottom of the foundation, mounting the foundation onto the racecar chassis, and affixing the buck converter to the top of the foundation.
 
-<iframe width="800" height="450" style="margin-bottom:25px" src="https://www.youtube.com/embed/hX3sbRBga1o?list=PLU9BrzGX4PH2DHZzxOg2gEkLMXhpkS7fV" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="800" height="450" src="https://www.youtube.com/embed/I3N23HLMa20?list=PLU9BrzGX4PH2DHZzxOg2gEkLMXhpkS7fV" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 **Required Materials and Tools**
 
@@ -433,7 +433,7 @@ ___
 
 In this section, we will configure the buck converter. The buck converter steps down the battery voltage (~7-8 V) to the voltage required by the Jetson Nano (5.0 V). Thus, we must perpare two connections: one between the battery and buck converter, and one between the buck converter and Jetson Nano. We will also adjust the buck converter's potentionmeter to achieve the correct output voltage.
 
-<iframe width="800" height="450" style="margin-bottom:25px" src="https://www.youtube.com/embed/1izz9qE9_Co?list=PLU9BrzGX4PH2DHZzxOg2gEkLMXhpkS7fV" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="800" height="450" src="https://www.youtube.com/embed/5vMLs2rVPf4?list=PLU9BrzGX4PH2DHZzxOg2gEkLMXhpkS7fV" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 **Required Materials and Tools**
 
@@ -673,7 +673,7 @@ ___
 
 In this section, we will assemble the back cover, mount the Jetson Nano, and attach the back cover to the foundation.
 
-<iframe width="800" height="450" style="margin-bottom:25px" src="https://www.youtube.com/embed/1MVYbm7atS4?list=PLU9BrzGX4PH2DHZzxOg2gEkLMXhpkS7fV" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="800" height="450" src="https://www.youtube.com/embed/7VCPL9Z3qCs?list=PLU9BrzGX4PH2DHZzxOg2gEkLMXhpkS7fV" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 **Required Materials and Tools**
 
@@ -770,8 +770,7 @@ ___
 ## Final Assembly
 
 In this section, we will finish assembling the racecar.
-
-<iframe width="800" height="450" style="margin-bottom:25px" src="https://www.youtube.com/embed/_fvoJzjnmu8?list=PLU9BrzGX4PH2DHZzxOg2gEkLMXhpkS7fV" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="800" height="450" src="https://www.youtube.com/embed/F9R5IC6I4wE?list=PLU9BrzGX4PH2DHZzxOg2gEkLMXhpkS7fV" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 **Required Materials and Tools**
 
