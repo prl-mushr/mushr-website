@@ -199,10 +199,11 @@ In this section, we will remove the brushed motor that comes with the chassis. R
 
     {{< figure src="/hardware/build_instructions/03_08_brushed_motor_mount_screws2.png" caption="Fig. 3.8" width="800">}}
 
-11. To finally release the motor, we must remove the motor gear pinion. First, rotate the motor gear pinion so that the screw is facing towards the right side of the chassis such that it is aligned with the indent in the plastic motor mount. This indent allows for extra space when inserting a hex key. Insert the hex key and remove the motor gear pinion screw. (Fig. 3.9) 
+11. To finally release the motor, we must remove the motor gear pinion. First, rotate the motor gear pinion so that the screw is facing towards the right side of the chassis such that it is aligned with the indent in the plastic motor mount. This indent allows for extra space when inserting a hex key. 
 
-    **Take extra caution in this step because the motor gear pinion screw is extremely tight and can easily be stripped, leaving the motor stuck. Make sure to check that the hex key tightly fits inside of the screw hole, and push the hex key into the screw hole with a large amount of pressure WHILE UNSCREWING to ensure that it does not slip out. If you feel the hex key starting to slip or strip, stop unscrewing and re-insert the hex key before trying again.**
+    **Take extra caution in this step because the motor gear pinion screw is extremely tight and can easily be stripped, leaving the motor stuck. It may be helpful to apply heat to the motor gear pinion screw in order to dissolve the thread locker that has been applied. A soldering iron or heat gun can be used to apply heat. When unscrewing, make sure to check that the hex key tightly fits inside of the screw hole, and push the hex key into the screw hole with a large amount of pressure WHILE UNSCREWING to ensure that it does not slip out. If you feel the hex key starting to slip or strip, stop unscrewing and re-insert the hex key before trying again.**
 
+    Using the above bolded guidelines, insert the hex key and remove the motor gear pinion screw. (Fig. 3.9) 
 
     {{< figure src="/hardware/build_instructions/03_09_motor_pinion_removal.png" caption="Fig. 3.9" width="800">}}
 
@@ -374,7 +375,7 @@ In this section, we will install the car's lower platform, which will serve as a
 
     {{< figure src="/hardware/build_instructions/06_01_attach_crossbar.png" caption="Fig. 6.1" width="800">}}
 
-4. Turn the foundation over so that the metal crossbar is on top. If using the **DZS Elec LM2596** buck converter, insert four M2.5 hex nuts into the holes outlined in blue in Fig. 6.2. If using the **DROK 180051US** buck converter, insert four M2.5 hex nuts into the holes outlined in red in Fig. 6.2. Add super glue into the spaces between the edge of the hole and the hex nuts in order to keep the hex nuts in place. Be careful not to get super glue into the threads of the hex nuts. Allow the super glue to dry before continuing. 
+4. Turn the foundation over so that the metal crossbar is on top. If using the **DZS Elec LM2596** buck converter, insert four M2.5 hex nuts into the holes outlined in red in Fig. 6.2. If using the **DROK 180051US** buck converter, insert four M2.5 hex nuts into the holes outlined in blue in Fig. 6.2. Add super glue into the spaces between the edge of the hole and the hex nuts in order to keep the hex nuts in place. Be careful not to get super glue into the threads of the hex nuts. Allow the super glue to dry before continuing. 
 
     {{< figure src="/hardware/build_instructions/06_02_insert_hex_nuts.png" caption="Fig. 6.2" width="800">}}
 
