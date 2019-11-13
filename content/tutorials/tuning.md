@@ -1,27 +1,25 @@
 ---
-title: "Tuning Your Car"
+title: "Tuning VESC Parameters"
 date: 2018-11-28T15:14:54+10:00
 image: "/services/default.png"
-featured: true
+featured: false
 draft: false
 active: true
 duration: 60
 difficulty: Beginner
 summary: Run the MuSHR platform on your machine!
-weight: 1
+weight: 4
 ---
 
 ### Introduction
-This guide will provide you with the steps needed to tune the parameters of the VESC. Tuning is a necessary part of your workflow with the car, as it ensures the Odometry from corresponds to accurate ....
+If the VESC maps input velocities (m/s) and steering angles (rads) to Electrical RPMs and servo positions. These conversions are not necessarily the same for every car, as there are many physical factors that contribute to differences.  This guide will provide you with the steps needed to tune the parameters of the VESC.
 
-What are some applications this is helpful for:
-- Controllers: when our controller commands the car to drive a certain speed with a specific steering angle, we want that to correspond as much as possible to the real world.
-- Mapping: When we map out our enivornment, the mapping algoritm will use the odometery (where the car has been [get intuitive explanation]) to build the map.
+If incorrectly tuned, the commands applied by your controller may not correspond to what's being executed on the physical hardware, making it difficult to debug issues with the controller.
 
-Comment about how this tuning won't be perfect, the dynamics of the car are very complicated, and we are using a simplified model. Our goal will be to design algorithms that can deal with these uncertainties and imperfections in tuning.
+**Note:** The conversion from velocity to ERPM and steering angle to servo position is modeled as a linear function of the inputs, so the values may not be acurate for large ranges of speeds. Try to tune around the speed you expect to drive at (and consider retuing if your speed regime changes drasically).
 
-### Goal 
-Tune the car's VESC parameters
+### Goal
+Set the VESC gains (multiplier/strength of an input) and offsets (defualt value when no control is applied).
 
 ### Requirements
 
@@ -30,58 +28,88 @@ Tune the car's VESC parameters
 
 ## Setup
 
-Find a relatively open space to run your car. We'll be driving it straight for ~6ft (3m) and turning in a semi-circle of diameter ~3ft (1.5m).
+Find a relatively open space to run your car. We'll be driving it straight for ~9ft (3m) and turning in a semi-circle of diameter ~3ft (1m).
 
-Boot up the car and `ssh` into it.
+Plug the batteries into the car, connect to the car's network and `ssh` into the car.
 
-For every value, give a ballpark region for the value to be in, so they know if they are on the right track.
+The file will be located at `~/catkin_ws/src/mushr_base/vesc/vesc_main/config/racecar-uw-nano/vesc.yaml`. If you have a different version of the car, you'll choose that one instead. If you don't know which car you have, you likely have the `racecar-uw-nano` version.
 
-Tune the car at the speed you plan to drive it at. This will allow you to get more acurate gains at that speed (as the gains may not scale linearly with speed (although we make this assumption)).
+The file will look something like this:
+
+```yaml
+# erpm (electrical rpm) = speed_to_erpm_gain * speed (meters / second) + speed_to_erpm_offset
+#-4614
+speed_to_erpm_gain: -2000
+speed_to_erpm_offset: 0.0
+
+[...omited for brevity]
+
+# servo value (0 to 1) =  steering_angle_to_servo_gain * steering angle (radians) + steering_angle_to_servo_offset
+steering_angle_to_servo_gain: 1.2135
+steering_angle_to_servo_offset: 0.55
+
+[...omited for brevity]
+
+vesc_driver:
+  port: /dev/vesc
+  [...omited for brevity]
+```
 
 ## Steering Angle Offset
 
-Give an introduction on what this parameter is.
+This offset sets the default servo position when the car is driving straight.
 
 ### How to Tune
-Point to the specific line in the vesc.yaml
-Create three GIFS from vidoes of the car running, one where it's veering left (low offset), one where it's going perfectly straight ("just right" offset), and one where it's veering right (high offset)
+The number you will be changing is associated with `steering_angle_to_servo_offset`.
 
-psuedocode for process:
-```
-while not tuned:
-    run teleop
-    drive car in a straight line a few times (sometimes it doesn't go perfectly straight after turning, so as long as it goes straight most of the time).
-    adjust steering_angle_offset in vesc.yaml (go higher if it veers too much left, lower if it veers too much right)
-    stop teleop
-```
+While the car doesn't drive straight, do the following procedure:
 
-**Note: Usually this value is between 0.45 and 0.55**
+1. Start teleop (`roslaunch mushr_base teleop.launch`)
+-  Drive car in a straight line a few times. It's never going to be perfectly straight, so as long as it goes straight most of the time, it'll be fine. You can always come back to retune if it's not sufficiently precise.
+-  Adjust `steering_angle_offset` in `vesc.yaml`. Increase the offset if the car veers too much left, decrease if it veers too much right.
+-  Stop teleop (`Ctrl-C` in the window you started `teleop.launch` in) and go back to Step 1.
+
+**Note: Usually this value is between 0.4 and 0.6**
+
+<figure>
+  <img src="/tutorials/tuning/steering_angle_offset/left.gif" style="width: 32%;" />
+  <img src="/tutorials/tuning/steering_angle_offset/straight.gif" style="width: 32%;" />
+  <img src="/tutorials/tuning/steering_angle_offset/right.gif" style="width: 32%;" />
+
+  <figcaption>
+	<p>The car during the tuning process. In all tests, the car is commanded to drive straight forward. In the left image, the car's steering angle offset is too high. In the center image, the offset is good. In the right image the offset is too low. <b>Note: the car will never drive perfectly straight. It just has to be good enough. In the future your controller will be able to make small corrections!</b></p>
+  </figcaption>
+</figure>
+
 
 ## Speed to ERPM Gain
 
-Introduction/what is this parameter for
+This gain converts velocity to ERPM.
 
 ### How to Tune
 
-psuedocode:
-```
-extend tape measure to around 7-8 ft on the floor.
-open a terminal on the car and run the command
-rostopic echo /vesc/odom/ (this will echo all the odometry information from the car.)
-  you won't see anything yet (as we haven't started teleop)
+<span style="color:red">Point to the specific line in the vesc.yaml</span>
 
-while not tuned:
-    place car at the base of the tape measure with the back wheelbase lined up with 0 (refer to picture).
-    start teleop (note the position (pose/pose/position) is all zeros. The odometry postion starts at (0, 0, 0) when the car starts, and advances based on driving commands.)
-    drive the car forward about 6 ft.
-    record the distance traveled. (if your tape measure is in inches, convert to meters)
-    compare to output of the rostopic echo command. If the reported distance traveled is larger than the actual, decrease the gain, if the reported distance is smaller, increase the gain.
-    stop teleop
-```
+Before starting to tune:
+1. Extend your tape measure to around 9-10 ft on the floor. It's okay if it's slightly less than this.
+{{<figure src="/tutorials/tuning/erpm_gain/start.jpg" width="300px">}}
 
-A good stopping criteria is when the reported distance is within 2-3 inches (0.05-0.076m) of the actual distance.
+Now, while the car does not drive the reported distance (by `rostopic echo` command):
+
+1. Place car at the base of the tape measure with the back wheelbase (indicated with a white line) lined up with 0.
+{{<figure src="/tutorials/tuning/erpm_gain/base_with_line.jpg" width="300px">}}
+-  Start teleop. Note the position (pose/pose/position) is all zeros. The odometry postion starts at (0, 0, 0), and when the car starts, and advances based on driving commands.
+-  Open a terminal on the car and run the command: `rostopic echo /vesc/odom/pose/pose/position/x`. This will echo all the odometry information -- how far the car has driven in the `x` direction since teleop started. The value should be `0.0` at the start, as the car hasn't moved yet.
+-  Drive the car forward about 7-8 ft. The car will drive slightly further as it decelerates and stops. Make sure you only drive forward, not altering the servo position otherwise you'll have both `x` and `y` directional changes (which makes it only slightly harder to check distance traveled).
+-  Record the distance traveled. If your tape measure is in inches, convert to meters.
+{{<figure src="/tutorials/tuning/erpm_gain/end-with-line.jpg" width="400px">}}
+-  Compare to output of the `rostopic echo` command's `x` value. If the reported distance traveled is larger than the actual, decrease the gain. If the reported distance is smaller, increase the gain. At the begining increasing or decreasing by 500 should allow you to quickly hone in on the value.
+-  Stop teleop. Go back to step 1 if the values are not sufficiently close (within 2-3 cm).
+
 
 **Note: This value can vary, but it should be on the order of thousands (2000-5000)**
+
+A good stopping criteria is when the reported distance is within 2-3 inches (0.05-0.076m) of the actual distance. Sometimes the servo will get stuck and veer off course. You can restart teleop and move the car back and try again if this happens. Remember we are looking to get "good" gains, not perfect gains.
 
 ## Steering Angle Gain
 
@@ -103,3 +131,6 @@ while not tuned:
     compare to output of the rostopic echo command. If the actual distance is larger than it should be, decrease the gain. If the actual distance is larger than it should beincrease the gain.
     stop teleop
 ```
+
+## Conclusion
+With these values, your car should conform to your applied commands much more accurately.
