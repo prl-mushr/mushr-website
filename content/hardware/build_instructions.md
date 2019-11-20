@@ -30,7 +30,8 @@ ___
 13. [Back Cover Installation](#back-cover-installation)
 14. [Front Cover Installation](#front-cover-installation)
 15. [Final Assembly](#final-assembly)
-16. [Teleoperate the Robot](#teleoperate-the-robot)
+16. [Software Setup](#software-setup)
+17. [Teleoperate the Robot](#teleoperate-the-robot)
 
 ___
 ## Prerequisites
@@ -902,7 +903,7 @@ In this section, we will configure the VESC firmware, pair the bluetooth control
     
 12. After uploading the firmware, the VESC will automatically reboot. If the **BLDC Tool** GUI closes, re-open as described in step 9. Click on the **Motor Configuration** tab (in the case that the GUI did not close), and re-connect to the VESC as described in step 10.
 
-13. In the lower left corner of the GUI, click the **Read configuration** button. Many of the fields should now be populated with non-zero values. Next, click the **Load XML** button. Choose the file at the path **catkin_ws/src/mushr/mushr_base/vesc/vesc_configs/mushr_vesc_sensorless_config.xml**. Then click **Write configuration** (which is to the right of the **Read configuration** button). Next, **make sure that the robot's wheels are suspended in air, because we are about to make the wheels move**. Press (and hold) any of the arrow keys. This should cause the wheels to move. Close the **BLDC Tool** gui. (Fig. 15.7)
+13. In the lower left corner of the GUI, click the **Read configuration** button. Many of the fields should now be populated with non-zero values. Next, click the **Load XML** button. Choose the file at the path **catkin_ws/src/mushr/mushr_base/vesc/vesc_configs/mushr_vesc_sensorless_config.xml**. Then click **Write configuration** (which is to the right of the **Read configuration** button). Next, **make sure that the robot's wheels are suspended in air, because we are about to make the wheels move**. Press (and hold) any of the arrow keys. This should cause the wheels to move. Close the **BLDC Tool** GUI. (Fig. 15.7)
 
     {{< figure src="/hardware/build_instructions/15_07_load_xml.png" caption="Fig. 15.7" width="800">}}
     
@@ -937,7 +938,7 @@ In this section, we will configure the VESC firmware, pair the bluetooth control
     roslaunch ydlidar lidar.launch
     {{< / highlight >}} <br/>
     
-    If you get the error **YDLIDAR Cannot bind to the specified serial port /dev/ydlidar**, this means that the **USB micro end** of the LIDAR cable was plugged in backwards. Use **CTRL-C** to shutdown the node. Then swap the two USB micro ends so that they are plugged into the opposite receptacles, and then try the above command again. When they are plugged in correctly, the LIDAR will begin spinning. Use **CTRL-C** to shutdown the node.
+    If you get the error **YDLIDAR Cannot bind to the specified serial port /dev/ydlidar**, this means that the **USB micro end** of the LIDAR cable was plugged in backwards. Use **CTRL-C** to shutdown the node. Then swap the two USB micro ends of the LIDAR cable so that they are plugged into the opposite receptacles, and then try the above command again. When they are plugged in correctly, the LIDAR will begin spinning. Use **CTRL-C** to shutdown the node.
     
 20. Shutdown the robot with the following command:  
 
