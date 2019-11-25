@@ -7,7 +7,7 @@ draft: false
 active: true
 duration: 60
 difficulty: Beginner
-summary: Run the MuSHR platform on your machine!
+summary: Fine tuning car specific control parameters.
 weight: 4
 ---
 
@@ -77,7 +77,10 @@ You will be changing the variable: `steering_angle_to_servo_offset`.
 #### Tuning loop:
 While the car doesn't drive straight, do the following procedure:
 
-1. Start teleop (`roslaunch mushr_base teleop.launch`)
+1. Start teleop:
+```
+roslaunch mushr_base teleop.launch
+```
 -  Drive car in a straight line a few times. It's never going to be perfectly straight, so as long as it goes straight most of the time, it'll be fine. You can always come back to retune if it's not sufficiently precise.
 -  Adjust `steering_angle_offset` in `vesc.yaml`. Increase the offset if the car veers too much left, decrease if it veers too much right.
 -  Stop teleop (`Ctrl-C` in the window you started `teleop.launch` in) and go back to Step 1.
@@ -113,11 +116,12 @@ Now, while the car does not drive the reported distance (by `rostopic echo` comm
 
 1. Place car at the base of the tape measure with the back wheelbase (indicated with a white line) lined up with 0.
 {{<figure src="/tutorials/tuning/erpm_gain/base_with_line.jpg" width="300px">}}
--  Start teleop. Note the position (pose/pose/position) is all zeros. The odometry postion starts at (0, 0, 0), and when the car starts, and advances based on driving commands.
--  Open a terminal on the car and run the command:
-<center>
-`rostopic echo /vesc/odom/pose/pose/position/x`.
-</center>This will echo all the odometry information -- how far the car has driven (in meters) in the `x` direction since teleop started. The value should be `0.0` at the start, as the car hasn't moved yet.
+-  Start teleop.
+-  Open another terminal on the car and run the command:
+```
+rostopic echo /vesc/odom/pose/pose/position/x
+```
+This will echo all the odometry information -- how far the car has driven (in meters) in the `x` direction since teleop started. The value should be `0.0` at the start, as the car hasn't moved yet.
 -  Drive the car forward about 7-8 ft. The car will drive slightly further as it decelerates and stops. Make sure you only drive forward, not altering the servo position, otherwise you'll have both `x` and `y` directional changes (which makes it only slightly harder to check distance traveled).
 -  Record the distance traveled. If your tape measure is in inches, convert to meters.
 {{<figure src="/tutorials/tuning/erpm_gain/end-with-line.jpg" width="400px">}}
