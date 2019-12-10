@@ -152,7 +152,7 @@ $ rviz
 
 The `rviz` window with the car model should appear (see below). `Rviz` is useful for visualizing what the car is thinking/seeing. Currently it is set to visualize the car, map, and laserscan but `rviz` can be used for much [more](http://wiki.ros.org/rviz/Tutorials).
 
-{{< figure src="/tutorials/quickstart/rviz_docker.png" caption="This is an image of the `rviz` window that should pop up." width="800">}}
+{{< figure src="/tutorials/quickstart/rviz_docker-update.png" caption="This is an image of the `rviz` window that should pop up." width="800">}}
 
 ### Setting an Initial Position
 
@@ -163,7 +163,7 @@ in `rviz` and clicking and dragging in the main window. Now you can click on the
 
 ### Navigating rviz
 
-The main pane will show a map of the Paul G. Allen Basement at the University of Washington. The ligher areas are hallways and rooms the simulated car can drive around. The darker areas are walls.
+The main pane will show a map of an empty square space. The ligher areas are the space where the simulated car can drive around. The darker areas are walls.
 
 Clicking and dragging will change the perspective of `rviz`, while `Shift + Click` and draging will move the map around.
 
