@@ -159,7 +159,7 @@ While the car doesn't drive :
 -  Start teleop.
 -  Command the steering wheel max in whichever direction the measurement tape is. (For the image, it would be left)
 -  Run the car such that the car has run over the tape and the back wheel is on the tape (see image). This will take some practice, but you can go slow.
-{{<figure src="/tutorials/tuning/steering_angle_gain/end_rotated.jpg" width="300px">}}
+{{<figure src="/tutorials/tuning/steering_angle_gain/end.jpg" width="300px">}}
 -  Record the distance. The goal distance is **1.722 meters (67.79 inches)**. If it overshot, increase the gain, if it undershot, decrease the gain.
 
 
