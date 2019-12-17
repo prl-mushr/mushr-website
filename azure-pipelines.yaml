@@ -18,6 +18,7 @@ stages:
       submodules: false # true  # true so Hugo theme submodule is checked out
     - task: HugoTask@1
       displayName: 'Generate Hugo site'
+      hugo-version: '0.61.0'
       inputs:
         destination: '$(Build.ArtifactStagingDirectory)'
     - publish: '$(Build.ArtifactStagingDirectory)'
