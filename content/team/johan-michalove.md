@@ -8,6 +8,7 @@ email: 'michajoh@cs.washington.edu'
 websiteurl: 'http://johanam.com/'
 github: 'johannesburg'
 twitter: 'MichaloveJohan'
+teamtype: '1'
 weight: 4
 ---
 

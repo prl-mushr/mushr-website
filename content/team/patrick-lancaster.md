@@ -6,6 +6,7 @@ image: 'team/plancaster.jpg'
 jobtitle: 'Hardware Lead'
 email: 'planc509@cs.washington.edu'
 websiteurl: 'https://homes.cs.washington.edu/~planc509/'
+teamtype: '1'
 weight: 5
 ---
 

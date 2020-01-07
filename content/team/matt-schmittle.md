@@ -6,6 +6,7 @@ image: 'team/mschmittle.jpg'
 jobtitle: 'Project Lead'
 email: 'schmttle@cs.washington.edu'
 websiteurl: 'https://schmittlema.github.io/'
+teamtype: '1'
 weight: 3
 ---
 

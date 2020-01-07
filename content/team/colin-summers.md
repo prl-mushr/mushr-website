@@ -6,6 +6,7 @@ image: 'team/csummers.jpg'
 jobtitle: 'Research and Development'
 email: 'colinxs@cs.washington.edu'
 websiteurl: 'https://colinxsummers.com/'
+teamtype: '1'
 weight: 7
 ---
 

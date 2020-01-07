@@ -7,6 +7,7 @@ jobtitle: 'Postdoctoral Fellow'
 email: 'fsadeghi@cs.washington.edu'
 websiteurl: 'https://homes.cs.washington.edu/~fsadeghi/'
 twitter: 'fereshteh_sa'
+teamtype: '1'
 weight: 3
 ---
 

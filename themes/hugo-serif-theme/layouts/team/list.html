@@ -18,11 +18,24 @@
   </div>
 </div>
 
-<div class="container pt-6 pb-md-12">
-  <div class="row">
-    {{ range .Pages.ByWeight }}
-    <div class="col-12 col-md-6 mb-2 ">{{ .Render "summary" }}</div>
-    {{ end }}
-  </div>
+
+{{ $team_names := dict "1" "Core Team" "2" "Collaborators" }}
+
+<div class="team">
+    <div class="container">
+        <div class="container pt-6 pb-md-12">
+            {{ range .Pages.GroupByParam "Teamtype" "asc"}}
+            <h1>{{ index $team_names .Key }}</h1>
+            <div class="row">
+                {{ range .Pages.ByWeight }}
+                {{ if not .Params.Draft }}
+                <div class="col-12 col-md-6 mb-2 ">{{ .Render "summary" }}</div>
+                {{ end }}
+                {{ end }}
+            </div>
+            {{end}}
+        </div>
+    </div>
 </div>
-{{ end }}
+
+{{end}}

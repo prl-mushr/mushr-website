@@ -5,6 +5,7 @@ draft: false
 image: 'team/mrockett.png'
 jobtitle: 'Robot Wrangler'
 email: 'rockettm@cs.washington.edu'
+teamtype: '1'
 weight: 6
 ---
 

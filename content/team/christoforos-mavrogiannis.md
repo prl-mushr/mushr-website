@@ -8,6 +8,7 @@ email: 'cmavro@cs.washington.edu'
 websiteurl: 'https://humanafterall.ai/'
 github: 'cmavrogiannis'
 twitter: 'mavrojean'
+teamtype: '1'
 weight: 3
 ---
 

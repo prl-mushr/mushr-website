@@ -8,6 +8,7 @@ email: 'siddh@cs.washington.edu'
 twitter: siddhss5
 websiteurl: 'https://goodrobot.ai/'
 github: siddhss5
+teamtype: '1'
 weight: 1
 ---
 
