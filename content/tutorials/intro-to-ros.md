@@ -52,7 +52,7 @@ Sourcing[^1] `devel/setup.bash` sets up the ROS environment and some useful auto
 
 ## A simple plan specification
 
-Now that we have a package we want create a source code file to run our ROS node[^3]. We will be creating a simple ROS node to read commands (in this case, velocity and steering angle) from a file line by line, and send them to the simulator to be applied to the simulated car. Each line will denote a command to be applied for one second. The first line is a message to send as the "starting pose" of the car. 
+Now that we have a package we want to create a source code file to run our ROS node[^3]. We will be creating a simple ROS node to read commands (in this case, velocity and steering angle) from a file line by line, and send them to the simulator to be applied to the simulated car. Each line will denote a command to be applied for one second. The first line is a message to send as the "starting pose" of the car. 
 
 The input files will be of the form:
 
@@ -200,7 +200,7 @@ Below we will break down the code. The code blocks are explained out of order in
 
 ### Includes
 
-We define functions and modules we need first:
+We import functions and modules we need first:
 
 {{< highlight python "linenos=table" >}}
 #!/usr/bin/env python
