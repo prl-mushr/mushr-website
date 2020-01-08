@@ -1,5 +1,7 @@
 # mushr-website
 
+**Use Hugo v0.61.0 to build using the same version of hugo as the pipeline.**
+
 The MuSHR website is generated using the Hugo static site generator. Please refer to Hugo's documentation for any major changes. You can host the site locally by running `hugo server -D` in this directory. <b>Do reach out to @johannesburg or @schmittle before pushing major changes.</b>
 
 ## Pushing website edits

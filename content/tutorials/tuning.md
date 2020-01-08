@@ -18,9 +18,11 @@ If incorrectly tuned, the commands applied by your autonomous controller may not
 
 **Note:** The conversion from velocity to ERPM and steering angle to servo position is a linear function of the input command:
 
-<center>
-`output = f(command) = gain * command + bias`,
-</center>
+<div style="text-align: center;" />
+<code>output = f(command) = gain * command + bias</code>,
+<br />
+<br />
+</div>
 
 so the values may not be acurate for large ranges of speeds. Try to tune around the speed you expect to drive at (and consider retuning if your speed regime changes drasically).
 
@@ -40,9 +42,11 @@ Plug the batteries into the car, connect to the car's network and `ssh` into the
 
 The file will be located at:
 
-<center>
-`~/catkin_ws/src/mushr_base/vesc/vesc_main/config/racecar-uw-nano/vesc.yaml`.
-</center>
+<div style="text-align: center;" />
+<code>~/catkin_ws/src/mushr_base/vesc/vesc_main/config/racecar-uw-nano/vesc.yaml</code>.
+<br />
+<br />
+</div>
 
 If you have a different version of the car, you'll choose that one instead. If you don't know which car you have, you likely have the `racecar-uw-nano` version.
 
