@@ -11,14 +11,11 @@ weight: 3
 ---
 
 ## Introduction
-
 ### Goal
-This tuturial will teach you to setup and plan a path from one start position in the map to a goal position. 
+The [Open Montion Planner Library(OMPL)](http://ompl.kavrakilab.org/index.html) contains modules for computing motion plans using sampling-based algorithm. The OMPL is designed to be easily integrated into other systems that provide necessary component such as ROS, and Moveit. In this tutorial, we will be using the ROS package that provides [ROS services](http://wiki.ros.org/rospy/Overview/Services) as an API for planning a path from a start position to a goal position.
 
 ### Requirement
-To complete this tutorial, you need to:
-- Complete the [quickstart](/tutorials/quickstart) tutorial.
-- 
+In order to successfully finish this tutorial you need to be familar with python and bash command, complete the [quickstart](/tutorials/quickstart) and [Intro to Ros](/tutorials/intro-to-ros) tutorial, and have a basic understanding of [ROS topics](http://wiki.ros.org/rospy/Overview/Publishers%20and%20Subscribers).
 ## Setup
 - Install ompl from source [here](https://ompl.kavrakilab.org/installation.html) with python bindings or downloading the script [here](https://ompl.kavrakilab.org/install-ompl-ubuntu.sh)
     - Change python version setting in the script from `$PYTHONV=3` to `$PYTHONV=2.7`
@@ -39,7 +36,7 @@ To complete this tutorial, you need to:
     # Go to your catkin workspace
     $ cd ~/catkin_ws/src
     # Clone the global planner node
-    $ git clone https://github.com/thompsonmax/mushr_global_planner.git
+    $ git clone https://github.com/schmittlema/mushr_global_planner.git
     ```
 - Make and source your workspace. (Assuming source commands in .bashrc)
     ```
@@ -59,26 +56,72 @@ rviz
 Then subscribe to the `/mushr_global_planner_result` topic, you should see a red path of `PoseArray`
 
 ## Using Mushr Global Planner 
-To use the global planner simply launch
-```
-roslaunch mushr_global_planner planner.launch
-```
-\* Note that the defualt launcher does not include a map server.
 
-To call the planner, simply make a service request using the API:
+#### The code 
+The code below examplify how to use a ROS service, which will be explained in greater detail later. Save this file in `mushr_ros_intro/src/global_planner.py`. 
+
+{{< highlight python "linenos=table" >}}
+
+    #!/usr/bin/env python
+    import rospy
+    from gpnode import MushrGlobalPlanner
+    from geometry_msgs.msg import (
+        Pose, 
+        PoseArray,
+        Point,
+        Quaternion
+    )
+
+    if __name__ == "__main__":
+        rospy.wait_for_service('mushr_global_planner')
+        mushrt_global_planner = rospy.ServiceProxy('mushr_global_planner', MushrGlobalPlanner)
+        start_pose = Pose(Point(-1.887, 26.930,0.0), Quaternion(0,0,0,1)) 
+        goal_pose = Pose(Point(41.804, 0.761, 0.0), Quaternion(0,0,0,1))
+        response = mushr_global_planner(header=None, start=start_pose, goal=goal_pose, turning_radius=5.0, planning_time=30.0)
+
+{{< / highlight >}}
+
+
+First, we have to make sure that service that we want to use, `mushr_global_planner` in this case, is running and ready. `rospy.wait_for_service` will wait until a service with given name becomes avaiable. You can limit the waiting time by specify the timeout(in seconds)
+```
+rospy.wait_for_service('mushr_global_planner')
+```
+Then, we could create a callable instance giving the service name and class. The instance could be use just like a regular python method.  
+```
+rospy.ServiceProxy('mushr_global_planner', MushrGlobalPlanner)
+```
+`global_planner` takes parameter as listed below: 
  - start position is in world frame
  - goal position is in world frame
  - turning radius is the turning radius of the car in meters. You can calculate your turning radius although we recommend you tune your car to match your expected turning radius. You should match the variables to the vesc settings preset [car length](https://github.com/prl-mushr/vesc/blob/master/vesc_main/config/racecar-uw-nano/vesc.yaml) and [delta](https://github.com/prl-mushr/mushr_base/blob/master/mushr_base/config/joy_teleop.yaml) (steering angle).  
     ![equation image](https://drive.google.com/uc?export=view&id=12Fe6HDtbWj7XZcV6HvmQ-qeWHpfCcDX0)
  - planning time is the planning time cutoff. E.g. give me your best solution after 30 seconds
-#### Publishers
-Topic | Type | Description
-------|------|------------
-`/mushr_global_planner_start`|[geometry_msgs/Pose](http://docs.ros.org/api/geometry_msgs/html/msg/Pose.html)| Start position
-`/mushr_global_planner_goal`|[geometry_msgs/Pose](http://docs.ros.org/api/geometry_msgs/html/msg/Pose.html)|Goal position
-`/mushr_global_planner_result`|[geometry_msgs/PoseArray](http://docs.ros.org/api/geometry_msgs/html/msg/PoseArray.html)| Planned path of poses in world coordinates from start to goal
+ ```
+ start_pose = Pose(Point(-1.887, 26.930,0.0), Quaternion(0,0,0,1)) 
+goal_pose = Pose(Point(41.804, 0.761, 0.0), Quaternion(0,0,0,1))
+response = mushr_global_planner(header=None, start=start_pose, goal=goal_pose, turning_radius=5.0, planning_time=30.0)
+ ```
 
-#### Services
-Topic | Type | Description
-------|------|------------
-`/mushr_global_planner`|[mushr_global_planner/MushrGlobalPlanner](srv/MushrGlobalPlanner.srv)| Calls for a path to be created with a given start, goal, turning radius, and planning time
+#### running globel planner
+With python files, we have to change the permissions to be able to execute and run.
+```
+$ chmod +x mushr_ros_intro/src/global_planner.py
+```
+Then initiate the `mushr_global_planner` server to be ready for client to invoke and plan the path.
+```
+roslaunch mushr_global_planner planner.launch
+```
+Since the launch file of the mushr global planner does not include the map server by default, we have to manually launch it.
+```
+roslaunch mushr_global_planner map_server.launch
+```
+Next, we run the `global_planner.py` to create the path.
+```
+rosrun mushr_ros_intro global_planner.py
+```
+Finally, open the rviz
+```
+rviz
+```
+Then subscribe to the `/mushr_global_planner_result` topic, you should see the same red path as the one generated by the demo.
+
