@@ -21,7 +21,9 @@ This tutorial will get you started with MuSHR in simulation!
 To get the simulator running on your machine so that you can begin hacking immediately!
 
 ### Requirements
-A Ubuntu Linux machine. If you don't run linux natively then get a Ubuntu VM: [OSX](https://www.instructables.com/id/How-to-Create-an-Ubuntu-Virtual-Machine-with-Virtu/), [Windows](https://itsfoss.com/install-linux-in-virtualbox/).
+A Ubuntu Linux machine. If you don't run linux natively then get a Ubuntu VM: [OSX](https://www.instructables.com/id/How-to-Create-an-Ubuntu-Virtual-Machine-with-Virtu/), [Windows](https://itsfoss.com/install-linux-in-virtualbox/). 
+
+We also provide a virtual machine image that already has the MuSHR stack setup, it can be downloaded [here](https://drive.google.com/a/cs.washington.edu/file/d/1mOzSzVx9BF_e2U1OeK58NS42UIPcnIZq/view?usp=sharing). The username is **robot** and the password is **prl_robot**. If you use this image, you can start the VM and then skip to the [**Running the Simulator**](#running-the-simulator) section.
 
 Window Subsystem for Linux (WSL): There has also been success getting the quickstart to run using WSL. When running `rivz` you'll need to disable native `opengl`. There will be a note ([**Note for WSL**](#wsl-users-note)) in the section running `rviz`.
 
@@ -154,7 +156,7 @@ $ rviz
 
 The `rviz` window with the car model should appear (see below). `Rviz` is useful for visualizing what the car is thinking/seeing. Currently it is set to visualize the car, map, and laserscan but `rviz` can be used for much [more](http://wiki.ros.org/rviz/Tutorials).
 
-{{< figure src="/tutorials/quickstart/rviz_docker.png" caption="This is an image of the `rviz` window that should pop up." width="800">}}
+{{< figure src="/tutorials/quickstart/rviz_docker-update.png" caption="This is an image of the `rviz` window that should pop up." width="800">}}
 
 ### Setting an Initial Position
 
@@ -165,7 +167,7 @@ in `rviz` and clicking and dragging in the main window. Now you can click on the
 
 ### Navigating rviz
 
-The main pane will show a map of the Paul G. Allen Basement at the University of Washington. The ligher areas are hallways and rooms the simulated car can drive around. The darker areas are walls.
+The main pane will show a map of an empty square space. The ligher areas are the space where the simulated car can drive around. The darker areas are walls.
 
 Clicking and dragging will change the perspective of `rviz`, while `Shift + Click` and draging will move the map around.
 

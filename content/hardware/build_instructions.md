@@ -30,7 +30,8 @@ ___
 13. [Back Cover Installation](#back-cover-installation)
 14. [Front Cover Installation](#front-cover-installation)
 15. [Final Assembly](#final-assembly)
-16. [Teleoperate the Robot](#teleoperate-the-robot)
+16. [Software Setup](#software-setup)
+17. [Teleoperate the Robot](#teleoperate-the-robot)
 
 ___
 ## Prerequisites
@@ -693,6 +694,7 @@ In this section, we will assemble the back cover, mount the Jetson Nano, and att
 * Tweezers  
 * Pliers
 * Philips Screwdriver 
+* Electrical Tape
 
 **Steps**
 
@@ -726,9 +728,15 @@ In this section, we will assemble the back cover, mount the Jetson Nano, and att
 
 11. Expose the adhesive on the back of each of the antennas, and attach them to the side walls of the back cover.
 
-12. Use four M2.5 flat head screws to mount the back cover to the foundation. (Fig. 12.5)
+12. Use electrical tape to re-enforce the adhesion of the antennae to the side walls.
 
-    {{< figure src="/hardware/build_instructions/12_05_mount_back_cover.png" caption="Fig. 12.5" width="800">}}    
+13. If necessary, use zip ties to bundles the antennae wires, as well as perform general cable management of the back cover. (Fig. 12.5)
+
+    {{< figure src="/hardware/build_instructions/12_05_antenna_wires.JPG" caption="Fig. 12.5" width="800">}}    
+
+12. Use four M2.5 flat head screws to mount the back cover to the foundation. (Fig. 12.6)
+
+    {{< figure src="/hardware/build_instructions/12_06_mount_back_cover.png" caption="Fig. 12.6" width="800">}}    
 
 ___
 ## Front Cover Installation
@@ -740,13 +748,16 @@ In this section, we will mount the D435i Realsense camera to the front cover of 
 
 **Required Materials and Tools**
 
-* Intel D435i Camera 
+* Intel D435i Camera and/or Intel T265 Camera
 * USB 3.0 1ft Cable
 * 3D Printed Parts:
     * Racecar Front Cover Whole
+    * Racecar T265 Mounting Plate (If using 2 Cameras)
 * Racecar Chasis
 * 5x Flat Head Screws
-* 2x 6mm M3 Pan Head Screws
+* 2x 6mm M3 Pan Head Screws (If using 1 Camera)
+* 4x 14mm M3 Pan Head Screws (If using 2 Cameras)
+* 8x Nylon Spacers (If using 2 Cameras) 
 * Pliers 
 * Hex Keys 
 * Philips Screwdriver 
@@ -755,23 +766,34 @@ In this section, we will mount the D435i Realsense camera to the front cover of 
 
 1. Plug the 1ft USB 3.0 cable into the D435i camera. Note that we are not using the USB cable that comes with the camera because it is excessively long.
 
-2. Guide the USB cable from the outside of the front cover to the inside through the gap near the mounting holes. (Fig. 13.1)
+2. **Single Camera** Guide the USB cable from the outside of the front cover to the inside through the gap near the mounting holes. (Fig. 13.1)
 
     {{< figure src="/hardware/build_instructions/13_01_guide_d435_usb.png" caption="Fig. 13.1" width="800">}}
 
-3. Use two 6mm M3 screws to mount the D435i camera to the front cover.(Fig. 13.2)
+3. **Single Camera** Use two 6mm M3 screws to mount the D435i camera to the front cover.(Fig. 13.2)
 
     {{< figure src="/hardware/build_instructions/13_02_mount_d435.png" caption="Fig. 13.2" width="800">}}
 
-4. Use five M2.5 flat head screws to mount the front cover to the race car. (Fig. 13.3)
+4. **Dual Camera** Use two 14mm M3 screws to attach the mounting plate and D435i camera to the front cover. (Fig. 13.3)
 
-    {{< figure src="/hardware/build_instructions/13_03_mount_front_cover.png" caption="Fig. 13.3" width="800">}}
+    {{< figure src="/hardware/build_instructions/13_03_mount_d435_double.JPG" caption="Fig. 13.3" width="800">}}
+
+5. **Dual Camera** Take two 14mm M3 screws and slip 4 nylon spacers onto each of them. Use these screws to attach the T265 camera to the mounting plate. (Fig. 13.4).
+
+    {{< figure src="/hardware/build_instructions/13_04_mount_t265_double.JPG" caption="Fig. 13.4" width="800">}}
+
+6. **Dual Camera** Guide the USB cables from the inside of the front cover to the outside, and attach them to the cameras. (Fig. 13.5).
+
+    {{< figure src="/hardware/build_instructions/13_05_guide_usb_double.JPG" caption="Fig. 13.5" width="800">}}
+
+7. Use five M2.5 flat head screws to mount the front cover to the race car. (Fig. 13.6)
+
+    {{< figure src="/hardware/build_instructions/13_06_mount_front_cover.png" caption="Fig. 13.6" width="800">}}
 
 ___
 ## Final Assembly
 
 In this section, we will finish assembling the racecar.
-<iframe width="800" height="450" src="https://www.youtube.com/embed/F9R5IC6I4wE?list=PLU9BrzGX4PH2DHZzxOg2gEkLMXhpkS7fV" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 **Required Materials and Tools**
 
@@ -782,41 +804,151 @@ In this section, we will finish assembling the racecar.
     * Racecar Cover Number
 * Zip Ties
 * Super Glue
+* Electrical Tape
 
 **Steps**
 
-1. Plug the wireless controller's dongle into the included range extender. Note that you could skip steps 1-5 of this section and just directly plug the dongle into the Jeton Nano's USB. However, we have observed that the range extender improves the controller's wireless connection.
+1. Re-attach the back bumper to the chassis if not already done.
 
-2. Remove the two screws that mount the back bumper to chassis. Place the range extender's wire inbetween the two screw holes before re-inserting the screws. (Fig. 14.1)
-
-    {{< figure src="/hardware/build_instructions/14_01_remove_back_bumper.png" caption="Fig. 14.1" width="800">}}
-
-3. Mount the range extender to the back bumper with two daisy chained zip ties. (Fig. 14.2)
-
-    {{< figure src="/hardware/build_instructions/14_02_mount_range_extender.png" caption="Fig. 14.2" width="800">}}
-
-4. Plug the range extender into one of the Jetson Nano's USB ports. 
-
-5. Tightly bundle the range extender's wire and attach it below the back bumper with a zip tie. (Fig. 14.3)
-
-    {{< figure src="/hardware/build_instructions/14_03_bundle_extender.png" caption="Fig. 14.4" width="800">}}
+2. Place tape around the connections between the VESC and motor. (Fig. 14.1)
     
-6. Route the VESC's USB cable up through the hole in the foundation near the left battery compartment. Plug it into one of the Jetson Nano's USB ports.
-
-7. Plug the YDLIDAR's USB cable into one of the Jetson Nano's USB ports.
-
-8. Plug Realsense D435i's USB cable into one of the Jetson Nano's USB ports.
-
-9. Make sure that the 5000 mAH battery is not plugged into the buck converter. Then plug the barrel connector into the Jetson Nano.
-
-10. Apply super glue to one of the insets on the outside of the back cover. Insert one of the 3D printed cover images into the inset.
-
-11. Repeat step 10 for the cover image on the other side of the back cover, and for the cover number in the center of the front cover.
-
-12. Congratulations, you have finished building the MuSHR Racecar! (Fig 14.4)
-
-    {{< figure src="/hardware/build_instructions/14_04_car_complete.jpg" caption="Fig. 14.4" width="800">}}
+    {{< figure src="/hardware/build_instructions/14_01_motor_tape.JPG" caption="Fig. 14.1" width="800">}}    
     
+2. Attach velcro to the back right side of the foundation. (Fig. 14.3) 
+
+    {{< figure src="/hardware/build_instructions/14_02_foundation_velcro.JPG" caption="Fig. 14.2" width="800">}}
+    
+3. Place velcro on the corresponding area of the battery. (Fig. 14.3)    
+
+    {{< figure src="/hardware/build_instructions/14_03_battery_velcro.JPG" caption="Fig. 14.3" width="800">}}
+   
+4. If using the T265 Camera, use zip ties to organize the USB cable. Use zip ties as necessary to manage cables. (Fig. 14.4)  
+
+    {{< figure src="/hardware/build_instructions/14_04_zip_ties.JPG" caption="Fig. 14.4" width="800">}}    
+    
+5. Route the VESC's USB cable up through the hole in the foundation near the left battery compartment. Plug it into one of the Jetson Nano's USB ports.
+
+6. Plug the YDLIDAR's USB cable into one of the Jetson Nano's USB ports.
+
+7. Plug the USB cable(s) of any installed Realsense cameras into the Jetson Nano's USB ports.   
+
+8. Make sure that the 5000 mAH battery is not plugged into the buck converter. Then plug the barrel connector into the Jetson Nano. (Fig. 14.5)
+
+    {{< figure src="/hardware/build_instructions/14_05_usb_plugged.JPG" caption="Fig. 14.5" width="800">}} 
+
+9. Apply super glue to one of the insets on the outside of the back cover. Insert one of the 3D printed cover images into the inset.
+
+10. Repeat the previous step for the cover image on the other side of the back cover, and for the cover number in the center of the front cover.
+
+11. Congratulations, you have finished building the MuSHR Racecar! (Fig 14.6)
+
+    {{< figure src="/hardware/build_instructions/14_06_car_complete.jpg" caption="Fig. 14.6" width="800">}}
+
+___
+## Software Setup
+In this section, we will configure the VESC firmware, pair the bluetooth controller, and setup other remaining software.
+
+**Required Materials and Tools**
+
+* Computer Monitor
+* HDMI Cable
+* USB Keyboard
+* USB Mouse
+* 3000 mAH Battery
+* 5V Power Adapter or 5000 mAH battery 
+
+**Steps**
+
+1. Attach the Jetson Nano to the computer monitor with the HDMI cable. Plug in the keyboard and mouse into its USB ports. Unplug the USB cables of the cameras if there are not enough open USB ports. Place a box underneath the chassis body such that the wheels are not touching the table/ground/surface.
+
+2. Power on the Jetson Nano. You may use either a 5V power adapter directly into the Jetson Nano's barrel connector, or use the 5000 mAH battery.
+
+3. Connect to the internet by setting up a Wi-Fi connection to an existing network. First, click on the Wi-Fi symbol in the upper right of the Ubuntu GUI and choose **Edit Connections**. Click the plus sign to create a new connection. On the **Choose a Connection Type** dialog, choose **Wi-Fi** from the drop down menu, and then click **Create...**. Enter a name into the **Connection Name** field. Enter the name of the network to connect to in the **SSID** field. Under the **Mode** field, choose **Client**. Under the **BSSID** field, choose the last option (there may only be one option). Then click **Save**. An example connection is shown below. (Fig. 15.1)
+
+    {{< figure src="/hardware/build_instructions/15_01_new_connection.png" caption="Fig. 15.1" width="800">}}    
+    
+4. Back in the **Edit Connections** dialog, double click on the **Robot AP** connection to begin editing the connection. Click on the **General** tab. Uncheck the **Automatically connect to this network when it is available** option. Click **Save**. (Fig. 15.2)
+
+    {{< figure src="/hardware/build_instructions/15_02_uncheck_robot_ap.png" caption="Fig. 15.2" width="800">}} 
+
+5. Again click on the Wi-Fi icon in the upper right corner. Click **Enable Networking**. This will disable networking. Re-enable networking by again clicking on **Enable Networking**. The robot should now be connected to the internet through an existing Wi-Fi network. (Fig. 15.3)
+
+    {{< figure src="/hardware/build_instructions/15_03_enable_networking.png" caption="Fig. 15.3" width="800">}} 
+    
+6. Open a terminal and install gparted using the following command:
+
+    {{< highlight bash >}}
+    sudo apt-get install gparted
+    {{< / highlight >}} <br/>
+
+7. Next, we will use gparted to expand the SD card partition. Open the gparted program, and right click on the **/dev/mmcblk0p1** partition. Choose **Resize/Move**. In the dialog that opens, drag the slider all the way to the right. Then click **Resize**. The dialog box will close. Click the green check mark, and click **Apply** in the resulting dialog. You should now have very little or no unallocated space. Close gparted. (Fig. 15.4)
+
+    {{< figure src="/hardware/build_instructions/15_04_gparted.png" caption="Fig. 15.4" width="800">}}
+    
+8. We will now upload firmware to the VESC. First, plug the 3000 mAH battery into the VESC. Note that you should charge the battery if not done already.
+
+9. Open a terminal and use the following command to open the VESC programming GUI:    
+
+    {{< highlight bash >}}
+    cd && ./bldc-tool/BLDC_Tool
+    {{< / highlight >}} <br/>
+
+10. In the upper right corner of the GUI, there is a dropdown box, and two buttons - one with a circular arrow and one labeled **Connect**. Click on the circular arrow button until the dropdown box reads **VESC - ttyACM0**. Look in the lower right of the GUI, where it should say **Not Connected**. Click on the **Connect** button until the text in the lower right flashes green and then reads **Connected**. (Fig. 15.5)
+
+    {{< figure src="/hardware/build_instructions/15_05_connect_vesc.png" caption="Fig. 15.5" width="800">}}
+
+11. Next, click on the **Firmware** tab. Under the **Upload New Firmware** section, click **Upload**. Read the warning and click **OK**. Choose the file at the path **bldc-tool/firmwares/hw_410_411_412/VESC_servoout.bin**. **It is VERY important to choose the correct file, as the previous warning described.** After verifying that you have chosen the correct file, click **Upload** to upload the firmware. (Fig. 15.6)
+
+    {{< figure src="/hardware/build_instructions/15_06_upload_vesc_firmware.png" caption="Fig. 15.6" width="800">}}
+    
+12. After uploading the firmware, the VESC will automatically reboot. If the **BLDC Tool** GUI closes, re-open as described in step 9. Click on the **Motor Configuration** tab (in the case that the GUI did not close), and re-connect to the VESC as described in step 10.
+
+13. In the lower left corner of the GUI, click the **Read configuration** button. Many of the fields should now be populated with non-zero values. Next, click the **Load XML** button. Choose the file at the path **catkin_ws/src/mushr/mushr_base/vesc/vesc_configs/mushr_vesc_sensorless_config.xml**. Then click **Write configuration** (which is to the right of the **Read configuration** button). Next, **make sure that the robot's wheels are suspended in air, because we are about to make the wheels move**. Press (and hold) any of the arrow keys. This should cause the wheels to move. Close the **BLDC Tool** GUI. (Fig. 15.7)
+
+    {{< figure src="/hardware/build_instructions/15_07_load_xml.png" caption="Fig. 15.7" width="800">}}
+    
+14. Note the column of icons on the left-side of the Ubuntu GUI. Click on the uppermost one, and type **Bluetooth**. Use the search result to open the **Bluetooth** dialog. Turn on the PS4 controller by pressing on the **Playstation** button. **Note that the controller must first be charged using a USB-mini cable.** The LED on the front of the controller should flash. Put the controller into pairing mode by simultaneously holding down the **Playstation** button and the **Share** button. The LED on the front of the controller should continuously emit quick flashes. Next, in the **Bluetooth dialog**, click on the plus icon in the lower left corner. In the dialog that pops up, choose **Input devices(mice,keyboards,etc.)** in the **Device type** drop down. There should now be a single entry labelled **Wireless Controller**. Click it, and then click **Next** in the lower right corner. After the dialog reports **Successfully set up new device 'Wireless Controller'**, close the **Bluetooth** dialog. (Fig. 15.8)
+
+    {{< figure src="/hardware/build_instructions/15_08_pair_controller.png" caption="Fig. 15.8" width="800">}}
+    
+15. Open the file **/home/robot/catkin_ws/src/mushr/mushr_base/mushr_base/config/joy_teleop.yaml** for editing. Note the hierarchal structure of this file. Under the field **teleop->human_control->axis_mappings**, there are two sections, each consisting of an **axis**, **target**, **scale**, and **offset** field. We will edit the section whose **target** field has a value of **drive.steering_angle**. The value of the **axis** field should be changed from **3** to **2**. Note that this may have already been done for you as a result of future updates. Save and close the file. (Fig. 15.9)
+
+    {{< figure src="/hardware/build_instructions/15_09_edit_joy_config.png" caption="Fig. 15.9" width="800">}}  
+    
+16. Open the file **/home/robot/catkin_ws/src/mushr/mushr_base/vesc/vesc_main/config/racecar-uw-nano/vesc.yaml** for editing. Change the **speed_to_erpm_gain** field to have a value of **-3500**, and the **steering_angle_to_servo_gain** field to have a value of **0.95**. These parameters affect the computation of the robot's odometry. While these values serve as a starting point, they will need to be tuned for your own car. More information about these parameters and how to tune them will be given in a soon-to-be-released [tutorial](/tutorials). Save and close the file. (Fig. 15.10)
+
+    {{< figure src="/hardware/build_instructions/15_10_vesc_params.png" caption="Fig. 15.10" width="800">}}  
+    
+17. Open the file **/etc/rc.local** for editing. **Note that you will need to use sudo to edit it**. On the line before the line that reads **nvpmodel -m 0**, add the following: 
+
+    {{< highlight bash >}}
+    rs-enumerate-devices &> /dev/null
+    {{< / highlight >}} <br/>
+    This causes the Jetson Nano to correctly recognize all of the camera devices on startup. Note that this line already may have been added for you as a result of future updates. Save and close the file. (Fig. 15.11)
+
+    {{< figure src="/hardware/build_instructions/15_11_enumerate_devices.png" caption="Fig. 15.11" width="800">}}   
+
+18. Re-open the **Network Connections** by clicking on the Wi-Fi symbol in the upper right of the Ubuntu GUI and choosing **Edit Connections**. Highlight the connection that you created in step 3, and click the minus icon to delete it. Afterwards, **Robot AP** should be the only remaining connection under the **Wi-Fi** section. Double-click on the **Robot AP** connection to edit it. Click on the **General** tab, and re-enable the **Automatically connect to this network when it available** option. Click **Save**. Disable and re-enable networking (as described in step 5) so that the robot uses the **Robot AP** connection. Verify that this connection is being used by entering the **ifconfig** command into the terminal and checking that there is an entry containing the IP **10.42.0.1**. (Fig. 15.12)
+
+    {{< figure src="/hardware/build_instructions/15_12_robot_ap_reconnect.png" caption="Fig. 15.12" width="800">}} 
+    
+19. Note that this step will cause the LIDAR to spin. Enter the following command into the terminal:
+
+    {{< highlight bash >}}
+    roslaunch ydlidar lidar.launch
+    {{< / highlight >}} <br/>
+    
+    If you get the error **YDLIDAR Cannot bind to the specified serial port /dev/ydlidar**, this means that the **USB micro end** of the LIDAR cable was plugged in backwards. Use **CTRL-C** to shutdown the node. Then swap the two USB micro ends of the LIDAR cable so that they are plugged into the opposite receptacles, and then try the above command again. When they are plugged in correctly, the LIDAR will begin spinning. Use **CTRL-C** to shutdown the node.
+    
+20. Shutdown the robot with the following command:  
+
+    {{< highlight bash >}}
+    sudo shutdown -P now
+    {{< / highlight >}} <br/>
+    
+    Once the robot has shutdown, unplug the monitor, keyboard and mouse. Re-insert any sensor USB cables that were removed at the beginning of this section.
+    
+21. You have now completely configured the MuSHR robot's software!
 ___
 ## Teleoperate the Robot
 

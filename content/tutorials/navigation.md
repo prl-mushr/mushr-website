@@ -28,9 +28,11 @@ At the highest level MuSHR's navigation stack consists of two principal componen
 1. **Receding Horizon Controller (RHC) Node:** This node is responsible for planning the motions and generating controls for the car. The implementation we ship with the car uses Model Predictive Control (MPC) to generate control signals which are sent to the car's motor controller (VESC).
 2. **Localization Node:** In order for the controller to know whether it is in the proximity of obstacles, it must know its location on a known map. Solving this problem is called "localization". The Localization Node is implemented using a method called Particle Filtering which in this case relies primarily on a data stream from the laser scanner.
 
-This tutorial does not cover Model Predictive Control and Particle Filtering in depth. However we recommend this tutoral to learn more about MPC and this one for Particle Filtering.
+This tutorial does not cover Model Predictive Control and Particle Filtering in depth.
 
 ## Installing the Navigation Stack
+
+*If you intend to run this tutorial on the simulator, start from downloading the [`mushr_rhc`](https://github.com/prl-mushr/mushr_rhc) and [`mushr_pf`](https://github.com/prl-mushr/mushr_pf).*
 
 First we will install the RHC and Localization nodes on your robot. If you have already installed them, skip this step.
 
@@ -58,7 +60,9 @@ $ cd ~/catkin_ws/src
 $ git clone git@github.com:prl-mushr/mushr_rhc.git 
 # Clone the localization node
 $ git clone git@github.com:prl-mushr/mushr_pf.git
-{{< / highlight >}}
+{{</ highlight >}}
+
+*You also need to download all dependencies packages for the [`mush_rhc`](https://github.com/prl-mushr/mushr_rhc)*.
 
 Both repositories contain ROS packages that reproduce the desired functionality. However, you need only concern yourself with each package's launch files to use them effectively. You can find the lauch files in each package's `launch` directory.
 
@@ -73,9 +77,18 @@ $ tmux
 
 Then, to create two vertical panes, type `ctrl+b` (`ctrl` and `b`) then `%` (or alternatively `"` to split horizontally). We will need three panes for this tutorial.
 
-First, we will launch `teleop.launch`, which activates the robot's sensors and hardware, including the motor controller. You will need to activate this launch file for any project which requires using the car's sensors:
+First, we will launch `teleop.launch`, 
+
+### In Real Car
+- To enable the robot's sensors and hardware including the motor controller, you will need to activate this launch file for any project which requires using the car's sensors:
 {{< highlight bash >}}
 $ roslaunch mushr_base teleop.launch
+{{< / highlight >}}
+
+### In Sim
+- If you run this tutorial with the simulator, you need the simulation version:
+{{< highlight bash >}}
+$ roslaunch mushr_sim teleop.launch
 {{< / highlight >}}
 
 Then, to go to the next tmux pane type `ctrl+b` then `[arrow key]`. Now, we will launch the localization node in the second tmux pane:
@@ -83,10 +96,18 @@ Then, to go to the next tmux pane type `ctrl+b` then `[arrow key]`. Now, we will
 $ roslaunch mushr_pf ParticleFilter.launch
 {{< / highlight >}}
 
-Then activate the RHC node:
-{{< highlight bash >}}
-roslaunch mushr_rhc real.launch
+Then activate the RHC node,
+
+### In Real Car
+- {{< highlight bash >}}
+$ roslaunch mushr_rhc_ros real.launch
 {{< / highlight >}}
+
+### In sim
+- {{< highlight bash >}}
+$ roslaunch mushr_rhc_ros sim.launch
+{{< / highlight >}}
+
 
 ## Operating the navigation stack
 

@@ -13,6 +13,9 @@ pygmentsUseClasses = true
 pygmentsCodefencesGuessSyntax = true
 pygmentsUseClassic = false
 
+[markup.goldmark.renderer]
+unsafe = true
+
 [params]
   google_analytics_id="UA-146151202-1"
 
