@@ -133,13 +133,13 @@ Then subscribe to the `/mushr_global_planner_result` topic, you should see the s
 ### Parameters for the service
 Parameter | Type | Description
 ----------|------|-------------
-`start` | [geometry_msgs/Pose](http://docs.ros.org/api/geometry_msgs/html/msg/Pose.html) | start position of the path in the world frame
-`goal` | [geometry_msgs/Pose](http://docs.ros.org/api/geometry_msgs/html/msg/Pose.html) | goal position of the path in the world frame
-`turning_radius` | [float](https://docs.python.org/2/tutorial/floatingpoint.html) | turning radius of the car in meters. You can calculate your turning radius although we recommend you tune your car to match your expected turning radius. You should match the variables to the vesc settings preset [car length](https://github.com/prl-mushr/vesc/blob/master/vesc_main/config/racecar-uw-nano/vesc.yaml) and [delta](https://github.com/prl-mushr/mushr_base/blob/master/mushr_base/config/joy_teleop.yaml) (steering angle). \![equation image](https://drive.google.com/uc?export=view&id=12Fe6HDtbWj7XZcV6HvmQ-qeWHpfCcDX0)
-`planning_time` | [float](https://docs.python.org/2/tutorial/floatingpoint.html) | planning time cutoff in seconds E.g. give me your best solution after 30 seconds
+`start` | [geometry_msgs/Pose](http://docs.ros.org/api/geometry_msgs/html/msg/Pose.html) | Start position of the path in the world frame
+`goal` | [geometry_msgs/Pose](http://docs.ros.org/api/geometry_msgs/html/msg/Pose.html) | Goal position of the path in the world frame
+`turning_radius` | [float](https://docs.python.org/2/tutorial/floatingpoint.html) | Turning radius of the car in meters. You can calculate your turning radius although we recommend you tune your car to match your expected turning radius. You should match the variables to the vesc settings preset [car length](https://github.com/prl-mushr/vesc/blob/master/vesc_main/config/racecar-uw-nano/vesc.yaml) and [delta](https://github.com/prl-mushr/mushr_base/blob/master/mushr_base/config/joy_teleop.yaml) (steering angle). \![equation image](https://drive.google.com/uc?export=view&id=12Fe6HDtbWj7XZcV6HvmQ-qeWHpfCcDX0)
+`planning_time` | [float](https://docs.python.org/2/tutorial/floatingpoint.html) | Planning time cutoff in seconds E.g. give me your best solution after 30 seconds
 
 ### How the planner works
-The planner is essentially a wrapper around OMPL doing Dubin’s path planning using BIT*. The input map is used to get the bounds of the state space and for determining if a sampled state is invalid (either by being out of bounds or within an obstacle). The planner uses the optimization objective of minimizing the path length of the solution. The planner then converts the solution path to a non-ompl format (list of tuples) and returns it to the user. The path is filled in with interpolated points via solutionPath.interpolate to create a dense path, but this can be tuned to vary the density of the output path.
+The planner is essentially a wrapper around OMPL doing Dubin’s path planning using BIT*. The input map is used to get the bounds of the state space and for determining if a sampled state is invalid (either by being out of bounds or within an obstacle). The planner uses the optimization objective of minimizing the path length of the solution. It then converts the solution path to a non-ompl format (list of tuples) and returns it to the user. The path is filled in with interpolated points via solutionPath.interpolate to create a dense path, but this can be tuned to vary the density of the output path.
 
 #### Publishers
 Topic | Type | Description
