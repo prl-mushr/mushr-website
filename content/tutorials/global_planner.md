@@ -163,7 +163,7 @@ Topic | Type | Description
 #### Parameters for the planner
 Parameter | Type | Description
 ----------|------|-------------
-`reuse_plans` | [Boolean](https://docs.python.org/2/c-api/bool.html)| Option to use the same previously generated path if the parameter is set to True, otherwise create a new path from the global planner service.  
-`kernal_size` | [Integer](https://docs.python.org/2/c-api/int.html)| The kernal that divides the map into smaller `kernal` x `kernal` boxes so that the planner could check validities of those sub areas for the path.
+`reuse_plans` | [Boolean](https://docs.python.org/2/c-api/bool.html)| Option to use the same previously generated path if the parameter is set to True, otherwise create a new path from the global planner service. This is used when the planner node is called multiple times with the same settings. 
+`kernal_size` | [Integer](https://docs.python.org/2/c-api/int.html)| The kernal that convolves over the map. A higher kernal size results in a planner that has a larger buffer from walls but may not find a path through tight spaces. Smaller sizes result in less of a buffer from walls.
 `interpolation_density`| [Integer](https://docs.python.org/2/c-api/int.html)| A number of states in a path so that the path is made up of exactly `interpolation_density` states. 
-`validity_resolution` | [Float](https://docs.python.org/2/tutorial/floatingpoint.html) | The resolution at which state validity needs to be verified in order for a motion between two states to be considered valid. This value is specified as a fraction of the space's extent.
+`validity_resolution` | [Float](https://docs.python.org/2/tutorial/floatingpoint.html) | The resolution at which state validity needs to be verified in order for a motion between two states to be considered valid (collision free). This value is specified as a fraction of the space's extent.
