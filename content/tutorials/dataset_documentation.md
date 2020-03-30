@@ -1,9 +1,22 @@
+---
+title: "dataset_documentation"
+date: 2018-11-28T15:14:54+10:00
+image: "/services/default.png"
+featured: true
+draft: false
+active: true
+difficulty: Beginner
+duration: 60
+summary: Fundamental Robot Operating System (ROS) concepts using MuSHR.
+weight: 2
+---
+
 ## Introduction
 
 This dataset contains more than 30 minutes(~110GB) of synchronized data from a variety of sensor data including images taken from 3 [MuSHR](mushr.io) race cars driving around in a closed lab environment. The purpose of this dataset is to provide a well organized dataset that facilitates multi-purpose Machine Learning/Deep Learning research in fields in robotics, computer vision, and self-driving autonomous vehicles under a low-cost/low-stake environment.
 
 ### Goal 
-This documentation will help you familiarize with the organization and content of the datasat as well as show you how to get started on using this dataset for your own projects.
+This documentation will help you familiarize with the organization and content of the datasat as well as showing you how to get started on using this dataset for your own projects.
 
 
 ## Data Format 
