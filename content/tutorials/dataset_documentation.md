@@ -28,11 +28,11 @@ $ rosbag info MOCAP_Dataset.bag
 
 ### Data Organization 
 
-The data in the .bag file is organized like any other .bag file using its ROS topics. For example laser scan data would be in sensor_msgs/LaserScan
+The data in the .bag file is organized like any other .bag file using its ROS topics. Here we don't need to care that much about the organization, all we need to know is that data is organized by topics and each topic is a type of data. For example laser scan data would be in "sensor_msgs/LaserScan"
 
 ### Naming Convention
 
-The ROS topics are named mostly by what data they contain with an additional label at the beginning to specify the car that it belongs to. Since there are three cars, the names of the topics for each car always starts with "/car24/..", /car25/...",  or "/car26/...".
+The names of the ROS topics are self-explanatory with the topic name representing what type of data it contains. However since there are data for each of the three cars, the topics will be additionally labelled at the start with the name of the car it belongs(e.g. "/car24/..", /car25/...",  or "/car26/...")
 
 For example pose messages for car 24 
 ```bash
@@ -41,11 +41,11 @@ $ rostopic echo /car24/PoseStamped
 
 ## Replaying the Dataset and Visualizing topics 
 
-Replay the bag again 
+With .bag files you can replay them again 
 ```bash
 $ rosbag play MOCAP_Dataset.bag
 ```
-Open rviz to visualize the RGBD images, car poses, laser scans, etc.
+You can also open rviz to visualize various topics such as RGBD images, car poses, laser scans, etc.
 ```bash
 $ rosrun rviz rivz
 ```
@@ -59,9 +59,9 @@ Not all of the data in side the dataset will be of use to you. The data containe
 
 To take the important information, you need to go through the original dataset and create a new dataset in the form or another bag file, csv file, etc. 
 
-Here we have 2 pieces of simple code to extract desired topics into a new bag file(pose and some image info in these examples). 
+Here we have 2 pieces of simple code to extract desired topics into a new bag file
 
-The first one is when you are extracting from a few topics from the original bag file. 
+The first one is when you are extracting from a few topics from the original bag file. Here we are extracting PoseStamped messages and camera/color/image_throtted messages from all three cars and creating a new dataset containing only these messages.
 ```
 from rosbag import Bag 
 import rospy  
@@ -78,7 +78,8 @@ with Bag(bagOut, 'w') as bagNew:
         if (topic == '/car24'+topicTwo) or (topic == '/car25'+topicTwo) or (topic == '/car26'+topicTwo):
             bagNew.write(topic, msg, t)
 ```               
-The second one is when you want most information from the original dataset and just don't want some specific information such as `/camera/color/image_throttled` you can use this to filter out unwanted data.
+
+The second example below is when you want most information from the original dataset and just don't want some specific information such as `/camera/color/image_throttled` you can use this to filter out unwanted data. Here we don't want the camera/color/image_throttled messages in our new dataset so we filter it out.
 ```
 from rosbag import Bag 
 import rospy  
