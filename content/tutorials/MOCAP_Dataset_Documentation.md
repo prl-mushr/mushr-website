@@ -1,18 +1,10 @@
-
-##  Data Collection & Instrument Description 
-
-This dataset is collected using the [MuSHR](mushr.io) race cars made by the Personal Robotics Lab in the Computer Science Department at the University of Washington. The dataset collected and processed by researchers and students in the University of Washington. 
-
 ## Introduction
 
-This dataset contains more than 30 minutes(~110GB) of synchronized data from a variety of sensor data including images taken from 3 [MuSHR](mushr.io) race cars driving around in a closed lab environment. 
+This dataset contains more than 30 minutes(~110GB) of synchronized data from a variety of sensor data including images taken from 3 [MuSHR](mushr.io) race cars driving around in a closed lab environment. The purpose of this dataset is to provide a well organized dataset that facilitates multi-purpose Machine Learning/Deep Learning research in fields in robotics, computer vision, and self-driving autonomous vehicles under a low-cost/low-stake environment.
 
 ### Goal 
 This documentation will help you familiarize with the organization and content of the datasat as well as show you how to get started on using this dataset for your own projects.
 
-### Purpose of Dataset 
-
-This purpose of this dataset is to provide a well organized dataset that facilitates multi-purpose Machine Learning/Deep Learning research in fields in robotics, computer vision, and self-driving autonomous vehicles under a low-cost/low-stake environment.
 
 ## Data Format 
 
@@ -21,15 +13,13 @@ The format of the dataset is one synchronized .bag file that contains sensor inf
 
 ### Data Organization 
 
-The data in the .bag file is organized by data from each car using ROS topics. ROS topics contains ROS messages with can be of different message types depending on the nature of the data being collected.
-
->E.g. sensor_msgs/LaserScan, geometry_msgs/PoseStamped, etc.
+The data in the .bag file is organized like any other .bag file using its ROS topics. For example laser scan data would be in <sensor_msgs/LaserScan>
 
 ### Naming Convention
 
-The ROS topics are named mostly what what data they contain with additional label at the beginning to specify the car that it belongs to. Since there are three cars, the names of the topics for each car always starts with "/car24/..", /car25/...",  or "/car26/..." respectively. 
+The ROS topics are named mostly by what data they contain with additional label at the beginning to specify the car that it belongs to. Since there are three cars, the names of the topics for each car always starts with "/car24/..", /car25/...",  or "/car26/...".
 
-For example pose messages for car 24 would can be echoed through
+For example pose messages for car 24 
 
     rostopic echo /car24/PoseStamped
 
@@ -116,6 +106,8 @@ Now you can extract any kind of data you want to create your own dataset!
 The cars are not always moving, sometimes they get stuck, run into each other, or just simply stops for a rest. You can get the timestamp of these states in a few ways:
 1. Plotting the x, y positions over the timestamp of the desired car and seeing when x, y is stable.  
 2. Playing the dataset and using rviz to visualize the camera topics or PoseStamped topics will allow you to determine whether a car ran into another car, got stuck, or simply stopped itself. 
+
+
 
 
 
