@@ -6,17 +6,16 @@ featured: true
 draft: false
 active: true
 difficulty: Beginner
-duration: 60
-summary: Fundamental Robot Operating System (ROS) concepts using MuSHR.
+duration: 35
+summary: Familiarizing and learning how to use the dataset.
 weight: 2
 ---
-
 ## Introduction
 
 This dataset contains more than 30 minutes(~110GB) of synchronized data from a variety of sensor data including images taken from 3 [MuSHR](mushr.io) race cars driving around in a closed lab environment. The purpose of this dataset is to provide a well organized dataset that facilitates multi-purpose Machine Learning/Deep Learning research in fields in robotics, computer vision, and self-driving autonomous vehicles under a low-cost/low-stake environment.
 
 ### Goal 
-This documentation will help you familiarize with the organization and content of the datasat as well as showing you how to get started on using this dataset for your own projects.
+This documentation will help you familiarize with the organization and content of the datasat as well as show you how to get started on using this dataset for your own projects.
 
 
 ## Data Format 
@@ -36,9 +35,9 @@ For example pose messages for car 24
 
     rostopic echo /car24/PoseStamped
 
-### List of Topics 
+### Overview of Dataset 
 
-View the list of topics  
+Get an overview of the dataset  
 
     rosbag info MOCAP_Dataset.bag
 
@@ -116,17 +115,9 @@ Now you can extract any kind of data you want to create your own dataset!
 	- Collided with another car(s)
 	- Stopped itself
 
-The cars are not always moving, sometimes they get stuck, run into each other, or just simply stops for a rest. You can get the timestamp of these states in a few ways:
+It is important to keep in mind that the cars are not always moving, sometimes they get stuck, run into each other, or just simply stops for a rest. You can get the timestamp of these states if you want for your purposes in a few ways:
+
 1. Plotting the x, y positions over the timestamp of the desired car and seeing when x, y is stable.  
 2. Playing the dataset and using rviz to visualize the camera topics or PoseStamped topics will allow you to determine whether a car ran into another car, got stuck, or simply stopped itself. 
-
-
-
-
-
-
-
-
-
 
 
