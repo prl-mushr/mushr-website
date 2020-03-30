@@ -26,22 +26,20 @@ The format of the dataset is one synchronized .bag file that contains sensor inf
 $ rosbag info MOCAP_Dataset.bag
 ```
 
-
-
 ### Data Organization 
 
-The data in the .bag file is organized like any other .bag file using its ROS topics. For example laser scan data would be in <sensor_msgs/LaserScan>
+The data in the .bag file is organized like any other .bag file using its ROS topics. For example laser scan data would be in sensor_msgs/LaserScan
 
 ### Naming Convention
 
-The ROS topics are named mostly by what data they contain with additional label at the beginning to specify the car that it belongs to. Since there are three cars, the names of the topics for each car always starts with "/car24/..", /car25/...",  or "/car26/...".
+The ROS topics are named mostly by what data they contain with an additional label at the beginning to specify the car that it belongs to. Since there are three cars, the names of the topics for each car always starts with "/car24/..", /car25/...",  or "/car26/...".
 
 For example pose messages for car 24 
 ```bash
 $ rostopic echo /car24/PoseStamped
 ```
 
-### Replaying the Dataset and Visualizing topics 
+## Replaying the Dataset and Visualizing topics 
 
 Replay the bag again 
 ```bash
@@ -53,24 +51,17 @@ $ rosrun rviz rivz
 ```
 Add the topics you would like to visualize. 
 
-### Data 
-
-Not all of the data in side the dataset will be of use to you. The data contained encompasses most of the essential on-car sensors for each of the race cars including, Laser Scanner(YDLiDAR), RGB-D images, car pose, odometry, IMU, VESC state, etc. The full list can be viewed again with 
-```bash
-$ rosbag info MOCAP_Dataset.bag
-```
-
 ## Using the Dataset
 
-Depending on what the use for the dataset is, different information in the dataset will be useful. For example, a pose estimation project based on RGB-D images would only need the PoseStamped messages and camera messages for each race car. Similarly a pose estimation project based on laser scans would not need the large RGB-D images. 
+Not all of the data in side the dataset will be of use to you. The data contained encompasses most of the essential on-car sensors for each of the race cars including, Laser Scanner(YDLiDAR), RGB-D images, car pose, odometry, IMU, VESC state, etc. Depending on what the use for the dataset is, different information in the dataset will be useful. For example, a pose estimation project based on RGB-D images would only need the PoseStamped messages and camera messages for each race car. Similarly a pose estimation project based on laser scans would not need the large RGB-D images. 
 
 ### Extracting from the large original dataset to produce your own dataset 
 
-To take the important information and filter out useless data, you need to go through the original dataset and create a new dataset in the form or another bag file, csv file, etc. 
+To take the important information, you need to go through the original dataset and create a new dataset in the form or another bag file, csv file, etc. 
 
 Here we have 2 pieces of simple code to extract desired topics into a new bag file(pose and some image info in these examples). 
 
-The first one is for if you only want a few topics from the original bag file. 
+The first one is when you are extracting from a few topics from the original bag file. 
 ```
 from rosbag import Bag 
 import rospy  
@@ -87,7 +78,7 @@ with Bag(bagOut, 'w') as bagNew:
         if (topic == '/car24'+topicTwo) or (topic == '/car25'+topicTwo) or (topic == '/car26'+topicTwo):
             bagNew.write(topic, msg, t)
 ```               
-If you want most information from the original dataset and just don't want some specific information such as `/camera/color/image_throttled` you can use this.
+The second one is when you want most information from the original dataset and just don't want some specific information such as `/camera/color/image_throttled` you can use this to filter out unwanted data.
 ```
 from rosbag import Bag 
 import rospy  
@@ -108,6 +99,8 @@ Now you can extract any kind of data you want to create your own dataset!
 
 ### States of the race cars 
 
+It is important to keep in mind that the cars are not always moving, sometimes they get stuck, run into each other, or just simply stops for a rest. 
+
 - In Motion
     - Mostly Random Motion 
 - Stationary 
@@ -115,7 +108,7 @@ Now you can extract any kind of data you want to create your own dataset!
     - Collided with another car(s)
     - Stopped itself
 
-It is important to keep in mind that the cars are not always moving, sometimes they get stuck, run into each other, or just simply stops for a rest. You can get the timestamp of these states if you want for your purposes in a few ways:
+You can get the timestamp of these states if you want for your purposes in a few ways:
 
 1. Plotting the x, y positions over the timestamp of the desired car and seeing when x, y is stable.  
 2. Playing the dataset and using rviz to visualize the camera topics or PoseStamped topics will allow you to determine whether a car ran into another car, got stuck, or simply stopped itself. 
