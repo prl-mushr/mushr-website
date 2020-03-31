@@ -6,7 +6,7 @@ featured: true
 draft: false
 active: true
 difficulty: Beginner
-duration: 35
+duration: 30
 summary: Familiarizing and learning to use the dataset for your own projects
 weight: 2
 ---
