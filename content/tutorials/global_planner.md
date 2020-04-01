@@ -43,7 +43,7 @@ Plan paths from start to goal in known map
     # Go to your catkin workspace
     $ cd ~/catkin_ws/src
     # Clone the global planner node
-    $ git clone https://github.com/schmittlema/mushr_global_planner.git
+    $ git clone https://github.com/prl-mushr/mushr_global_planner
     ```
 - Make and source your workspace. (Assuming source commands in .bashrc)
     ```
