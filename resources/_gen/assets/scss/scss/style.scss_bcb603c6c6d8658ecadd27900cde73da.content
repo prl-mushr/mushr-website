@@ -34,7 +34,6 @@ html {
   @media (min-width: 1300px) {
     .container {
       max-width: 1140px; } }
-
 .container-fluid {
   width: 100%;
   padding-right: 10px;
@@ -56,12 +55,12 @@ html {
     padding-right: 0;
     padding-left: 0; }
 
-.col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12, .col,
-.col-auto, .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm,
-.col-sm-auto, .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12, .col-md,
-.col-md-auto, .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg,
-.col-lg-auto, .col-xl-1, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl,
-.col-xl-auto {
+.col-xl,
+.col-xl-auto, .col-xl-12, .col-xl-11, .col-xl-10, .col-xl-9, .col-xl-8, .col-xl-7, .col-xl-6, .col-xl-5, .col-xl-4, .col-xl-3, .col-xl-2, .col-xl-1, .col-lg,
+.col-lg-auto, .col-lg-12, .col-lg-11, .col-lg-10, .col-lg-9, .col-lg-8, .col-lg-7, .col-lg-6, .col-lg-5, .col-lg-4, .col-lg-3, .col-lg-2, .col-lg-1, .col-md,
+.col-md-auto, .col-md-12, .col-md-11, .col-md-10, .col-md-9, .col-md-8, .col-md-7, .col-md-6, .col-md-5, .col-md-4, .col-md-3, .col-md-2, .col-md-1, .col-sm,
+.col-sm-auto, .col-sm-12, .col-sm-11, .col-sm-10, .col-sm-9, .col-sm-8, .col-sm-7, .col-sm-6, .col-sm-5, .col-sm-4, .col-sm-3, .col-sm-2, .col-sm-1, .col,
+.col-auto, .col-12, .col-11, .col-10, .col-9, .col-8, .col-7, .col-6, .col-5, .col-4, .col-3, .col-2, .col-1 {
   position: relative;
   width: 100%;
   padding-right: 10px;
@@ -12143,7 +12142,6 @@ h1 {
       font-size: 30px;
       line-height: 1.2;
       font-weight: 400; } }
-
 h2 {
   font-size: 20px;
   font-family: "Gugi", serif, -apple-system;
@@ -12155,7 +12153,6 @@ h2 {
     h2 {
       font-size: 24px;
       line-height: 1.4; } }
-
 h3 {
   color: #1C0658;
   font-size: 16px;
@@ -12164,7 +12161,6 @@ h3 {
     h3 {
       font-size: 20px;
       line-height: 1.4; } }
-
 .display-1 {
   font-size: 50px;
   letter-spacing: 4.5px;
@@ -12173,7 +12169,6 @@ h3 {
     .display-1 {
       font-size: 20px;
       letter-spacing: 1.7px; } }
-
 .page {
   display: flex;
   min-height: 100vh;
@@ -12259,7 +12254,6 @@ h3 {
             height: 40px;
             padding: 10px 8px 10px 8px;
             font-weight: 300; } }
-
 .sub-footer {
   background: #411b5e;
   padding-top: 20px;
@@ -12307,7 +12301,6 @@ h3 {
           margin-left: 10px; }
           .sub-footer .sub-footer-inner ul li:first-of-type {
             margin-left: 0; } }
-
 .logo {
   display: none; }
   @media (min-width: 576px) {
@@ -12562,7 +12555,6 @@ h3 {
       .call svg {
         width: 120px;
         height: 120px; } }
-
 .get-started {
   position: relative;
   overflow: hidden;
@@ -12602,7 +12594,6 @@ h3 {
       .get-started svg {
         width: 120px;
         height: 120px; } }
-
 .title {
   color: #1C0658;
   font-size: 48px;
@@ -12610,7 +12601,6 @@ h3 {
   @media (min-width: 992px) {
     .title {
       font-size: 50px; } }
-
 .content ol {
   margin-top: 10px;
   margin-bottom: 20px;
@@ -12644,7 +12634,6 @@ h3 {
     .content h1 {
       line-height: 1.2;
       font-weight: 300; } }
-
 .content h2 {
   font-family: "Gugi", serif, -apple-system;
   font-size: 24px;
@@ -12652,7 +12641,6 @@ h3 {
   @media (min-width: 768px) {
     .content h2 {
       line-height: 1.4; } }
-
 .content h3 {
   color: #1C0658;
   line-height: 1.4;
@@ -12663,7 +12651,6 @@ h3 {
       line-height: 1.4;
       letter-spacing: 1.8px;
       font-weight: 200; } }
-
 .content table {
   width: 100%; }
   .content table th,
@@ -12740,7 +12727,6 @@ h3 {
       right: -120px;
       width: 120%;
       top: -40px; } }
-
 .intro-small {
   padding-top: 100px;
   padding-bottom: 30px; }
@@ -13038,7 +13024,6 @@ code, .highlight {
       top: -160px;
       height: 40em;
       z-index: 1; } }
-
 .page-tutorials-single sup {
   font-size: 75%;
   line-height: 0;
