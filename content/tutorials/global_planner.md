@@ -151,19 +151,19 @@ The planner is essentially a wrapper around OMPL doing Dubin’s path planning u
 #### Publishers
 Topic | Type | Description
 ------|------|------------
-`/mushr_global_planner_start`|[geometry_msgs/Pose](http://docs.ros.org/api/geometry_msgs/html/msg/Pose.html)| Start position
-`/mushr_global_planner_goal`|[geometry_msgs/Pose](http://docs.ros.org/api/geometry_msgs/html/msg/Pose.html)|Goal position
-`/mushr_global_planner_result`|[geometry_msgs/PoseArray](http://docs.ros.org/api/geometry_msgs/html/msg/PoseArray.html)| Planned path of poses in world coordinates from start to goal
+`/mushr_global_planner_start` | [geometry_msgs/Pose](http://docs.ros.org/api/geometry_msgs/html/msg/Pose.html) | Start position
+`/mushr_global_planner_goal` | [geometry_msgs/Pose](http://docs.ros.org/api/geometry_msgs/html/msg/Pose.html) | Goal position
+`/mushr_global_planner_result` | [geometry_msgs/PoseArray](http://docs.ros.org/api/geometry_msgs/html/msg/PoseArray.html) | Planned path of poses in world coordinates from start to goal
 
 #### Services
 Topic | Type | Description
 ------|------|------------
-`/mushr_global_planner`|[mushr_global_planner/MushrGlobalPlanner](srv/MushrGlobalPlanner.srv)| Calls for a path to be created with a given start, goal, turning radius, and planning time
+`/mushr_global_planner` | [mushr_global_planner/MushrGlobalPlanner](srv/MushrGlobalPlanner.srv) | Calls for a path to be created with a given start, goal, turning radius, and planning time
 
 #### Parameters for the planner
 Parameter | Type | Description
 ----------|------|-------------
-`reuse_plans` | [Boolean](https://docs.python.org/2/c-api/bool.html)| Option to use the same previously generated path if the parameter is set to True, otherwise create a new path from the global planner service. This is used when the planner node is called multiple times with the same settings. 
-`kernal_size` | [Integer](https://docs.python.org/2/c-api/int.html)| The kernal that convolves over the map. A higher kernal size results in a planner that has a larger buffer from walls but may not find a path through tight spaces. Smaller sizes result in less of a buffer from walls.
-`interpolation_density`| [Integer](https://docs.python.org/2/c-api/int.html)| A number of states in a path so that the path is made up of exactly `interpolation_density` states. 
+`reuse_plans` | [Boolean](https://docs.python.org/2/c-api/bool.html) | Option to use the same previously generated path if the parameter is set to True, otherwise create a new path from the global planner service. This is used when the planner node is called multiple times with the same settings. 
+`kernal_size` | [Integer](https://docs.python.org/2/c-api/int.html) | The kernal that convolves over the map. A higher kernal size results in a planner that has a larger buffer from walls but may not find a path through tight spaces. Smaller sizes result in less of a buffer from walls.
+`interpolation_density` | [Integer](https://docs.python.org/2/c-api/int.html) | A number of states in a path so that the path is made up of exactly `interpolation_density` states. 
 `validity_resolution` | [Float](https://docs.python.org/2/tutorial/floatingpoint.html) | The resolution at which state validity needs to be verified in order for a motion between two states to be considered valid (collision free). This value is specified as a fraction of the space's extent.
