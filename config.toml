@@ -69,7 +69,7 @@ unsafe = true
 [[menu.main]]
     identifier = "team"
     name = "Team"
-    url = "/team/"
+    url = "https://personalrobotics.cs.washington.edu/people/"
     weight = 4
 
 [[menu.main]]
