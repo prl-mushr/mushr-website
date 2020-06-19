@@ -22,10 +22,9 @@ This tutorial will help you get familiar with the framework developed for creati
 In order to successfully complete this tutorial you will need: 
 
 1. Familiarity with python
-2. Pytorch installed on your machine (preferably with gpu). Refer to this ['link'](https://pytorch.org/get-started/locally/) for install instructions
-3. Keras?
+2. Preferably using python version >= 3.6 (one of the dependencies doesn't work properly with <3.6), pip version >= 20, setuptools >=44
 3. Git installed. Refer to this ['link'](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) for installation instructions
-4. A system with at least 8 gigabytes of RAM.
+4. A system with 8 Gigabytes of RAM, preferably with the GPU enabled.
 
 
 ### Notes
@@ -33,97 +32,115 @@ It is advised to use a GPU enabled machine for running the models, as the infere
 
 ## Setting up the environment
 
-1. You can download the precompiled binary for the simulator from these links:
-[Windows](https://drive.google.com/file/d/1gKCxjyaRV37veT3759DrYHIGdrn9ized/view?usp=sharing)
-[Linux](https://drive.google.com/file/d/1P_hUH7W4liz8REW2fqjG_yG3CzXqsIma/view?usp=sharing)
-[Mac OS](https://drive.google.com/file/d/1h6TSImqIEQeK4dWEFIH32td5hNgLk_up/view?usp=sharing)
-or build from [source](www.google.com). We suggest using the precompiled binary if you're unfamiliar with the unity engine. You can name the folder what you want, but for this tutorial we'll call it DonkeySimWin.
+1. Download the precompiled binary for the simulator from these links: 
+[Windows](https://drive.google.com/file/d/1gKCxjyaRV37veT3759DrYHIGdrn9ized/view?usp=sharing),
+[Linux](https://drive.google.com/file/d/1P_hUH7W4liz8REW2fqjG_yG3CzXqsIma/view?usp=sharing),
+[Mac OS](https://drive.google.com/file/d/1h6TSImqIEQeK4dWEFIH32td5hNgLk_up/view?usp=sharing).
 
-2. open the terminal(Linux) or command line interface (Windows) and navigate to the folder where the simulator files are kept (not that DonkeySimWin is just the name of the folder in which the simulator files are kept):
+2. open the terminal(Linux) or command line interface (Windows) and navigate to the folder where the simulator files are kept.
 ```bash
-cd PATH\TO\DonkeySimWin
+cd PATH\TO\DonkeySim
 ```
 then execute these commands:
 ```bash
 git clone https://github.com/prl-mushr/gym-donkeycar.git
-pip install -e gym-donkeycar
+pip3 install gym-donkeycar
 git clone https://github.com/prl-mushr/MUSHR-DL.git
 ```
-unpack the contents of the mushr directory into the DonkeySimWin directory
+dependencies:
+the dependencies can be installed by running 
+```bash
+pip3 install -r requirements.txt
+```
 
 ## Running the examples:
 
-1. The reinforcement learning example is already provided by the gym-donkey car package. The aformentioned package provides an open-AI-gym interface for training and inference. You can run the example for training the RL agent as follows:
+### Running the simulator:
+Start the simulator by running the donkey_sim.exe (or donkey_sim.x86_64 for linux). For linux systems, you'll have to provide permission for the exe to run:
+```bash
+sudo chmod +x donkey_sim.x86_64
+```
 
-First start by creating a catkin package for our code:
+### Reinforcement Learning:
+The reinforcement learning example is already provided by the gym-donkey car package. The aformentioned package provides an open-AI-gym interface for training and inference. You can run the example for training the RL agent as follows:
 ```bash
 python gym-donkeycar/examples/reinforcement_learning/ddqn.py --sim <path to simulator>
 ```
-You can feed the path to the simulator, or you can start the simulator manually by running the donkeysim.exe application before executing the command above
+You may provide the path to the simulator or start the simulator manually and omit the --sim argument.
 
 You can run the model in test mode by running:
 ```bash
 python gym-donkeycar/examples/reinforcement_learning/ddqn.py --test --sim <path to simulator>
 ```
 
-2. Imitation learning: Imitation learning involves 4 steps; data collection, post processing, training, and testing. For collecting training data as well as for running the models, the same file "run_sim.py" needs to be run. 
+### Imitation Learning:
+Imitation learning: Imitation learning involves 4 steps; data collection, post processing, training, and testing. For collecting training data as well as for running the models, the same file "run_sim.py" needs to be run. 
 
-a) For collecting data, first, start the simulator, then, using the command line (in the same directory), execute:
-```bash
-python run_sim.py --dataset_name=your_preferred_name_for_the_dataset
-```
+1. Collecting data:
+For collecting data, first, start the simulator, then, using the command line (in the same directory), execute run_sim.py.
 Options available for this file are:
 
-**dataset_name**: A suffix that will be added to the standard dataset name. for example: MUSHR_320x240_test.npy, where "test" is the suffix
+	**dataset_name**: A suffix that will be added to the standard dataset name. for example: MUSHR_320x240_test.npy, where "test" is the suffix
 
-**model**: type of model: image to steering, image to bezier or image to image. This does not apply when collecting data
+	**model**: type of model: image to steering, image to bezier or image to image. This does not apply when collecting data
 
-**test**: whether we're testing the model or not. It is False by default
+	**test**: whether we're testing the model or not. It is False by default
 
-**manual_control**: how the car is driven manually. The default is to use the mouse for steering and throttle, and use keyboard keys to record/
+	**manual_control**: how the car is driven manually. The default is to use the mouse for steering and throttle, and use keyboard keys to record/
 abort and change driving mode (auto or manual).
 
-**env_name**: name of the environment that you want to be loaded in. The list can be seen by typing -h after the above command
+	**env_name**: name of the environment that you want to be loaded in. The list can be seen by typing -h after the above command
 
-Recording can be started/paused by pressing the key 'K', and stopped (aborts the run_sim.py program) by pressing 'O'
+	Recording can be started/paused by pressing the key 'K', and stopped (aborts the run_sim.py program) by pressing 'O'
 For changing modes: autonomous steering, if test=True and a valid model is selected, can be turned on by pressing 'A'. Switching to manual can be done by pressing 'M'.
 
-
-b) The next step is to run post processing on the collected data: post processing involves, at minimum, shuffling of the data, and creation of the labels for each image.
+	command:
 ```bash
-python post_processing_mushr.py --dataset_name=the_name_you_picked_earlier --model=model_type 
-```
-Options available for this file are:
-dataset_name: the output file will have the name MUSHR_320x240_dataset_name.npy.
-model: type of model to create the dataset for (steering, bezier, or image-image).
-
-
-c)For training:
-
-For training an image to image network, run:
-```bash
-python pytorch_img_to_steering_train.py --dataset_name=the_name_you_picked_earlier
-```
-the model will be saved with a preset name. Do not change the model name for this example. The file model_runner.py looks for a particular name for each type of file. You can change this in the future if you want (but the same change has to be reflected in the python script used for training as well).
-
-```bash
-python pytorch_img_to_steering_test.py --dataset_name=the_name_you_picked_earlier
+python run_sim.py --dataset_name=test
 ```
 
-For training/testing image to bezier or image to image type models, you can run:
-For image to bezier:
+### Note:
+if you're running this tutorial on python version <3.6, you may get an error related to the screeninfo package. In that case, open the file MUSHR-DL/key_check.py and remove all the lines related to screeninfo and set screen_width and screen_height to the pixel width and height of your monitor
+
+2. Post processing:
+The next step is to run post processing on the collected data: post processing involves, at minimum, shuffling of the data, and creation of the labels for each image. 
+	
+	Options available for this file are:
+
+	**dataset_name**: the output file will have the name MUSHR_320x240_dataset_name.npy.
+
+	**model**: type of model to create the dataset for (steering, bezier, or image-image).
+
+	command:
 ```bash
-python pytorch_img_to_bezier_train.py --dataset_name=the_name_you_picked_earlier
-python pytorch_img_to_bezier_test.py --dataset_name=the_name_you_picked_earlier
+python post_processing_mushr.py --dataset_name=test --model=model_type 
 ```
 
-For image to image:
+3. Training:
+
+**Image to steering angle:**
 ```bash
-python pytorch_img_to_img_train.py --dataset_name=the_name_you_picked_earlier
-python pytorch_img_to_img_test.py --dataset_name=the_name_you_picked_earlier
+python pytorch_img_to_steering_train.py --dataset_name=test
 ```
-d) driving the 
-to use a model for driving the car (assuming that the model exists), run:
+the model will be saved with a preset name. The same name is used in testing as well as the model running script, and so for the sake of the tutorial the name should be left as is.
+
+```bash
+python pytorch_img_to_steering_test.py --dataset_name=test
+```
+
+**Image to bezier:**
+```bash
+python pytorch_img_to_bezier_train.py --dataset_name=test
+python pytorch_img_to_bezier_test.py --dataset_name=test
+```
+**Image to image:**
+```bash
+python pytorch_img_to_img_train.py --dataset_name=test
+python pytorch_img_to_img_test.py --dataset_name=test
+```
+
+4. Driving the car using the trained model:
+To use a model for driving the car (assuming that the model exists), run:
 ```bash
 python run_sim.py --test=True --model=model_type --env_name=MUSHR_benchmark
 ```
