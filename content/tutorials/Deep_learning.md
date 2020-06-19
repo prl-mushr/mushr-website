@@ -33,7 +33,11 @@ It is advised to use a GPU enabled machine for running the models, as the infere
 
 ## Setting up the environment
 
-1. You can download the precompiled binary for the simulator from this [link](https://drive.google.com/file/d/1gKCxjyaRV37veT3759DrYHIGdrn9ized/view?usp=sharing) or build from [source](www.google.com). We suggest using the precompiled binary if you're unfamiliar with the unity engine. You can name the folder what you want, but for this tutorial we'll call it DonkeySimWin.
+1. You can download the precompiled binary for the simulator from these links:
+[Windows](https://drive.google.com/file/d/1gKCxjyaRV37veT3759DrYHIGdrn9ized/view?usp=sharing)
+[Linux](https://drive.google.com/file/d/1P_hUH7W4liz8REW2fqjG_yG3CzXqsIma/view?usp=sharing)
+[Mac OS](https://drive.google.com/file/d/1h6TSImqIEQeK4dWEFIH32td5hNgLk_up/view?usp=sharing)
+or build from [source](www.google.com). We suggest using the precompiled binary if you're unfamiliar with the unity engine. You can name the folder what you want, but for this tutorial we'll call it DonkeySimWin.
 
 2. open the terminal(Linux) or command line interface (Windows) and navigate to the folder where the simulator files are kept (not that DonkeySimWin is just the name of the folder in which the simulator files are kept):
 ```bash
