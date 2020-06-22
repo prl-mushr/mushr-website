@@ -41,6 +41,12 @@ The following steps will setup the required libraries on the Jetson Nano.
     {{< highlight bash >}}
     ./mushr_install.sh
     {{< / highlight >}} <br/>
-6. All of the necessary libraries should now be installed. Now continue finishing software setup [here](/hardware/build_instructions#software-setup).
+6. Open the realsense viewer:
+    {{< highlight bash >}}
+    realsense-viewer
+    {{< / highlight >}} <br/>
+If the upper right hand corner of the GUI recommends a firmware update, download and install the updated firmware.
+
+7. All of the necessary libraries should now be installed. Now continue finishing software setup [here](/hardware/build_instructions#software-setup).
 
 
