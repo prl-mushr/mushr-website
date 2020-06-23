@@ -28,7 +28,7 @@ In order to successfully complete this tutorial you will need:
 
 
 ### Notes
-It is advised to use a GPU enabled machine for running the models, as the inference time for the models can be as high if running on CPU, which may lead to control related issues when actually using the model to drive the car.
+It is advised to use a GPU enabled machine for running the models, as the inference time for the models can be high when running on CPU, which may lead to control related issues when actually using the model to drive the car.
 
 ## Setting up the environment
 
