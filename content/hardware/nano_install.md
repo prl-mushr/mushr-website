@@ -41,7 +41,7 @@ The following steps will setup the required libraries on the Jetson Nano.
     {{< highlight bash >}}
     ./mushr_install.sh
     {{< / highlight >}} <br/>
-6. Open the realsense viewer:
+6. Plug in any realsense cameras and open the realsense viewer:
     {{< highlight bash >}}
     realsense-viewer
     {{< / highlight >}} <br/>
