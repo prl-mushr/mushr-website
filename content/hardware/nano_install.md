@@ -62,6 +62,11 @@ If the upper right hand corner of the GUI recommends a firmware update, download
 
     {{< figure src="/hardware/nano_install/robot_ap_pass.png" caption="Fig. 3" width="800">}}  
 
+9. Some changes only take effect after re-booting, so shutdown the robot.
+    {{< highlight bash >}}
+    sudo shutdown -P now
+    {{< / highlight >}} <br/>
+
 9. All of the necessary libraries should now be installed. Now continue finishing software setup [here](/hardware/build_instructions#software-setup).
 
 
