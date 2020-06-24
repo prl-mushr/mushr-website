@@ -47,7 +47,7 @@ The following steps will setup the required libraries on the Jetson Nano.
     {{< / highlight >}} <br/>
 If the upper right hand corner of the GUI recommends a firmware update, download and install the updated firmware.
 
-7. Open the file **~/catkin_ws/src/mushr/mushr_hardware/launch/sensors.launch**. Comment out the lines that launch **rs_camera.launch**, and add the following code as shown in Fig. 1.
+7. Open the file **~/catkin_ws/src/mushr/mushr_hardware/mushr_hardware/launch/sensors.launch**. Comment out the lines that launch **rs_camera.launch**, and add the following code as shown in Fig. 1.
 
     {{< highlight bash >}}
     <node pkg="timed_roslaunch" type="timed_roslaunch.sh"
