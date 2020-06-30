@@ -7,11 +7,14 @@ draft: false
 active: true
 difficulty: Moderate
 duration: 60
-summary: Using Imitation learning and Reinforcement learning for driving the MuSHR car.
+summary: Basic tutorial on using Imitation learning and Reinforcement learning for driving the MuSHR car.
 weight: 2
 ---
-![alt-text](https://github.com/naughtyStark/mushr-website/blob/master/mushr_DL.gif)
-## Introduction
+
+{{< figure src="/tutorials/MUSHR-DL/mushr_DL.gif" width="800" >}}
+<br>
+
+### Introduction
 
 Deep learning is part of a broader family of machine learning methods based on artificial neural networks with representation learning. Learning can be supervised, semi-supervised or unsupervised. In this tutorial, we'll see how to get started with applying imitation learning as well as reinforcement learning to the MuSHR car through the use of a modified simulator developed by the DIYRobcars community, named [Donkey Simulator](https://github.com/tawnkramer/sdsandbox). 
 
@@ -22,60 +25,112 @@ This tutorial will help you get familiar with the framework developed for creati
 In order to successfully complete this tutorial you will need: 
 
 1. Familiarity with python
-2. Preferably using python version >= 3.6 (the dependency [screeninfo](https://pypi.org/project/screeninfo/) doesn't work well with python<3.6), pip version >= 20, setuptools >=44
-3. Git installed. Refer to this ['link'](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) for installation instructions
-4. A system with 8 Gigabytes of RAM, preferably with the GPU enabled.
+2. Python version >= 3.6 (the dependency [screeninfo](https://pypi.org/project/screeninfo/) doesn't work well with python<3.6), pip version >= 20, setuptools >=44
+3. Pytorch. For installing pytorch, follow the instructions on this [link](https://pytorch.org/get-started/locally/) . You'll have to select the options that match the configuration of your computer. For example, if you have a Windows computer with CUDA NOT enabled, you'd pick :
+
+{{< figure src="/tutorials/MUSHR-DL/pytorch_install.PNG" width="800" >}}
+
+If you have CUDA enabled, you'd pick the option for the CUDA version you have installed on your computer. Copy the highlighted command and paste it in the terminal/cmd and hit enter. (use pip3 instead of pip if you have python 2.x and 3.x on the same system)
+
+4. Git installed. Refer to this ['link'](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) for installation instructions. Follow the instructions for the type of OS you have. 
+5. A system with a minimum of 8 Gigabytes of RAM, preferably with the GPU enabled.
 
 
-### Notes
+#### Note:
 It is advised to use a GPU enabled machine for running the models, as the inference time for the models can be high when running on CPU, which may lead to control related issues when actually using the model to drive the car.
 
-## Setting up the environment
+### Setting up the environment
 
-1. Download the precompiled binary for the simulator from these links: 
+1. Downloading the simulator:
+Download the precompiled binary for the simulator from these links: 
 [Windows](https://drive.google.com/file/d/1gKCxjyaRV37veT3759DrYHIGdrn9ized/view?usp=sharing),
 [Linux](https://drive.google.com/file/d/1P_hUH7W4liz8REW2fqjG_yG3CzXqsIma/view?usp=sharing),
 [Mac OS](https://drive.google.com/file/d/1h6TSImqIEQeK4dWEFIH32td5hNgLk_up/view?usp=sharing).
+Extract it into the home directory (or wherever you prefer to extract it, just remember where you extract it) and rename it to "DonkeySim". Within the extracted folder, you should see the following contents(for linux. In windows, you'll see a donkey_sim.exe instead and find .dll instead of .so, but the overall contents will be the same)
 
-2. Open the terminal(Linux) or command line interface (Windows) and navigate to the folder where the simulator files are kept.
+{{< figure src="/tutorials/MUSHR-DL/direct_struct.PNG" >}}
+
+In case of macOS, the files will have a slightly different arrangement but they'll all be there when you download the binaries.
+
+2. Downloading other files related to MUSHR-DL:
+Open the terminal(Linux) or command line interface (Windows) and navigate to the folder where the simulator files are kept.
 ```bash
-$ cd PATH\TO\DonkeySim
+$ cd PATH\\TO\\DonkeySim
 ```
-then execute these commands:
+
+##### Note:
+Note that from here onwards, 
+
+```bash
+$ cd DonkeySim
+```
+Refers to:
+
+```bash
+$ cd PATH\\TO\\DonkeySim
+```
+
+execute these commands in the DonkeySim directory:
 ```bash
 $ git clone https://github.com/prl-mushr/gym-donkeycar.git
 $ pip3 install gym-donkeycar
 $ git clone https://github.com/prl-mushr/MUSHR-DL.git
 ```
+
 dependencies:
-the dependencies can be installed by running 
+the remaining dependencies can be installed by running 
 ```bash
 $ cd MUSHR-DL
 $ pip3 install -r requirements.txt
 ```
-For installing pytorch, follow the instructions on this [link](https://pytorch.org/get-started/locally/) (use pip3 instead of pip if you have python 2.x and 3.x on the same system). 
 
-## Running the examples:
+### Running the examples:
 
-### Running the simulator:
-Start the simulator by running the donkey_sim.exe (or donkey_sim.x86_64 for linux). For linux systems, you'll have to provide permission for the exe to run:
+#### Running the simulator:
+Find the donkey_sim.exe or donkey_sim.x86_64 file (it will essentially be an application) within the DonkeySim directory. On linux, you'll have to give permission for the execution to this application. You can do this by entering the following command in the terminal:
 ```bash
+$ cd DonkeySim
 $ sudo chmod +x donkey_sim.x86_64
 ```
+Now double click on it to start the simulator. Right now, the simulator is running in stand-alone mode. Your screen should look something like this:
 
-### Reinforcement Learning:
-The reinforcement learning example is already provided by the gym-donkey car package. The aformentioned package provides an open-AI-gym interface for training and inference. You can run the example for training the RL agent as follows:
+{{< figure src="/tutorials/MUSHR-DL/main_menu.PNG" width="400">}}
+
+Click on the box with "Generated road" caption. You should see something like this:
+
+{{< figure src="/tutorials/MUSHR-DL/standalone.PNG" width="400">}}
+
+Note that each time you start the generated track, you will get a different track layout. The track layouts are generated in a manner that produces a different track each time. This is useful for producing a rich dataset for training. The donkey sim by default allows you to record steering and image data. However, for reasons that we'll cover in the implementation details section, we won't be using this feature. Driving the car with the keyboard should give you a feel for the dynamics of the car. Drive till you're content, then click on "STOP" on the top right corner. You can try out other environments or quit the simulator at this point.
+
+{{< figure src="/tutorials/MUSHR-DL/driving_standalone.PNG" width="400">}}
+
+#### Reinforcement Learning:
+The reinforcement learning example is already provided by the gym-donkey car package. The aformentioned package provides an open-AI-gym interface for training and inference.
+**training:**
+a) Start the simulator by double clicking it.
+
+b) Execute the following commands in the terminal:
+
 ```bash
-$ python gym-donkeycar/examples/reinforcement_learning/ddqn.py --sim <path to simulator>
+$ cd DonkeySim
+$ python gym-donkeycar/examples/reinforcement_learning/ddqn.py
 ```
-You may provide the path to the simulator or start the simulator manually and omit the --sim argument.
+It is possible to start the simulator by passing an argument as well but it's not the most user friendly method, so it has been omitted for the sake of simplicity. 
 
-You can run the model in test mode by running:
+You can expect the car to start moving erratically and resetting to it's initial position everytime it hits something or crosses the lane boundary like so:
+
+{{< figure src="/tutorials/MUSHR-DL/RL.gif" width="800" >}}
+
+The trained model is saved as "rl_driver.h5". The training can be aborted at any time by pressing "Ctrl+C". The model is saved after each episode (an episode lasts until the car hits something or crosses the lane).
+
+**testing:**
+The same script can be used to run the model in test mode:
 ```bash
-$ python gym-donkeycar/examples/reinforcement_learning/ddqn.py --test --sim <path to simulator>
+$ python gym-donkeycar/examples/reinforcement_learning/ddqn.py --test
 ```
 
-### Imitation Learning:
+
+#### Imitation Learning:
 Imitation learning: Imitation learning involves 4 steps; data collection, post processing, training, and testing. For collecting training data as well as for running the models, the same file "run_sim.py" needs to be run. 
 
 1. Collecting data:
@@ -85,73 +140,73 @@ Options available for this file are:
     **dataset_name**: A suffix that will be added to the standard dataset name. for example: MUSHR_320x240_test.npy, where "test" is the suffix
 
     **model**: type of model: image to steering, image to bezier or image to image. This does not apply when collecting data
-
+    
     **test**: whether we're testing the model or not. It is False by default
-
+    
     **manual_control**: how the car is driven manually. The default is to use the mouse for steering and throttle, and use keyboard keys to record/
 abort and change driving mode (auto or manual).
-
+    
     **env_name**: name of the environment that you want to be loaded in. The list can be seen by typing -h after the above command
 
-    Recording can be started/paused by pressing the key 'K', and stopped (aborts the run_sim.py program) by pressing 'O'
-For changing modes: autonomous steering, if test=True and a valid model is selected, can be turned on by pressing 'A'. Switching to manual can be done by pressing 'M'.
+    Enter the following command in the terminal/cmd after starting the simulator (don't select the environment manually, just double click the exe file and thats it, the python script takes care of the rest):
 
-    command:
 ```bash
-$ python run_sim.py --dataset_name=test
+$ python run_sim.py --dataset_name=testing
 ```
+You will notice a similar interface as before:
 
-### Note:
-if you're running this tutorial on python version <3.6, you may get an error related to the screeninfo package. In that case, open the file MUSHR-DL/key_check.py and remove all the lines related to screeninfo and set screen_width and screen_height to the pixel width and height of your monitor
+{{< figure src="/tutorials/MUSHR-DL/driving_standalone.PNG" width="400">}}
+
+However, you'll also notice that right as the environment is loaded, your mouse gets centered on the screen. Moving the mouse up and down will increase the throttle or apply braking (or reverse the car if it has come to a halt already). Moving the mouse left will turn the steering left and vice-versa. Small mouse movements should be sufficient to completely control both the throttle and the steering. 
+
+Once you're confident in your driving ability with the mouse, you can start recording the data.
+Key bindings:
+**K :** toggles recording 
+**O :** aborts recording and shuts down the simulator (can also shut down the simulator even if recording has not started. its basically an abort button)
+**M :** enables manual steering control
+**A :** enables autonomous steering control (if neural net model exits)
+The last two key bindings are not relevant for data collection, so just pay attention to the first two keys for now.
+
+##### Note:
+If you're running this tutorial on python version <3.6, you may get an error related to the screeninfo package. In that case, open the file MUSHR-DL/key_check.py and remove all the lines related to screeninfo and set **screen_width** and **screen_height** to the pixel width and height of your monitor
 
 2. Post processing:
 The next step is to run post processing on the collected data: post processing involves, at minimum, shuffling of the data, and creation of the labels for each image. 
     
     Options available for this file are:
 
-    **dataset_name**: the output file will have the name MUSHR_320x240_dataset_name.npy.
+    **dataset_name**: the output file will have the name MUSHR_320x240_shuffled_dataset_name.npy.
 
-    **model**: type of model to create the dataset for (steering, bezier, or image-image).
+    **model**: type of model to create the dataset for (for now we'll only consider steering).
 
-    command:
+In this tutorial, we will create dataset for training an image to steering dataset.
+
 ```bash
-$ python post_processing_mushr.py --dataset_name=test --model=model_type 
+$ cd DonkeySim/MUSHR-DL
+$ python post_processing_mushr.py --dataset_name=test --model=steering
 ```
 
 3. Training:
-
-**Image to steering angle:**
+Execute the following command to begin training the steering predicting model (assuming the dataset for steering prediction has been generated in the previous step):
 ```bash
+$ cd DonkeySim/MUSHR-DL
 $ python pytorch_img_to_steering_train.py --dataset_name=test
 ```
-the model will be saved with a preset name. The same name is used in testing as well as the model running script, and so for the sake of the tutorial the name should be left as is.
+the model will be saved with a preset name. The same model name is used in testing as well as the model running script, and so for the sake of the tutorial the name should be left as is.
 
 ```bash
 $ python pytorch_img_to_steering_test.py --dataset_name=test
 ```
 
-**Image to bezier:**
-```bash
-$ python pytorch_img_to_bezier_train.py --dataset_name=test
-$ python pytorch_img_to_bezier_test.py --dataset_name=test
-```
-**Image to image:**
-```bash
-$ python pytorch_img_to_img_train.py --dataset_name=test
-$ python pytorch_img_to_img_test.py --dataset_name=test
-```
-
 4. Driving the car using the trained model:
-To use a model for driving the car (assuming that the model exists), run:
+
+To use a model for driving the car (assuming that the model exists), start the simulator again by double clicking the donkey_sim.exe/x86_64 and then run the following commands:
+
 ```bash
-$ python run_sim.py --test=True --model=model_type --env_name=MUSHR_benchmark
+$ cd DonkeySim/MUSHR-DL
+$ python run_sim.py --test=True --model=steering --env_name=MUSHR_benchmark
 ```
 The environment "MUSHR_benchmark" is a simpler, fixed environment that you can use to compare the performance of different networks.
-the model type refers to the type of network being used, image to image, image to steering or image to bezier.  
+the model type is set to steering as we trained a simple image to steering predicting network.
 
-## Details regarding the implementation (what would be a better name for this section?):
-The simulator provides 3 camera images for each time step. One image is from the forward facing camera (RGB), the other 2 are from cameras looking 15 degrees off from the center
-
-## Wrap up
-
-## Challenges
+When the environment loads, you'll notice that you can still control the car manually with the mouse. To enable the neural net steering, press "A". You will notice that the steering will now operate on it's own and will not be affected by your mouse inputs. The throttle will still be in your control and so you will have to use the mouse to apply throttle. 
