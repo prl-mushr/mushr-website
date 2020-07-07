@@ -171,9 +171,9 @@ However, you'll also notice that right as the environment is loaded, your mouse 
 Once you're confident in your driving ability with the mouse, you can start recording the data.
 Key bindings:
 
-**K :** toggles recording 
+**K :** toggles recording (does not save recording to hard drive when recording is turned off)
 
-**O :** aborts recording and shuts down the simulator (can also shut down the simulator even if recording has not started. its basically an abort button)
+**O :** aborts recording (and saves it to the hard drive) and shuts down the simulator (can also shut down the simulator even if recording has not started. its basically an abort button)
 
 **M :** enables manual steering control
 
