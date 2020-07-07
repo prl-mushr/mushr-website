@@ -70,15 +70,15 @@ Refers to:
 $ cd PATH\\TO\\DonkeySim
 ```
 
-execute these commands in the DonkeySim directory:
+Execute these commands in the DonkeySim directory:
 ```bash
 $ git clone https://github.com/prl-mushr/gym-donkeycar.git
 $ pip3 install gym-donkeycar
 $ git clone https://github.com/prl-mushr/MUSHR-DL.git
 ```
 
-dependencies:
-the remaining dependencies can be installed by running 
+Dependencies:
+The remaining dependencies can be installed by running 
 ```bash
 $ cd MUSHR-DL
 $ pip3 install -r requirements.txt
@@ -100,13 +100,19 @@ Click on the box with "Generated road" caption. You should see something like th
 
 {{< figure src="/tutorials/MUSHR-DL/standalone.PNG" width="400">}}
 
-Note that each time you start the generated track, you will get a different track layout. The track layouts are generated in a manner that produces a different track each time. This is useful for producing a rich dataset for training. The donkey sim by default allows you to record steering and image data. However, for reasons that we'll cover in the implementation details section, we won't be using this feature. Driving the car with the keyboard should give you a feel for the dynamics of the car. Drive till you're content, then click on "STOP" on the top right corner. You can try out other environments or quit the simulator at this point.
+Note that each time you start the generated track, you will get a different track layout. This is useful for producing a rich dataset for training. The donkey sim by default allows you to record steering and image data. However, we won't be using this feature.
 
 {{< figure src="/tutorials/MUSHR-DL/driving_standalone.PNG" width="400">}}
 
+Driving the car with the keyboard should give you a feel for the dynamics of the car. Drive till you're content, then click on "STOP" on the top right corner. You can try out other environments or quit the simulator at this point.
+
+
+
 #### Reinforcement Learning:
 The reinforcement learning example is already provided by the gym-donkey car package. The aformentioned package provides an open-AI-gym interface for training and inference.
+
 **training:**
+
 a) Start the simulator by double clicking it.
 
 b) Execute the following commands in the terminal:
@@ -126,6 +132,7 @@ The trained model is saved as "rl_driver.h5". The training can be aborted at any
 **testing:**
 The same script can be used to run the model in test mode:
 ```bash
+$ cd DonkeySim
 $ python gym-donkeycar/examples/reinforcement_learning/ddqn.py --test
 ```
 
@@ -151,8 +158,10 @@ abort and change driving mode (auto or manual).
     Enter the following command in the terminal/cmd after starting the simulator (don't select the environment manually, just double click the exe file and thats it, the python script takes care of the rest):
 
 ```bash
+$ cd DonkeySim
 $ python run_sim.py --dataset_name=testing
 ```
+
 You will notice a similar interface as before:
 
 {{< figure src="/tutorials/MUSHR-DL/driving_standalone.PNG" width="400">}}
@@ -161,10 +170,15 @@ However, you'll also notice that right as the environment is loaded, your mouse 
 
 Once you're confident in your driving ability with the mouse, you can start recording the data.
 Key bindings:
+
 **K :** toggles recording 
+
 **O :** aborts recording and shuts down the simulator (can also shut down the simulator even if recording has not started. its basically an abort button)
+
 **M :** enables manual steering control
+
 **A :** enables autonomous steering control (if neural net model exits)
+
 The last two key bindings are not relevant for data collection, so just pay attention to the first two keys for now.
 
 ##### Note:
@@ -207,6 +221,83 @@ $ cd DonkeySim/MUSHR-DL
 $ python run_sim.py --test=True --model=steering --env_name=MUSHR_benchmark
 ```
 The environment "MUSHR_benchmark" is a simpler, fixed environment that you can use to compare the performance of different networks.
-the model type is set to steering as we trained a simple image to steering predicting network.
+the model type is set to steering as we trained a simple image to steering prediction network.
 
 When the environment loads, you'll notice that you can still control the car manually with the mouse. To enable the neural net steering, press "A". You will notice that the steering will now operate on it's own and will not be affected by your mouse inputs. The throttle will still be in your control and so you will have to use the mouse to apply throttle. 
+
+
+
+
+# Implementation details:
+This section provides information on how the underlying code works and how one could test their own models within this framework. The RL pipeline is fairly straightforward and the steps for it have been provided [here](https://github.com/tawnkramer/gym-donkeycar), therefore, we can jump to the Imitation learning pipeline. 
+
+## Note:
+This section assumes that the reader is well versed with python, numpy, opencv and has some understanding of pytorch (a high level understanding is sufficient).
+
+As stated before, the imitation learning pipeline involves 4 steps, data recording, post-processing, training and finally running the trained model on real time data (which can be considered as "testing"). For the purposes of data recording as well as running the model, we use the same script [run_sim.py](https://github.com/prl-mushr/MUSHR-DL/blob/master/run_sim.py), for post-processing, we use [post_processing_mushr.py](https://github.com/prl-mushr/MUSHR-DL/blob/master/post_processing_mushr.py), and for training, we use [pytorch_img_to_steering_train.py](https://github.com/prl-mushr/MUSHR-DL/blob/master/pytorch_img_to_steer_train.py).
+
+## Simulator:
+Before we get to the code part, lets first quickly consider what we get from the simulator. The simulator provides the following state information about the car: 
+1. position (x,y,z): (x,y,z) position of the car relative to a predefined origin (note that the car does not start at 0,0,0)
+2. speed (scalar): the absolute speed of the car
+3. Steering and throttle values
+4. hit: whether the car has hit something
+5. cross track error (cte): distance from the centerline of the track; this is useful for training RL agents
+6. camera image(s): 3 images of size 320x320 with a horizontal field of view (fov) of 87 degrees. There are 3 cameras on the car, one camera pointing straight ahead, and the other two pointing to the left and right at an angle of 15 degrees. The center camera image is RGB, while the others are greyscale (but still have 3 color dimensions because the images are transferred in a png format, therefore necessitating the use of 3 color dimensions). To mimic the real camera characteristics on the MUSHR car, we need 320x240 pixel images (the actual camera has 87 degree horizontal fov and a 58 degree vertical fov, the simulator does not allow that, so this is a workaround to get the same fov as the real camera). After cropping the top and bottom 40 pixels from these images, you'd get something like this (the images are from left to right in that order): 
+
+<img src="/tutorials/MUSHR-DL/left.png" width="200">
+<img src="/tutorials/MUSHR-DL/center.png" width="200">
+<img src="/tutorials/MUSHR-DL/center.png" width="200">
+
+
+## Main script:
+The main script "run_sim.py" performs the following tasks:
+1. Selects the desired environment in the simulator, 
+2. Communicates with the simulator (in a client-server manner, where the simulator is the server)
+3. Collects and saves training data
+4. Runs the Imitation learning models
+5. Recording analysis data (this is useful for comparing different models)
+
+The main script is actually a modified version of this [script](https://github.com/tawnkramer/sdsandbox/blob/master/src/test_client.py) from the donkey simulator source code. 
+
+### The interface script:
+The main script (run_sim.py) defines a class [SimpleClient](https://github.com/prl-mushr/MUSHR-DL/blob/master/run_sim.py#L17), which derives from the SDClient class. As far as we are concerned, the object of this class performs the job of getting and sending data using the functions [on_msg_recv](https://github.com/prl-mushr/MUSHR-DL/blob/master/run_sim.py#L25) and [send_controls](https://github.com/prl-mushr/MUSHR-DL/blob/master/run_sim.py#L57) respectively. We don't have to call these functions to pass or get the values. They are called automatically and asynchronously, therefore we merely need to create class members that can be used within these functions to set or get the required data.
+
+### The car-specific script:
+In order to avoid chaos, we create a separate module called [CAR.py](https://github.com/prl-mushr/MUSHR-DL/blob/master/CAR.py) which defines a class called [driver](https://github.com/prl-mushr/MUSHR-DL/blob/master/CAR.py#L11), which contains all the variables related to the car itself; the state (position, speed, steering, throttle, image) as well as other information which may be useful such as the wheelbase of the car and status flags for whether the data is being recorded or not.
+{{< figure src="/tutorials/MUSHR-DL/class_driver.PNG" width="500" >}}
+
+In the SimpleClient class inside run_sim.py, we create an [object](https://github.com/prl-mushr/MUSHR-DL/blob/master/run_sim.py#L23) of the "driver" class and call the [update_state](https://github.com/prl-mushr/MUSHR-DL/blob/master/CAR.py#L83) function in the [on_msg_recv](https://github.com/prl-mushr/MUSHR-DL/blob/master/run_sim.py#L50) function. This function is the core of the driver class, as it updates the state of the car and records the data. Note that it records the state of the car along with all the 3 camera images (grayscale). The data is appended to a list, which is then saved as numpy array by the main script (run_sim.py)
+
+Within the same script, in the init function you will find variables for [input](https://github.com/prl-mushr/MUSHR-DL/blob/master/CAR.py#L26) and the [Neural net](https://github.com/prl-mushr/MUSHR-DL/blob/master/CAR.py#L41) being defined. These are objects that are responsible for updating the control commands. The main functions of these objects are run in a separate thread to allow asynchronous operation.
+
+### Command/Control scripts:
+#### Manual control:
+The control inputs are captured by the object of class [keyboard_input](https://github.com/prl-mushr/MUSHR-DL/blob/master/controller.py#L14). This class further makes use of key_check module which further uses pynput library for getting the keyboard strokes and mouse inputs. The job of this module is to act as a middle-man so that the key bindings may be modified in the future. 
+
+#### Autonomous control 
+The imitation learning model (or any autonomous approach based model) is run using the object of class [model_runner](https://github.com/prl-mushr/MUSHR-DL/blob/master/model_runner.py). The [update_model_input](https://github.com/prl-mushr/MUSHR-DL/blob/master/model_runner.py#L54) is used for getting the data, while the [run_model](https://github.com/prl-mushr/MUSHR-DL/blob/master/model_runner.py#L67) is used for processing the input asynchronously.
+
+The overall structure of all these modules looks like this:
+{{< figure src="/tutorials/MUSHR-DL/flowchart.png" width="300" >}}
+
+Going through these files should tell you how you could add your own methods (ideally, you should add your autonomous control code in the model_runner file).
+
+## The model:
+The file [pytorch_model.py](https://github.com/prl-mushr/MUSHR-DL/blob/master/pytorch_model.py#L7) provides an example model for controlling the steering angle with the input as an image. Feel free to play around with the architecture of the model. If you change the output type or dimensions, you'll have to do the same with the dataset as well and write your own code block for converting your output to a steering angle. The script contains 2 other models as examples to show how the model could be modified to output 
+1. Parameters for a bezier curve trajectory that the car has to follow
+2. An image which displays the trajectory that the car has to follow
+
+The model is imported during training to the training script. This script is essentially a repository for all the models you create, which makes making complex models convenient as you could borrow and swap code blocks from other existing models fairly easily.
+
+## The post-processing script:
+The post_processing_mushr.py file is used for performing any and all post-processing on the data. We'll consider the post-processing approach for the steering data in the [create_steering_data](https://github.com/prl-mushr/MUSHR-DL/blob/master/model_runner.py#L67) function. The variable 'N' is for controlling the frames that you want to exclude; for instance, if the recording was stopped due to some glitch or a driver error, the driver error would also be recorded in the last 1 second (last 15 frames). The model we have here expects a 320x240x1 image as input and produces a 2x1 output. The ouptut essentially represents how much the model thinks the car should go left and how much it should go right. If both numbers are 0.5 and 0.5, the net steering angle would be 0. 
+
+The purpose of the function is to convert the single steering angle value between -1 and 1 to 2 variables representing left or right. You could design your own custom functions for a different kind of output (for example, a 30x1 array where each entry represents a steering angle between +/-15 degrees). For the camera images looking 15 degrees away from the center, add or remove 10 degrees of steering angle before converting to a 2x1 format. Finally, shuffle the data and then save it. 
+
+The same file includes 2 other functions for utilizing a different approach towards imitation learning. The first is to predict the trajectory of the car as a bezier curve upto some distance into the future. The other is to predict the trajectory of the car in the image plane itself and then make the car follow that trajectory. These other functions should show you how you could create datasets that require action-sequence preservation (with shuffling). The shuffling step is common across all approaches.
+
+## The training script:
+The [pytorch_img_to_steer_train.py](https://github.com/prl-mushr/MUSHR-DL/blob/master/pytorch_img_to_steer_train.py) shows how the an image to steering model can be trained. Here we assume that the model has already been defined and accepts a 320x240x1 image(or Tensor) and spits out a 2x1 output. The [pytorch_high_level.py](https://github.com/prl-mushr/MUSHR-DL/blob/master/pytorch_high_level.py) module provides a high level interface for training any model.
+
+If you create a model with a different output, like the Bezier or image-to-image model, you will have to write your own code for converting the model's output into control commands. The scripts mentioned here can be used as a template for you to make your own scripts.  
