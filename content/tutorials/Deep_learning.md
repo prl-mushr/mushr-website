@@ -43,9 +43,9 @@ It is advised to use a GPU enabled machine for running the models, as the infere
 
 1. Downloading the simulator:
 Download the precompiled binary for the simulator from these links: 
-[Windows](https://drive.google.com/file/d/1gKCxjyaRV37veT3759DrYHIGdrn9ized/view?usp=sharing),
-[Linux](https://drive.google.com/file/d/1P_hUH7W4liz8REW2fqjG_yG3CzXqsIma/view?usp=sharing),
-[Mac OS](https://drive.google.com/file/d/1h6TSImqIEQeK4dWEFIH32td5hNgLk_up/view?usp=sharing).
+[Windows](https://drive.google.com/file/d/172JgedopITw5YjcfuUrok48TTYuL_nTV/view?usp=sharing),
+[Linux](https://drive.google.com/file/d/1GGI-ncz4MxzhaQJP_6Uyzgbt1BOvwzPk/view?usp=sharing),
+[Mac OS](https://drive.google.com/file/d/1NNWISqEf5k_ZUFfq8sRoGAUXKw8tOFPo/view?usp=sharing).
 Extract it into the home directory (or wherever you prefer to extract it, just remember where you extract it) and rename it to "DonkeySim". Within the extracted folder, you should see the following contents(for linux. In windows, you'll see a donkey_sim.exe instead and find .dll instead of .so, but the overall contents will be the same)
 
 {{< figure src="/tutorials/MUSHR-DL/direct_struct.PNG" >}}
@@ -108,11 +108,10 @@ Driving the car with the keyboard should give you a feel for the dynamics of the
 
 
 
-#### Reinforcement Learning:
+### Reinforcement Learning:
 The reinforcement learning example is already provided by the gym-donkey car package. The aformentioned package provides an open-AI-gym interface for training and inference.
 
-**training:**
-
+**Training:**
 a) Start the simulator by double clicking it.
 
 b) Execute the following commands in the terminal:
@@ -127,33 +126,33 @@ You can expect the car to start moving erratically and resetting to it's initial
 
 {{< figure src="/tutorials/MUSHR-DL/RL.gif" width="800" >}}
 
-The trained model is saved as "rl_driver.h5". The training can be aborted at any time by pressing "Ctrl+C". The model is saved after each episode (an episode lasts until the car hits something or crosses the lane).
+The trained model is saved as "rl_driver.h5" in the \MUSHR-DL\gym-donkeycar\examples\reinforcement_learning directory. The training can be aborted at any time by pressing "Ctrl+C". The model is saved after each episode (an episode lasts until the car hits something or crosses the lane).
 
-**testing:**
-The same script can be used to run the model in test mode:
+**Testing:**
+You can test your model with the following command:
 ```bash
 $ cd DonkeySim
 $ python gym-donkeycar/examples/reinforcement_learning/ddqn.py --test
 ```
 
 
-#### Imitation Learning:
+### Imitation Learning:
 Imitation learning: Imitation learning involves 4 steps; data collection, post processing, training, and testing. For collecting training data as well as for running the models, the same file "run_sim.py" needs to be run. 
 
-1. Collecting data:
+1. **Collecting data**:
 For collecting data, first, start the simulator, then, using the command line (in the same directory), execute run_sim.py.
 Options available for this file are:
 
-    **dataset_name**: A suffix that will be added to the standard dataset name. for example: MUSHR_320x240_test.npy, where "test" is the suffix
+    _dataset_name:_  A suffix that will be added to the standard dataset name. for example: MUSHR_320x240_test.npy, where "test" is the suffix
 
-    **model**: type of model: image to steering, image to bezier or image to image. This does not apply when collecting data
+    _model:_  Type of model: image to steering, image to bezier or image to image. This does not apply when collecting data
     
-    **test**: whether we're testing the model or not. It is False by default
+    _test:_  Whether we're testing the model or not. It is False by default
     
-    **manual_control**: how the car is driven manually. The default is to use the mouse for steering and throttle, and use keyboard keys to record/
+    _manual_control:_  How the car is driven manually. The default is to use the mouse for steering and throttle, and use keyboard keys to record/
 abort and change driving mode (auto or manual).
     
-    **env_name**: name of the environment that you want to be loaded in. The list can be seen by typing -h after the above command
+    _env_name:_ Name of the environment that you want to be loaded in. The list can be seen by typing -h after the above command
 
     Enter the following command in the terminal/cmd after starting the simulator (don't select the environment manually, just double click the exe file and thats it, the python script takes care of the rest):
 
@@ -173,7 +172,7 @@ Key bindings:
 
 **K :** toggles recording (does not save recording to hard drive when recording is turned off)
 
-**O :** aborts recording (and saves it to the hard drive) and shuts down the simulator (can also shut down the simulator even if recording has not started. its basically an abort button)
+**O :** aborts recording (and saves it to the hard drive in the same directory as MUSHR-DL) and shuts down the simulator. It can also shut down the simulator even if recording has not started; its essentially an abort button)
 
 **M :** enables manual steering control
 
@@ -184,14 +183,14 @@ The last two key bindings are not relevant for data collection, so just pay atte
 ##### Note:
 If you're running this tutorial on python version <3.6, you may get an error related to the screeninfo package. In that case, open the file MUSHR-DL/key_check.py and remove all the lines related to screeninfo and set **screen_width** and **screen_height** to the pixel width and height of your monitor
 
-2. Post processing:
+2. **Post processing**:
 The next step is to run post processing on the collected data: post processing involves, at minimum, shuffling of the data, and creation of the labels for each image. 
     
     Options available for this file are:
 
-    **dataset_name**: the output file will have the name MUSHR_320x240_shuffled_dataset_name.npy.
+    _dataset_name:_ The output file will have the name MUSHR_320x240_shuffled_dataset_name.npy.
 
-    **model**: type of model to create the dataset for (for now we'll only consider steering).
+    _model:_ Type of model to create the dataset for (for now we'll only consider steering).
 
 In this tutorial, we will create dataset for training an image to steering dataset.
 
@@ -200,7 +199,7 @@ $ cd DonkeySim/MUSHR-DL
 $ python post_processing_mushr.py --dataset_name=test --model=steering
 ```
 
-3. Training:
+3. **Training**:
 Execute the following command to begin training the steering predicting model (assuming the dataset for steering prediction has been generated in the previous step):
 ```bash
 $ cd DonkeySim/MUSHR-DL
@@ -208,11 +207,13 @@ $ python pytorch_img_to_steering_train.py --dataset_name=test
 ```
 the model will be saved with a preset name. The same model name is used in testing as well as the model running script, and so for the sake of the tutorial the name should be left as is.
 
+Testing:
+The following command can be used to test the model. The printed numbers are the error (or difference) between the ground truth (human driver or supervisor's response to the input image) and the network output.
 ```bash
 $ python pytorch_img_to_steering_test.py --dataset_name=test
 ```
 
-4. Driving the car using the trained model:
+4. **Driving the car using the trained model**:
 
 To use a model for driving the car (assuming that the model exists), start the simulator again by double clicking the donkey_sim.exe/x86_64 and then run the following commands:
 
