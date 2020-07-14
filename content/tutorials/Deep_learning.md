@@ -6,9 +6,9 @@ featured: true
 draft: false
 active: true
 difficulty: Moderate
+author: https://github.com/naughtyStark
 duration: 60
 summary: Basic tutorial on using Imitation learning and Reinforcement learning for driving the MuSHR car.
-author: https://github.com/naughtyStark
 weight: 2
 ---
 
