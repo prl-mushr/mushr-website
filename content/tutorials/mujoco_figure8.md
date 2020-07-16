@@ -94,6 +94,13 @@ Locate the highlighted msg of interest as highlighted in the image below. This i
 
 The entire code is written below. Feel free to try to code it by yourself, as this code is very similar to the MuSHR Introductory navigation (link: ), and in the earlier section we know our rostopic of interest. The code will be explained later on in chunks.
 
+{{<higlight bash>}}
+  $ cd ~/catkin_ws/src/mushr_mujoco_ros/src
+  $ nano path_publisher.py
+{{</ highlight>}}
+
+Paste the below code in path_publisher.py.
+
 {{< highlight python "linenos=table" >}}
 #!/usr/bin/env python
 
@@ -111,12 +118,14 @@ from tf.transformations import quaternion_from_euler
 def run_plan(pub_init_pose, pub_controls, plan):
     init = plan.pop(0)
     send_init_pose(pub_init_pose, init)
+    
     for c in plan:
         send_command(pub_controls, c)
         
 def send_init_pose(pub_init_pose, init_pose):
     pose_data = init_pose.split(",")
     assert len(pose_data) == 3
+    
     x, y, theta = float(pose_data[0]), float(pose_data[1]), float(pose_data[2])
     q = Quaternion(*quaternion_from_euler(0, 0, theta))
     point = Point(x=x, y=y)
@@ -128,10 +137,12 @@ def send_command(pub_controls, c):
     cmd = c.split(",")
     assert len(cmd) == 2
     v, delta = float(cmd[0]), float(cmd[1])
+    
     dur = rospy.Duration(1.0)
     rate = rospy.Rate(10)
     start = rospy.Time.now()
     drive = AckermannDrive(steering_angle=delta, speed=v)
+    
     while rospy.Time.now() - start < dur:
         pub_controls.publish(AckermannDriveStamped(drive=drive))
         rate.sleep()
@@ -139,107 +150,112 @@ def send_command(pub_controls, c):
 
 if __name__ == "__main__":
     rospy.init_node("path_publisher")
+    
     control_topic = rospy.get_param("~control_topic", "/mushr_mujoco_ros/buddy/control")
     pub_controls = rospy.Publisher(control_topic, AckermannDriveStamped, queue_size=1)
     init_pose_topic = rospy.get_param("~init_pose_topic", \
                                     "/mushr_mujoco_ros/buddy/initialpose")
+    
     pub_init_pose = rospy.Publisher(init_pose_topic, PoseWithCovarianceStamped, queue_size=1)
     plan_file = rospy.get_param("~plan_file")
     with open(plan_file) as f:
         plan = f.readlines()
+    
     rospy.sleep(1.0)
     run_plan(pub_init_pose, pub_controls, plan)
 {{< / highlight >}}
 
 ## The code explained
 
+The detailed explanations of the python functions are given in the introductory navigation tutorial (link: ).
+
+{{< highlight python "linenos=table" >}}
+if __name__ == "__main__":
+    rospy.init_node("path_publisher")
+    
+    control_topic = rospy.get_param("~control_topic", "/mushr_mujoco_ros/buddy/control")
+    pub_controls = rospy.Publisher(control_topic, AckermannDriveStamped, queue_size=1)
+    
+    init_pose_topic = rospy.get_param("~init_pose_topic", \
+                                    "/mushr_mujoco_ros/buddy/initialpose")    
+    pub_init_pose = rospy.Publisher(init_pose_topic, PoseWithCovarianceStamped, queue_size=1)
+    
+    plan_file = rospy.get_param("~plan_file")
+    with open(plan_file) as f:
+        plan = f.readlines()
+    
+    rospy.sleep(1.0)
+    run_plan(pub_init_pose, pub_controls, plan)
+{{< / highlight >}}
+
+(Correctly mention the line numbers)
+Line 51 initializes the ros node. Lines 53-54 initializes the publisher node to control the MuSHR bot. ``rospy.get_param("~control_topic", "/mushr_mujoco_ros/buddy/control")`` gets the rostopic we want to publish messages to (will be more clear while writing the launch file, notice this is the highlighted topic from before). Similarly lines 56-58 initializes the publisher node to set the initial position of the MuSHR bot. Lines 60-62 reads the figure8.txt file we just created.
+
 ## Writing the launch file
+
+We need to create a launch file to launch our path_publisher.py code. Again the entire code is pasted below, feel free to write your own launch file, (Note: Make sure to implement relevant changes in path_publisher.py in case you decide to make changes).
+
+{{< highlight bash>}}
+  $ cd ~/catkin_ws/src/mushr_mujoco_ros/launch
+  $ nano path_publisher.launch
+{{< / highlight >}}
+
+Paste the below code in path_publisher.launch.
+
+{{< highlight python "linenos=table" >}}
+<launch>
+    <arg name="control_topic" default="/mushr_mujoco_ros/buddy/control" />
+    <arg name="init_pose_topic" default="/mushr_mujoco_ros/buddy/initialpose" />
+    <arg name="plan_file" default="$(find mushr_mujoco_ros)/plans/figure8.txt" />
+
+    <node pkg="mushr_mujoco_ros" type="path_publisher.py" name="path_publisher" output="screen">
+        <param name="control_topic" value="$(arg control_topic)" />
+        <param name="init_pose_topic" value="$(arg init_pose_topic)" />
+        <param name="plan_file" value="$(arg plan_file)" />
+    </node>
+</launch>
+{{< / highlight >}}
+
+## The launch file explained
+
+Lines 12-14 create arguments with default values (note: these values can be set externally while running the launch file). Lines 16-20, initialize a node with parameters "control_topic", "init_pose_topic" and "plan_file", which if you recall are used in rospy.get_param() in path_publisher.py. ``value=$(arg control_topic)``, sets value as the value assigned to control_topic. If no value was assigned to control_topic, the default is used. In case you decide to make modifications and add some parameters, make sure you always assign default values to the arguments. (Might be confusing, make it clearer.)
+
+## Catkin_make
+
+You are all set. Lets catkin_make our files to start executing the figure 8.
+
+{{< highlight bash >}}
+  $ cd ~/catkin_ws/
+  $ catkin_make
+{{< / highlight >}}
 
 ## Executing the figure 8
 
+Now time to execute our code. First lets launch our file cars. In a new terminal enter the below commands
+
+{{< highlight bash >}}
+  $ source ~/catkin_ws/devel/setup.bash
+  $ roslaunch mushr_mujoco_ros twa_cars.launch
+{{< / highlight >}}
+
+After this step, the MuJoCo simulator must launch and two cars standing next to each other should be visible. 
+
+(Add image of the MuJoCo simulator)
+
+Next, in a new terminal enter the follow commands.
+
+{{< highlight bash >}}
+  $ roslaunch mushr_mujoco_ros path_publisher.launch
+{{< / highlight >}}
+
+If instead, you want to manually add a plan.txt file, you can write it as below, since the default plan file is our plan file of interest, we dont require to add it manually (like below)
+
+{{< highlight bash >}}
+  $ roslaunch mushr_mujoco_ros path_publisher.launch plan_file:='~/catkin_ws/src/mushr_mujoco_ros/plans/figure8.txt'
+{{< / highlight >}}
+
+Enjoy how one MuSHR bot makes an 8 without colliding with the other MuSHR bot. Once you have reached here, feel free to play around and design your own plans and you can then execute them as shown above. 
+
 -----------------------------------------------------------------------------------------------------------------
 
-{{< highlight bash >}}
-$ sudo pip install Cython 
-{{< / highlight >}}
-
-Now that Cython's installed, you can install rangelibc:
-
-{{< highlight bash >}}
-$ cd ~/catkin_ws/src/range_libc/pywrapper
-$ sudo python setup.py install
-$ cd ~/catkin_ws/src && rm -rf range_libc
-{{< / highlight >}}
-
-We will now run `catkin_make` to setup all the packages:
-{{< highlight bash >}}
-$ cd ~/catkin_ws && catkin_make
-{{< / highlight >}}
-
-### Setting up our environment
-
-To make sure our environment is setup we run:
-
-*If you are using a shell other than bash, be sure to put these "source" commands in the analagous file for your shell.*
-
-#### Kinetic (Ubuntu 16.04)
-
-{{< highlight bash >}}
-$ echo 'source /opt/ros/kinetic/setup.bash' >> ~/.bashrc
-$ echo 'source ~/catkin_ws/devel/setup.bash' >> ~/.bashrc
-$ . ~/.bashrc
-{{< / highlight >}}
-
-#### Melodic (Ubuntu 18.04)
-
-{{< highlight bash >}}
-$ echo 'source /opt/ros/melodic/setup.bash' >> ~/.bashrc
-$ echo 'source ~/catkin_ws/devel/setup.bash' >> ~/.bashrc
-$ . ~/.bashrc
-{{< / highlight >}}
-
-Putting these lines in the `~/.bashrc` guarantee they run on the startup of a new shell.
-
-Finally, move the "Outrun" themed `.rviz` file to `~/.rviz` to get our default setup:
-{{< highlight bash >}}
-$ cp ~/catkin_ws/src/mushr/mushr_utils/rviz/default.rviz ~/.rviz/
-{{< / highlight >}}
-
-That's it! Time to run it.
-
-## Running the Simulator
-To start the sim run:
-
-{{< highlight bash >}}
-$ roslaunch mushr_sim teleop.launch
-{{< / highlight >}}
-
-{{< figure src="/tutorials/quickstart/teleop_window.png" caption="Teleop window that should appear after starting the sim" width="200">}}
-
-And in another terminal window launch rviz:
-
-{{< highlight bash >}}
-$ rviz
-{{< / highlight >}}
-
-<span id="wsl-users-note">**WSL Users Note:**</span> In order for Open GL to find a display you'll need to do an extra step to get `rviz` to work. See [Install VcXsrv](https://janbernloehr.de/2017/06/10/ros-windows#install-vcxsrv) to get it working.
-
-The `rviz` window with the car model should appear (see below). `Rviz` is useful for visualizing what the car is thinking/seeing. Currently it is set to visualize the car, map, and laserscan but `rviz` can be used for much [more](http://wiki.ros.org/rviz/Tutorials).
-
 {{< figure src="/tutorials/quickstart/rviz_docker-update.png" caption="This is an image of the `rviz` window that should pop up." width="800">}}
-
-### Setting an Initial Position
-
-Give the car an initial position by clicking
-{{< figure src="/tutorials/quickstart/2d_pose_estimate.png" width="150">}}
-
-in `rviz` and clicking and dragging in the main window. Now you can click on the small gray window and use the WASD keys to drive the car around! You can set the position at any time to reset the pose.
-
-### Navigating rviz
-
-The main pane will show a map of an empty square space. The ligher areas are the space where the simulated car can drive around. The darker areas are walls.
-
-Clicking and dragging will change the perspective of `rviz`, while `Shift + Click` and draging will move the map around.
-
-## Going Further
-To learn about programming the car, continue to the [Intro to ROS Tutorial](/tutorials/intro-to-ros).
