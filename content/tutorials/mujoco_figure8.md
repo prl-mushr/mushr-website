@@ -29,9 +29,9 @@ Window Subsystem for Linux (WSL): There has also been success getting the quicks
 
 ## Setup
 
-Make sure you have completed the MuSHR Quickstart tutorial (link: ) and MuJoCo setup tutorial (link: ) before you proceed.
+Make sure you have completed the MuSHR Quickstart tutorial (link: [MuSHR Setup](https://mushr.io/tutorials/intro-to-ros/)) and MuJoCo setup tutorial (link: Link from Caemen) before you proceed.
 
-Let's create our "figure 8" plan text files.
+Let's first start by creating our "figure 8" plan text file.
 
 {{< highlight bash >}}
 $ cd ~/catkin_ws/src/mushr_mujoco_ros
@@ -45,7 +45,7 @@ Next is to create a file called figure8.txt and save the below coordinate comman
   $ nano figure8.txt
 {{< / highlight >}}
 
-Copy the below contents in figure8.txt
+Copy the below in figure8.txt
 ```
 0,0,0.785
 2.0,0.09
@@ -76,13 +76,13 @@ Copy the below contents in figure8.txt
 
 (Note: This section is only for better understanding, feel free to skip it.)
 
-Before jumping into the code lets find out which rostopics we need to publish.
+Before jumping into the code lets find out which rostopics we need to publish to. In a new terminal window type, 
 
 {{< highlight bash >}}
   $ roslaunch mushr_mujoco_ros two_cars.launch
 {{< / highlight >}}
 
-Open a new terminal window, and type the folloing.
+Open a new terminal window, and type the following.
 
 {{< highlight bash >}}
  $ rostopic list -v 
@@ -92,7 +92,7 @@ Locate the highlighted msg of interest as highlighted in the image below. This i
 
 ## Code
 
-The entire code is written below. Feel free to try to code it by yourself, as this code is very similar to the MuSHR Introductory navigation (link: ), and in the earlier section we know our rostopic of interest. The code will be explained later on in chunks.
+The entire code is written below. Feel free to try to code it by yourself, as this code is very similar to the MuSHR Introductory navigation (link: [MuSHR Setup](https://mushr.io/tutorials/intro-to-ros/)), and from the earlier section we now know our rostopic of interest. The code will be explained later on in chunks.
 
 {{<higlight bash>}}
   $ cd ~/catkin_ws/src/mushr_mujoco_ros/src
@@ -167,7 +167,7 @@ if __name__ == "__main__":
 
 ## The code explained
 
-The detailed explanations of the python functions are given in the introductory navigation tutorial (link: ).
+The detailed explanations of the python functions are given in the introductory navigation tutorial (link: [MuSHR Setup](https://mushr.io/tutorials/intro-to-ros/)).
 
 {{< highlight python "linenos=table" >}}
 if __name__ == "__main__":
@@ -189,7 +189,7 @@ if __name__ == "__main__":
 {{< / highlight >}}
 
 (Correctly mention the line numbers)
-Line 51 initializes the ros node. Lines 53-54 initializes the publisher node to control the MuSHR bot. ``rospy.get_param("~control_topic", "/mushr_mujoco_ros/buddy/control")`` gets the rostopic we want to publish messages to (will be more clear while writing the launch file, notice this is the highlighted topic from before). Similarly lines 56-58 initializes the publisher node to set the initial position of the MuSHR bot. Lines 60-62 reads the figure8.txt file we just created.
+Line 51 initializes the ros node. Lines 53-54 initializes the publisher node to control the MuSHR bot. `rospy.get_param("~control_topic", "/mushr_mujoco_ros/buddy/control")` gets the rostopic we want to publish messages to (will be more clear while writing the launch file, notice this is the highlighted topic from before). Similarly lines 56-58 initializes the publisher node to set the initial position of the MuSHR bot. Lines 60-62 reads the figure8.txt file we just created.
 
 ## Writing the launch file
 
@@ -218,7 +218,7 @@ Paste the below code in path_publisher.launch.
 
 ## The launch file explained
 
-Lines 12-14 create arguments with default values (note: these values can be set externally while running the launch file). Lines 16-20, initialize a node with parameters "control_topic", "init_pose_topic" and "plan_file", which if you recall are used in rospy.get_param() in path_publisher.py. ``value=$(arg control_topic)``, sets value as the value assigned to control_topic. If no value was assigned to control_topic, the default is used. In case you decide to make modifications and add some parameters, make sure you always assign default values to the arguments. (Might be confusing, make it clearer.)
+Lines 12-14 create arguments with default values (note: these values can be set externally while running the launch file). Lines 16-20, initialize a node with parameters "control_topic", "init_pose_topic" and "plan_file", which if you recall are used in rospy.get_param() in path_publisher.py. We can set values to arguments (arg) while executing the launch file. If no value was assigned to the argument, the default is used. In case you decide to make modifications and add some more arguments, make sure you always assign default values to the arguments.
 
 ## Catkin_make
 
@@ -235,26 +235,26 @@ Now time to execute our code. First lets launch our file cars. In a new terminal
 
 {{< highlight bash >}}
   $ source ~/catkin_ws/devel/setup.bash
-  $ roslaunch mushr_mujoco_ros twa_cars.launch
+  $ roslaunch mushr_mujoco_ros two_cars.launch
 {{< / highlight >}}
 
-After this step, the MuJoCo simulator must launch and two cars standing next to each other should be visible. 
+After this step, the MuJoCo simulator must launch and two cars standing next to each other should be visible as shown below. 
 
-(Add image of the MuJoCo simulator)
+(Add image of the MuJoCo simulator with two cars)
 
-Next, in a new terminal enter the follow commands.
+Next, in a new terminal enter the following commands.
 
 {{< highlight bash >}}
   $ roslaunch mushr_mujoco_ros path_publisher.launch
 {{< / highlight >}}
 
-If instead, you want to manually add a plan.txt file, you can write it as below, since the default plan file is our plan file of interest, we dont require to add it manually (like below)
+If instead, you want to manually add a plan.txt file, you can write it as below, since the default plan file is our plan file of interest, we dont require to add it manually.
 
 {{< highlight bash >}}
   $ roslaunch mushr_mujoco_ros path_publisher.launch plan_file:='~/catkin_ws/src/mushr_mujoco_ros/plans/figure8.txt'
 {{< / highlight >}}
 
-Enjoy how one MuSHR bot makes an 8 without colliding with the other MuSHR bot. Once you have reached here, feel free to play around and design your own plans and you can then execute them as shown above. 
+Enjoy how one MuSHR bot makes an 8 without colliding with the other. Once you have reached here, feel free to play around and design your own plans and you can then execute them as shown above. 
 
 -----------------------------------------------------------------------------------------------------------------
 
