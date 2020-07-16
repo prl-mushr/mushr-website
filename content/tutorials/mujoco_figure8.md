@@ -95,7 +95,6 @@ Locate the highlighted msg of interest as highlighted in the image below. This i
 The entire code is written below. Feel free to try to code it by yourself, as this code is very similar to the MuSHR Introductory navigation (link: ), and in the earlier section we know our rostopic of interest. The code will be explained later on in chunks.
 
 {{< highlight python "linenos=table" >}}
-
 #!/usr/bin/env python
 
 import rospy
@@ -109,19 +108,15 @@ from geometry_msgs.msg import (
 )
 from tf.transformations import quaternion_from_euler
 
-
 def run_plan(pub_init_pose, pub_controls, plan):
     init = plan.pop(0)
     send_init_pose(pub_init_pose, init)
-
     for c in plan:
         send_command(pub_controls, c)
-
-
+        
 def send_init_pose(pub_init_pose, init_pose):
     pose_data = init_pose.split(",")
     assert len(pose_data) == 3
-
     x, y, theta = float(pose_data[0]), float(pose_data[1]), float(pose_data[2])
     q = Quaternion(*quaternion_from_euler(0, 0, theta))
     point = Point(x=x, y=y)
@@ -133,13 +128,10 @@ def send_command(pub_controls, c):
     cmd = c.split(",")
     assert len(cmd) == 2
     v, delta = float(cmd[0]), float(cmd[1])
-
     dur = rospy.Duration(1.0)
     rate = rospy.Rate(10)
     start = rospy.Time.now()
-
     drive = AckermannDrive(steering_angle=delta, speed=v)
-
     while rospy.Time.now() - start < dur:
         pub_controls.publish(AckermannDriveStamped(drive=drive))
         rate.sleep()
@@ -147,23 +139,16 @@ def send_command(pub_controls, c):
 
 if __name__ == "__main__":
     rospy.init_node("path_publisher")
-
     control_topic = rospy.get_param("~control_topic", "/mushr_mujoco_ros/buddy/control")
     pub_controls = rospy.Publisher(control_topic, AckermannDriveStamped, queue_size=1)
-
     init_pose_topic = rospy.get_param("~init_pose_topic", \
                                     "/mushr_mujoco_ros/buddy/initialpose")
     pub_init_pose = rospy.Publisher(init_pose_topic, PoseWithCovarianceStamped, queue_size=1)
-
     plan_file = rospy.get_param("~plan_file")
-
     with open(plan_file) as f:
         plan = f.readlines()
-
-
     rospy.sleep(1.0)
     run_plan(pub_init_pose, pub_controls, plan)
-
 {{< / highlight >}}
 
 ## The code explained
