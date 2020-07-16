@@ -46,8 +46,131 @@ Next is to create a file called figure8.txt and save the below coordinate comman
 {{< / highlight >}}
 
 Copy the below contents in figure8.txt
+```
+0,0,0.785
+2.0,0.09
+2.0,0.09
+2.0,0.09
+2.0,0.09
+2.0,0.09
+2.0,0.09
+2.0,0.09
+2.0,0.09
+2.0,0.09
+2.0,0.09
+2.0,0.09
+2.0,-0.09
+2.0,-0.09
+2.0,-0.09
+2.0,-0.09
+2.0,-0.09
+2.0,-0.09
+2.0,-0.09
+2.0,-0.09
+2.0,-0.09
+2.0,-0.09
+2.0,-0.09
+0.0,-0.09
+```
+## Rostopic of interest
+
+(Note: This section is only for better understanding, feel free to skip it.)
+
+Before jumping into the code lets find out which rostopics we need to publish.
+
+{{< highlight bash >}}
+  $ roslaunch mushr_mujoco_ros two_cars.launch
+{{< / highlight >}}
+
+Open a new terminal window, and type the folloing.
+
+{{< highlight bash >}}
+ $ rostopic list -v 
+{{< / highlight >}}
+
+Locate the highlighted msg of interest as highlighted in the image below. This is the topic we will publish navigation commands to.
+
+## Code
+
+The entire code is written below. Feel free to try to code it by yourself, as this code is very similar to the MuSHR Introductory navigation (link: ), and in the earlier section we know our rostopic of interest. The code will be explained later on in chunks.
+
+{{< highlight python "linenos=table" >}}
+
+#!/usr/bin/env python
+
+import rospy
+from ackermann_msgs.msg import AckermannDrive, AckermannDriveStamped
+from geometry_msgs.msg import (
+    Point,
+    Pose,
+    PoseWithCovariance,
+    PoseWithCovarianceStamped,
+    Quaternion,
+)
+from tf.transformations import quaternion_from_euler
 
 
+def run_plan(pub_init_pose, pub_controls, plan):
+    init = plan.pop(0)
+    send_init_pose(pub_init_pose, init)
+
+    for c in plan:
+        send_command(pub_controls, c)
+
+
+def send_init_pose(pub_init_pose, init_pose):
+    pose_data = init_pose.split(",")
+    assert len(pose_data) == 3
+
+    x, y, theta = float(pose_data[0]), float(pose_data[1]), float(pose_data[2])
+    q = Quaternion(*quaternion_from_euler(0, 0, theta))
+    point = Point(x=x, y=y)
+    pose = PoseWithCovariance(pose=Pose(position=point, orientation=q))
+    pub_init_pose.publish(PoseWithCovarianceStamped(pose=pose))
+
+
+def send_command(pub_controls, c):
+    cmd = c.split(",")
+    assert len(cmd) == 2
+    v, delta = float(cmd[0]), float(cmd[1])
+
+    dur = rospy.Duration(1.0)
+    rate = rospy.Rate(10)
+    start = rospy.Time.now()
+
+    drive = AckermannDrive(steering_angle=delta, speed=v)
+
+    while rospy.Time.now() - start < dur:
+        pub_controls.publish(AckermannDriveStamped(drive=drive))
+        rate.sleep()
+
+
+if __name__ == "__main__":
+    rospy.init_node("path_publisher")
+
+    control_topic = rospy.get_param("~control_topic", "/mushr_mujoco_ros/buddy/control")
+    pub_controls = rospy.Publisher(control_topic, AckermannDriveStamped, queue_size=1)
+
+    init_pose_topic = rospy.get_param("~init_pose_topic", \
+                                    "/mushr_mujoco_ros/buddy/initialpose")
+    pub_init_pose = rospy.Publisher(init_pose_topic, PoseWithCovarianceStamped, queue_size=1)
+
+    plan_file = rospy.get_param("~plan_file")
+
+    with open(plan_file) as f:
+        plan = f.readlines()
+
+
+    rospy.sleep(1.0)
+    run_plan(pub_init_pose, pub_controls, plan)
+
+{{< / highlight >}}
+
+## The code explained
+
+## Writing the launch file
+
+## Executing the figure 8
 
 -----------------------------------------------------------------------------------------------------------------
 
