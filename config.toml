@@ -72,11 +72,11 @@ unsafe = true
     url = "https://personalrobotics.cs.washington.edu/people/"
     weight = 4
 
-#[[menu.main]]
-    #identifier = "forum"
-    #name = "Forum"
-    #url = "/forum/"
-    #weight = 7
+[[menu.main]]
+    identifier = "forum"
+    name = "Forum"
+    url = "https://spectrum.chat/mushr"
+    weight = 7
 
 [[menu.main]]
     identifier = "contact"
@@ -90,11 +90,11 @@ unsafe = true
 	url = "/"
     weight = 1
 
-#[[menu.footer]]
-    #identifier = "forum"
-	#name = "Forum"
-	#url = "/forum/"
-    #weight = 2
+[[menu.footer]]
+    identifier = "forum"
+	name = "Forum"
+	url ="https://spectrum.chat/mushr"
+    weight = 2
 
 [[menu.footer]]
     identifier = "contact"
