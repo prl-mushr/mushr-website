@@ -102,7 +102,7 @@ unsafe = true
 	url = "/contact/"
     weight = 3
 
-[[menu.footer]]
-	name = "Newsletter"
-	url = "https://tinyletter.com/mushr"
-    weight = 4
+#[[menu.footer]]
+	#name = "Newsletter"
+	#url = "https://tinyletter.com/mushr"
+    #weight = 4
