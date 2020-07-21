@@ -1,47 +1,36 @@
 ---
-title: "Navigating in the Mujoco Simulator."
+title: "Driving in the Mujoco Simulator."
 date: 2020-07-15T15:14:54+10:00
 image: "/services/default.png"
 featured: true
 draft: false
 active: true
 duration: (need to calculate)
-difficulty: Beginner
+difficulty: Intermediate
 summary: Execute a plan/trajectory in the MuJoCo simulator.
-weight: (Needs to be changed)
+weight: 5
 ---
 
-{{< figure src="/tutorials/mujoco_figure8/figure8.gif" width="800" >}}
+{{< figure src="/tutorials/mujoco_figure8/figure8.gif" width="800" caption="MuSHR car making a figure 8 without colliding into the other MuSHR car" >}}
 <br>
 
 ### Introduction
-This tutorial will introduce you to controlling the mushr bot in the MuJoCo environment.
+This tutorial will introduce you to controlling the mushr bot in the MuJoCo environment. Why MuJoCo??? MuJoCo is a physics simulator which provides a unique combination of speed, accuracy and modeling power for the purpose of model based optimization, and in particular optimization through contacts. MuJoCo is your goto simulator for RL and Deep RL projects. A well-known example would be DeepMind's humanoid simulations. You can find some very interesting OpenAI+MuJoCo projects [here](https://gym.openai.com/envs/#mujoco).
 
 ### Goal 
-To command the MuSHR bot to execute a figure 8 plan in the MuJoCo simulator.
+To command the MuSHR car to execute a figure 8 plan in the MuJoCo simulator.
 
 ### Requirements
-A Ubuntu Linux machine. If you don't run linux natively then get a Ubuntu VM: [OSX](https://www.instructables.com/id/How-to-Create-an-Ubuntu-Virtual-Machine-with-Virtu/), [Windows](https://itsfoss.com/install-linux-in-virtualbox/). 
-
-We also provide a virtual machine image that already has the MuSHR stack setup, it can be downloaded [here](https://drive.google.com/a/cs.washington.edu/file/d/1mOzSzVx9BF_e2U1OeK58NS42UIPcnIZq/view?usp=sharing). The username is **robot** and the password is **prl_robot**. If you use this image, you can start the VM and then skip to the [**Running the Simulator**](#running-the-simulator) section.
-
-Window Subsystem for Linux (WSL): There has also been success getting the quickstart to run using WSL. When running `rivz` you'll need to disable native `opengl`. There will be a note ([**Note for WSL**](#wsl-users-note)) in the section running `rviz`.
+Complete the [Quickstart tutorial](https://mushr.io/tutorials/quickstart/). (Need to add the MuJoCo simulator setup link)
 
 ## Setup
 
-Make sure you have completed the MuSHR Quickstart tutorial (link: [MuSHR Setup](https://mushr.io/tutorials/intro-to-ros/)) and MuJoCo setup tutorial (link: Link from Caemen) before you proceed.
-
-Let's first start by creating our "figure 8" plan text file.
+Let's first start by creating our "figure 8" plain text file.
 
 ```bash
 $ cd ~/catkin_ws/src/mushr_mujoco_ros
 $ mkdir plans
 $ cd plans
-```
-
-Next is to create a file called figure8.txt and save the below coordinate commands in it.
-
-```bash
 $ nano figure8.txt
 ```
 
@@ -88,15 +77,36 @@ Open a new terminal window, and type the following.
 $ rostopic list -v 
 ```
 
-Locate the highlighted msg of interest as highlighted in the image below. This is the topic we will publish navigation commands to.
+You will see a list of Published and Subscribed topics like below.
 
-{{< figure src="/tutorials/mujoco_figure8/rostopic.png" width="800" >}}
-<br>
+```bash
+Published topics:
+ * /map_metadata [nav_msgs/MapMetaData] 1 publisher
+ * /mushr_mujoco_ros/buddy/velocimeter [geometry_msgs/Vector3Stamped] 1 publisher
+ * /mushr_mujoco_ros/goose/velocimeter [geometry_msgs/Vector3Stamped] 1 publisher
+ * /mushr_mujoco_ros/buddy/car_imu [sensor_msgs/Imu] 1 publisher
+ * /mushr_mujoco_ros/goose/pose [geometry_msgs/PoseStamped] 1 publisher
+ * /rosout [rosgraph_msgs/Log] 3 publishers
+ * /rosout_agg [rosgraph_msgs/Log] 1 publisher
+ * /mux/ackermann_cmd_mux/input/teleop [ackermann_msgs/AckermannDriveStamped] 1 publisher
+ * /mushr_mujoco_ros/buddy/pose [geometry_msgs/PoseStamped] 1 publisher
+ * /mushr_mujoco_ros/body_state [mushr_mujoco_ros/BodyStateArray] 1 publisher
+ * /map [nav_msgs/OccupancyGrid] 1 publisher
+ * /mushr_mujoco_ros/goose/car_imu [sensor_msgs/Imu] 1 publisher
 
+Subscribed topics:
+ * /mushr_mujoco_ros/buddy/initialpose [geometry_msgs/PoseWithCovarianceStamped] 1 subscriber
+ * /rosout [rosgraph_msgs/Log] 1 subscriber
+ * /mushr_mujoco_ros/goose/initialpose [geometry_msgs/PoseWithCovarianceStamped] 1 subscriber
+ * /mushr_mujoco_ros/goose/control [ackermann_msgs/AckermannDriveStamped] 1 subscriber
+ * /mushr_mujoco_ros/buddy/control [ackermann_msgs/AckermannDriveStamped] 1 subscriber</b>
+```
+
+**/mushr_mujoco_ros/buddy/control** in Subscribed topics is our rostopic of interest.
 
 ## Code
 
-The entire code is written below. Feel free to try to code it by yourself, as this code is very similar to the MuSHR Introductory navigation (link: [MuSHR Setup](https://mushr.io/tutorials/intro-to-ros/)), and from the earlier section we now know our rostopic of interest. The code will be explained later on.
+The entire code is written below. Feel free to try to code it by yourself, as this code is very similar to the MuSHR Introductory navigation (link: [MuSHR Intro to ROS](https://mushr.io/tutorials/intro-to-ros/)), and from the earlier section we now know our rostopic of interest. The code will be explained later on.
 
 ```bash
 $ cd ~/catkin_ws/src/mushr_mujoco_ros/src
@@ -171,7 +181,7 @@ if __name__ == "__main__":
 
 ## The code explained
 
-The detailed explanations of the python functions are given in the introductory navigation tutorial (link: [MuSHR Setup](https://mushr.io/tutorials/intro-to-ros/)).
+The detailed explanations of the python functions are given in the introductory navigation tutorial (link: [MuSHR Intro to ROS](https://mushr.io/tutorials/intro-to-ros/)).
 
 {{< highlight python "linenos=table" >}}
 if __name__ == "__main__":
@@ -192,7 +202,7 @@ if __name__ == "__main__":
     run_plan(pub_init_pose, pub_controls, plan)
 {{< / highlight >}}
 
-Line 2 initializes the ros node. Lines 4-5 initializes the publisher node to control the MuSHR bot. `rospy.get_param("~control_topic", "/mushr_mujoco_ros/buddy/control")` calls the rostopic we want to publish messages to (will be more clear while writing the launch file, notice this is the highlighted rostopic from before). Similarly lines 7-9 initializes the publisher node to set the initial position of the MuSHR bot. Lines 11-13 reads the figure8.txt file we just created.
+Line 2 initializes the rosnode. Lines 4-5 initializes the publisher node to control the MuSHR car. `rospy.get_param("~control_topic", "/mushr_mujoco_ros/buddy/control")` calls the rostopic we want to publish messages to (will be more clear while writing the launch file, notice this is the highlighted rostopic from before). Similarly lines 7-9 initializes the publisher node to set the initial position of the MuSHR bot. Lines 11-13 reads the figure8.txt file we just created.
 
 ## Writing the launch file
 
@@ -234,14 +244,14 @@ $ catkin_make
 
 ## Executing the figure 8
 
-Now time to execute our code. First lets launch the MuSHR cars. In a new terminal enter the below commands.
+Now it's time to execute our code. First let's launch the MuSHR cars. In a new terminal, enter the below commands.
 
 ```bash
 $ source ~/catkin_ws/devel/setup.bash
 $ roslaunch mushr_mujoco_ros two_cars.launch
 ```
 
-After this step, two cars spawned in the MuJoCo simulator as shown below.
+After this step, two cars are spawned in the MuJoCo simulator as shown below.
 
 {{< figure src="/tutorials/mujoco_figure8/Mujoco.png" caption="MuJoCo simulator with two MuSHR cars spawned" width="800" >}}
 <br>
@@ -251,14 +261,12 @@ Next, in a new terminal enter the following roslaunch command.
 $ roslaunch mushr_mujoco_ros path_publisher.launch
 ```
 
-If instead, you want to manually add a plan.txt file, you can write it as
+Since the default plan file is our plan file of interest, we don't need to add the path to figure8.txt manually. But, if you would like to call a different plan file you can write:
 
 ```bash
-$ roslaunch mushr_mujoco_ros path_publisher.launch plan_file:='~/catkin_ws/src/mushr_mujoco_ros/plans/figure8.txt'
+$ roslaunch mushr_mujoco_ros path_publisher.launch plan_file:='~/catkin_ws/src/mushr_mujoco_ros/plans/{name of text file}'
 ```
 
-Since the default plan file is our plan file of interest, we dont need to add the path to the plan_file manually. Both methods should work.
-
-Enjoy how one MuSHR bot makes an 8 without colliding into the other bot. Awesome, you have successfully completed this tutorial, feel free to play around and design your own plans and execute them.
+Enjoy how one MuSHR car makes an 8 without colliding into the other car. Awesome, you have successfully completed this tutorial! Feel free to play around and design your own plans and execute them.
 
 -----------------------------------------------------------------------------------------------------------------
