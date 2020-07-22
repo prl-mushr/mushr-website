@@ -13,6 +13,8 @@
           <p>{{ .Params.Summary }}</p> {{ end }}
           {{ if and (.Params.Difficulty) (.Params.Duration)}}
           <h4 class="properties">{{.Params.Difficulty}} Tutorial | Expected duration is {{ .Params.Duration }} minutes</h4> {{ end }}
+          {{ if .Params.Author}}
+          <h5 class="properties">By : {{.Params.Author}}</h5> {{ end }}
           {{.Content}}
         </div>
       </div>
