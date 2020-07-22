@@ -5,17 +5,17 @@ image: "/services/default.png"
 featured: true
 draft: false
 active: true
-duration: (need to calculate)
+duration: 20
 difficulty: Intermediate
 summary: Execute a plan/trajectory in the MuJoCo simulator.
 weight: 5
 ---
 
-{{< figure src="/tutorials/mujoco_figure8/figure8.gif" width="800" caption="MuSHR car making a figure 8 without colliding into the other MuSHR car" >}}
+{{< figure src="/tutorials/mujoco_figure8/side_shot.gif" width="800" caption="MuSHR car making a figure 8" >}}
 <br>
 
 ### Introduction
-This tutorial will introduce you to controlling the mushr bot in the MuJoCo environment. Why MuJoCo??? MuJoCo is a physics simulator which provides a unique combination of speed, accuracy and modeling power for the purpose of model based optimization, and in particular optimization through contacts. MuJoCo is your goto simulator for RL and Deep RL projects. A well-known example would be DeepMind's humanoid simulations. You can find some very interesting OpenAI+MuJoCo projects [here](https://gym.openai.com/envs/#mujoco).
+This tutorial will introduce you to controlling the mushr car in the MuJoCo environment. Why MuJoCo??? MuJoCo is a physics simulator which provides a unique combination of speed, accuracy and modeling power for the purpose of model based optimization, and in particular optimization through contacts. MuJoCo is your goto simulator for RL and Deep RL projects. A well-known example would be DeepMind's humanoid simulations. You can find some very interesting OpenAI+MuJoCo projects [here](https://gym.openai.com/envs/#mujoco).
 
 ### Goal 
 To command the MuSHR car to execute a figure 8 plan in the MuJoCo simulator.
@@ -68,7 +68,7 @@ Paste below initial pose and drive commands in figure8.txt
 Before jumping into the code lets find out which rostopics we need to publish to. In a new terminal window type, 
 
 ```bash
-$ roslaunch mushr_mujoco_ros two_cars.launch
+$ roslaunch mushr_mujoco_ros one_car.launch
 ```
 
 Open a new terminal window, and type the following.
@@ -83,23 +83,18 @@ You will see a list of Published and Subscribed topics like below.
 Published topics:
  * /map_metadata [nav_msgs/MapMetaData] 1 publisher
  * /mushr_mujoco_ros/buddy/velocimeter [geometry_msgs/Vector3Stamped] 1 publisher
- * /mushr_mujoco_ros/goose/velocimeter [geometry_msgs/Vector3Stamped] 1 publisher
  * /mushr_mujoco_ros/buddy/car_imu [sensor_msgs/Imu] 1 publisher
- * /mushr_mujoco_ros/goose/pose [geometry_msgs/PoseStamped] 1 publisher
  * /rosout [rosgraph_msgs/Log] 3 publishers
  * /rosout_agg [rosgraph_msgs/Log] 1 publisher
  * /mux/ackermann_cmd_mux/input/teleop [ackermann_msgs/AckermannDriveStamped] 1 publisher
  * /mushr_mujoco_ros/buddy/pose [geometry_msgs/PoseStamped] 1 publisher
  * /mushr_mujoco_ros/body_state [mushr_mujoco_ros/BodyStateArray] 1 publisher
  * /map [nav_msgs/OccupancyGrid] 1 publisher
- * /mushr_mujoco_ros/goose/car_imu [sensor_msgs/Imu] 1 publisher
 
 Subscribed topics:
  * /mushr_mujoco_ros/buddy/initialpose [geometry_msgs/PoseWithCovarianceStamped] 1 subscriber
  * /rosout [rosgraph_msgs/Log] 1 subscriber
- * /mushr_mujoco_ros/goose/initialpose [geometry_msgs/PoseWithCovarianceStamped] 1 subscriber
- * /mushr_mujoco_ros/goose/control [ackermann_msgs/AckermannDriveStamped] 1 subscriber
- * /mushr_mujoco_ros/buddy/control [ackermann_msgs/AckermannDriveStamped] 1 subscriber</b>
+ * /mushr_mujoco_ros/buddy/control [ackermann_msgs/AckermannDriveStamped] 1 subscriber
 ```
 
 **/mushr_mujoco_ros/buddy/control** in Subscribed topics is our rostopic of interest.
@@ -181,7 +176,7 @@ if __name__ == "__main__":
 
 ## The code explained
 
-The detailed explanations of the python functions are given in the introductory navigation tutorial (link: [MuSHR Intro to ROS](https://mushr.io/tutorials/intro-to-ros/)).
+The detailed explanations of the python functions (run_plan, send_init_pose, send_command) are given in the introductory navigation tutorial (link: [MuSHR Intro to ROS](https://mushr.io/tutorials/intro-to-ros/)).
 
 {{< highlight python "linenos=table" >}}
 if __name__ == "__main__":
@@ -206,7 +201,7 @@ Line 2 initializes the rosnode. Lines 4-5 initializes the publisher node to cont
 
 ## Writing the launch file
 
-We need to create a launch file to launch our path_publisher.py code. Again the entire code is pasted below, feel free to write your own launch file, (Note: Make sure to implement relevant changes in path_publisher.py in case you decide to make changes).
+We need to create a launch file to launch our path_publisher.py code. Again the entire code is pasted below, feel free to write your own launch file (Note: Make sure to implement relevant changes in path_publisher.py in case you decide to make changes).
 
 ```bash
 $ cd ~/catkin_ws/src/mushr_mujoco_ros/launch
@@ -244,16 +239,16 @@ $ catkin_make
 
 ## Executing the figure 8
 
-Now it's time to execute our code. First let's launch the MuSHR cars. In a new terminal, enter the below commands.
+Now it's time to execute our code. First let's launch the MuSHR car. In a new terminal, enter the below commands.
 
 ```bash
 $ source ~/catkin_ws/devel/setup.bash
-$ roslaunch mushr_mujoco_ros two_cars.launch
+$ roslaunch mushr_mujoco_ros one_car.launch
 ```
 
-After this step, two cars are spawned in the MuJoCo simulator as shown below.
+After this step, a MuSHR car is spawned in the MuJoCo simulator as shown below.
 
-{{< figure src="/tutorials/mujoco_figure8/Mujoco.png" caption="MuJoCo simulator with two MuSHR cars spawned" width="800" >}}
+{{< figure src="/tutorials/mujoco_figure8/mujoco.png" caption="MuJoCo simulator a MuSHR car spawned" width="600" >}}
 <br>
 Next, in a new terminal enter the following roslaunch command.
 
@@ -267,6 +262,6 @@ Since the default plan file is our plan file of interest, we don't need to add t
 $ roslaunch mushr_mujoco_ros path_publisher.launch plan_file:='~/catkin_ws/src/mushr_mujoco_ros/plans/{name of text file}'
 ```
 
-Enjoy how one MuSHR car makes an 8 without colliding into the other car. Awesome, you have successfully completed this tutorial! Feel free to play around and design your own plans and execute them.
+Awesome, if your MuSHR car makes an 8, you have successfully completed this tutorial! Feel free to play around and design your own plans and execute them.
 
 -----------------------------------------------------------------------------------------------------------------
