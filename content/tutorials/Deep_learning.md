@@ -9,7 +9,7 @@ difficulty: Intermediate
 duration: 90
 summary: A basic tutorial on using Imitation learning and Reinforcement learning for driving the MuSHR car
 
-weight: 2
+weight: 4
 ---
 
 <h2> By: <a href=https://github.com/naughtyStark>Sidharth Talia</a></h2>
