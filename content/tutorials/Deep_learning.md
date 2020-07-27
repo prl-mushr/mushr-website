@@ -6,12 +6,13 @@ featured: true
 draft: false
 active: true
 difficulty: Intermediate
-author: Sidharth Talia | https://github.com/naughtyStark
 duration: 90
 summary: A basic tutorial on using Imitation learning and Reinforcement learning for driving the MuSHR car
 
 weight: 2
 ---
+
+<h2> By: <a href=https://github.com/naughtyStark>Sidharth Talia</a></h2>
 
 {{< figure src="/tutorials/MUSHR-DL/mushr_DL.gif" width="800" >}}
 <br>
