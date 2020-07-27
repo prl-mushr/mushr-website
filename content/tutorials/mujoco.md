@@ -11,6 +11,9 @@ summary: Run a MuSHR simulation with the MuJoCo physics engine.
 weight: 5
 ---
 
+{{< figure src="/tutorials/mujoco/mushr_mujoco.png" width="800" >}}
+<br>
+
 ## Introduction
 
 ### Goal 
@@ -51,7 +54,7 @@ $ sudo apt-get install libglfw3-dev
 
 Compile your workspace:
 {{< highlight bash >}}
-$ catkin_make
+$ cd .. && catkin_make
 {{</ highlight >}}
 
 ### Running the Simulator
@@ -109,4 +112,25 @@ line below, replacing the name of the car as needed:
 $ rosrun topic_tools relay /mux/ackermann_cmd_mux/input/teleop /mushr_mujoco_ros/buddy/control
 {{</ highlight >}}
 
-For more MuSHR MuJoCo, check out our more advanced tutorials!
+### Experimenting with MuJoCo
+
+Try to drive the car around and push the block. You might notice that it's 
+somewhat difficult to push the block with precision. Let's change the MuJoCo
+model parameters to facilitate our task. Open `block.xml` and find the `body`
+tag that describes the block. Double the mass to "2.4", and increase the size to 
+"0.1 0.1 0.1", which should provide a larger block to push. Increase the 
+friction on the block by setting friction to be "0.8 0.05 0.001". The 3 values 
+control tangential, torsional, and rolling friction, respectively. Feel free to 
+mess around with the values for a desired result.
+
+{{< highlight xml >}}
+<body pos="1.000000 0.000000 0.049" name="block" euler="0 0 0.000000">
+  <joint type="free"/>
+  <geom type="box" mass="2.4" contype="1" friction="0.8 0.05 0.001" 
+  conaffinity="1" size="0.1 0.1 0.1" rgba="0.247 0.772 0.760 1"/>
+</body>
+{{< / highlight >}}
+
+After changing model parameters, remember to recompile the workspace with 
+`catkin_make` for the changes to take effect. Have fun with MuJoCo! For more 
+MuSHR MuJoCo, check out our more advanced tutorials!
