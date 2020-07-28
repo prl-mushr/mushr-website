@@ -2,11 +2,11 @@
 title: "Driving in the Mujoco Simulator."
 date: 2020-07-15T15:14:54+10:00
 image: "/services/default.png"
-featured: true
+featured: false
 draft: false
 active: true
 duration: 30
-difficulty: Intermediate
+difficulty: Beginner
 summary: Execute a plan/trajectory in the MuJoCo simulator.
 weight: 5
 ---
@@ -21,15 +21,28 @@ This tutorial will introduce you to controlling the mushr car in the MuJoCo envi
 To command the MuSHR car to execute a figure 8 plan in the MuJoCo simulator.
 
 ### Requirements
-Complete the [Quickstart tutorial](https://mushr.io/tutorials/quickstart/). (Need to add the MuJoCo simulator setup link)
+* Complete the [Quickstart tutorial](https://mushr.io/tutorials/quickstart/). 
+* (Need to add the MuJoCo simulator setup link).
 
 ## Setup
 
-Let's first start by creating our "figure 8" plain text file.
+Let's first start by creating a new rospackage.
 
 ```bash
-$ cd ~/catkin_ws/src/mushr_mujoco_ros
-$ mkdir plans
+cd ~/catkin_ws/src
+catkin_create_pkg mushr_mujoco_figure8 rospy geometry_msgs ackermann_msgs
+```
+
+Now let's make the directories we will be needing.
+
+```bash
+cd mushr_mujoco_figure8
+mkdir launch plans
+```
+
+We first need to create our "figure 8" plain text file.
+
+```bash
 $ cd plans
 $ nano figure8.txt
 ```
@@ -104,7 +117,7 @@ Subscribed topics:
 The entire code is written below. Feel free to try to code it by yourself, as this code is very similar to the MuSHR Introductory navigation (link: [MuSHR Intro to ROS](https://mushr.io/tutorials/intro-to-ros/)), and from the earlier section we now know our rostopic of interest. The code will be explained later on.
 
 ```bash
-$ cd ~/catkin_ws/src/mushr_mujoco_ros/src
+$ cd ~/catkin_ws/src/mushr_mujoco_figure8/src
 $ nano path_publisher.py
 ```
 
@@ -174,6 +187,12 @@ if __name__ == "__main__":
     run_plan(pub_init_pose, pub_controls, plan)
 {{< / highlight >}}
 
+Make the python script executable.
+
+```bash
+chmod +x path_publisher.py
+```
+
 ## The code explained
 
 The detailed explanations of the python functions (run_plan, send_init_pose, send_command) are given in the introductory navigation tutorial (link: [MuSHR Intro to ROS](https://mushr.io/tutorials/intro-to-ros/)).
@@ -204,7 +223,7 @@ Line 2 initializes the rosnode. Lines 4-5 initializes the publisher node to cont
 We need to create a launch file to launch our path_publisher.py code. Again the entire code is pasted below, feel free to write your own launch file (Note: Make sure to implement relevant changes in path_publisher.py in case you decide to make changes).
 
 ```bash
-$ cd ~/catkin_ws/src/mushr_mujoco_ros/launch
+$ cd ~/catkin_ws/src/mushr_mujoco_figure8/launch
 $ nano path_publisher.launch
 ```
 
@@ -214,9 +233,9 @@ Paste the below code in path_publisher.launch.
 <launch>
     <arg name="control_topic" default="/mushr_mujoco_ros/buddy/control" />
     <arg name="init_pose_topic" default="/mushr_mujoco_ros/buddy/initialpose" />
-    <arg name="plan_file" default="$(find mushr_mujoco_ros)/plans/figure8.txt" />
+    <arg name="plan_file" default="$(find mushr_mujoco_figure8)/plans/figure8.txt" />
 
-    <node pkg="mushr_mujoco_ros" type="path_publisher.py" name="path_publisher" output="screen">
+    <node pkg="mushr_mujoco_figure8" type="path_publisher.py" name="path_publisher" output="screen">
         <param name="control_topic" value="$(arg control_topic)" />
         <param name="init_pose_topic" value="$(arg init_pose_topic)" />
         <param name="plan_file" value="$(arg plan_file)" />
@@ -253,13 +272,13 @@ After this step, a MuSHR car is spawned in the MuJoCo simulator as shown below.
 Next, in a new terminal enter the following roslaunch command.
 
 ```bash
-$ roslaunch mushr_mujoco_ros path_publisher.launch
+$ roslaunch mushr_mujoco_figure8 path_publisher.launch
 ```
 
 Since the default plan file is our plan file of interest, we don't need to add the path to figure8.txt manually. But, if you would like to call a different plan file you can write:
 
 ```bash
-$ roslaunch mushr_mujoco_ros path_publisher.launch plan_file:='~/catkin_ws/src/mushr_mujoco_ros/plans/{name of text file}'
+$ roslaunch mushr_mujoco_figure8 path_publisher.launch plan_file:='~/catkin_ws/src/mushr_mujoco_figure8/plans/{name of text file}'
 ```
 
 Awesome, if your MuSHR car makes an 8, you have successfully completed this tutorial! Feel free to play around and design your own plans and execute them.
