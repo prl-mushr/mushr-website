@@ -1,5 +1,5 @@
 ---
-title: "Applying deep learning to the MuSHR project"
+title: "Applying Deep Learning to Autonomus Driving"
 date: 2018-11-28T15:14:54+10:00
 image: "/services/default.png"
 featured: true
