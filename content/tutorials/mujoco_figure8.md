@@ -5,7 +5,7 @@ image: "/services/default.png"
 featured: true
 draft: false
 active: true
-duration: 20
+duration: 30
 difficulty: Intermediate
 summary: Execute a plan/trajectory in the MuJoCo simulator.
 weight: 5
