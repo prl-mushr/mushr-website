@@ -2,13 +2,14 @@
 title: "MuJoCo Simulation"
 date: 2020-07-13T15:14:54+10:00
 image: "/services/default.png"
-featured: true
+featured: false
 draft: false
 duration: 30
 active: true
 difficulty: Beginner
 summary: Run a MuSHR simulation with the MuJoCo physics engine.
 weight: 5
+by: Caelen Wang
 ---
 
 {{< figure src="/tutorials/mujoco/mushr_mujoco.png" width="800" >}}
@@ -25,13 +26,16 @@ the MuJoCo environment.
 
 ### Requirements
 
-Install the full MuSHR stack by following the 
-[Quickstart](https://mushr.io/tutorials/quickstart/) tutorial.
+* The full MuSHR stack from the 
+[Quickstart](https://mushr.io/tutorials/quickstart/) tutorial
 
-For a quick refresher on ROS, complete the [Intro to ROS](https://mushr.io/tutorials/intro-to-ros/) tutorial.
+* ROS, follow the [Intro to ROS](https://mushr.io/tutorials/intro-to-ros/) 
+tutorial for a refresher
 
-You need a licensed copy of MuJoCo. Download [mujoco200 linux](https://www.roboti.us/index.html). Place the extracted folder `mujoco200_linux` along with
-the license `mjkey.txt` in the directory `~/.mujoco`.
+* A licensed copy of [MuJoCo](https://www.roboti.us/index.html). Place the 
+extracted folder `mujoco200_linux` along with the license `mjkey.txt` in the directory `~/.mujoco/`
+
+* [Cmake](https://cmake.org/download/) miminum version 3.13.2
 
 ### Setup
 
@@ -44,8 +48,7 @@ $ git clone git@github.com:prl-mushr/mushr_mujoco_ros.git
 {{</ highlight >}}
 
 Note that in `CMakeLists.txt`, you can specify the MuJoCo directory with 
-the `MUJOCO_LOCATION` environment variable. The default path follows that in the
-previous section. Additonally, if you want to use OpenGL for enhanced graphics, 
+the `MUJOCO_LOCATION` environment variable. The default path is `~/.mujoco/`. Optionally, if you want to use OpenGL for enhanced graphics, 
 set the `USE_GL` environment variable to 1, which is the default value. To
 compile with GL install GLFW:
 {{< highlight bash >}}
@@ -61,8 +64,8 @@ $ cd .. && catkin_make
 To demonstrate the MuSHR MuJoCo environment, we will run a simple simulation 
 of a car and a block that can be pushed. Each simulation requires a ROS launch
 file, a MuJoCo model XML file, and a configuration YAML file with the same name.
-Take a look at `block.launch`, `block.xml`, and `block.yaml` in the `launch`, 
-`models`, and `config` directories, respectively.
+Take a look at `launch/block.launch`, `models/block.xml`, and 
+`config/block.yaml`.
 
 In the launch file, we can use a specific map file. The environment variable 
 should match the name of the three files mentioned above:
@@ -83,16 +86,15 @@ well as visualization. The default paths follow that in the previous step:
 </node>
 {{< / highlight >}}
 
-The model XML file contains mainly MuJoCo constants. To add a car to the 
-simulation, use an "include" tag with the path from the `models` directory:
+The model XML file contains MuJoCo constants that define the bodies and actuator parameters for the simulate car. To add a car to the simulation, use an 
+"include" tag with the path from the `models` directory:
 {{< highlight xml >}}
 <include file="cars/pusher_car/buddy.xml"/>
 {{< / highlight >}}
 
-The configuration YAML file is a straightfoward list of the simulation objects.
-The MuSHR vehicles are listed under "cars" while other objects are listed under
-"bodies". In this simulation, the car `buddy` receives the control, pose, and 
-initpose messages on the `controls`, `pose`, and `initialpose` ROS topics:
+The configuration YAML file is a list of bodies and cars whose position will be published to different topics. The MuSHR vehicles are listed under "cars" while 
+other objects are listed under "bodies". In this simulation, the car `buddy` 
+receives the control, pose, and initpose messages on the `controls`, `pose`, and `initialpose` ROS topics:
 {{< highlight xml >}}
 cars:
 - name: buddy
@@ -116,10 +118,10 @@ $ rosrun topic_tools relay /mux/ackermann_cmd_mux/input/teleop /mushr_mujoco_ros
 
 Try to drive the car around and push the block. You might notice that it's 
 somewhat difficult to push the block with precision. Let's change the MuJoCo
-model parameters to facilitate our task. Open `block.xml` and find the `body`
-tag that describes the block. Double the mass to "2.4", and increase the size to 
-"0.1 0.1 0.1", which should provide a larger block to push. Increase the 
-friction on the block by setting friction to be "0.8 0.05 0.001". The 3 values 
+model parameters to facilitate our task. Open `models/block.xml` and find 
+the `body` tag that describes the block. Double the mass to "2.4", and increase 
+the size to "0.1 0.1 0.1", which should provide a larger block to push. Increase 
+the friction on the block by setting friction to be "0.8 0.05 0.001". The 3 values 
 control tangential, torsional, and rolling friction, respectively. Feel free to 
 mess around with the values for a desired result.
 
@@ -133,4 +135,5 @@ mess around with the values for a desired result.
 
 After changing model parameters, remember to recompile the workspace with 
 `catkin_make` for the changes to take effect. Have fun with MuJoCo! For more 
-MuSHR MuJoCo, check out our more advanced tutorials!
+MuSHR MuJoCo, check out our more 
+[advanced tutorials](https://mushr.io/tutorials/mujoco_figure8/)!
