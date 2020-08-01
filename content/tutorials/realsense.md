@@ -40,7 +40,7 @@ Normally, we would launch tele-op here in order to be able to drive the car arou
 First, navigate to the directory containing the realsense2 package for ROS.
 
 {{< highlight bash >}}
-$ cd ~/catkin_ws/src/realsense2/launch/
+$ cd ~/catkin_ws/src/realsense2/realsense2_camera/launch/
 {{< / highlight >}}
 
 Here, you can now launch the camera by running the launchfile. Ensure your RealSense camera is connected to the Jetson's USB port.
@@ -54,7 +54,7 @@ If you get an error along the lines of `failed to find nodelet to unload` try re
 ## Launching RViz on your computer
 Set the `ROS_IP` to your IP. Your IP can be found in a variety of ways: [Linux](https://www.howtogeek.com/howto/17012/how-to-find-your-ip-address-in-ubuntu/), [Mac](http://osxdaily.com/2010/08/08/lan-ip-address-mac/), [Windows](https://kb.netgear.com/20878/Finding-your-IP-address-without-using-the-command-prompt).
 
-Note: the following commands in this section should be run in a terminal window connected to your device, NOT the car.
+Note: the following commands in this section should be run in a terminal window connected to your device, NOT the SSH window to the car.
 
 Set `ROS_IP` with:
 
