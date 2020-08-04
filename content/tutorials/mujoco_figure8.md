@@ -1,5 +1,5 @@
 ---
-title: "Driving in the Mujoco Simulator."
+title: "Driving in the MuJoCo Simulator."
 date: 2020-07-15T15:14:54+10:00
 image: "/services/default.png"
 featured: false
