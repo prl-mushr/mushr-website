@@ -2,15 +2,16 @@
 title: "MuJoCo Simulation"
 date: 2020-07-13T15:14:54+10:00
 image: "/services/default.png"
-featured: false
+featured: true
 draft: false
 duration: 30
 active: true
 difficulty: Beginner
 summary: Run a MuSHR simulation with the MuJoCo physics engine.
 weight: 5
-by: Caelen Wang
 ---
+
+<h2> By: <a href=https://github.com/21WANGC>Caelen Wang</a></h2>
 
 {{< figure src="/tutorials/mujoco/mushr_mujoco.png" width="800" >}}
 <br>
@@ -134,6 +135,6 @@ mess around with the values for a desired result.
 {{< / highlight >}}
 
 After changing model parameters, remember to recompile the workspace with 
-`catkin_make` for the changes to take effect. Have fun with MuJoCo! For more 
-MuSHR MuJoCo, check out our more 
-[advanced tutorials](https://mushr.io/tutorials/mujoco_figure8/)!
+`catkin_make` for the changes to take effect. Have fun with MuJoCo!
+To autonomously drive figure-8s in MuJoCo, checkout the 
+[MuJoCo Figure 8](https://mushr.io/tutorials/mujoco_figure8/) tutorial.
