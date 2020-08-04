@@ -11,6 +11,8 @@ summary: Execute a plan/trajectory in the MuJoCo simulator.
 weight: 5
 ---
 
+<h2> By: <a href=https://github.com/Alrick11>Alrick Dsouza</a></h2>
+
 {{< figure src="/tutorials/mujoco_figure8/side_shot.gif" width="800" caption="MuSHR car making a figure 8" >}}
 <br>
 
@@ -22,7 +24,7 @@ To command the MuSHR car to execute a figure 8 plan in the MuJoCo simulator.
 
 ### Requirements
 * Complete the [Quickstart tutorial](https://mushr.io/tutorials/quickstart/). 
-* (Need to add the MuJoCo simulator setup link).
+* 
 
 ## Setup
 
