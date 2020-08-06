@@ -7,12 +7,20 @@
   <div class="row justify-content-start">
     <div class="col-12 col-md-8">
       <div class="service service-single">
-        <h1 class="title">{{.Title}}</h1>
         {{ partial "call.html" . }}
         <div class="content mt-4">{{.Content}}</div>
+
+        <div class="call">
+          <div class="call-box-top">
+            <div class="call-email"><strong>For potential collaborations and research opportunities, or any other inquires,
+              <br>email us @ mushr [at] cs [dot] uw [dot] edu</strong></div>
+          </div>          
+        
+        </div>
       </div>
     </div>
   </div>
 </div>
+
 
 {{ end }}
