@@ -67,7 +67,7 @@ Run the above command, and you should be able to see the topics for the camera, 
 {{< / highlight >}}
 
 ## Launching RViz on your computer
-Set the `ROS_IP` to your IP. Your IP can be found in a variety of ways: [Linux](https://www.howtogeek.com/howto/17012/how-to-find-your-ip-address-in-ubuntu/), [Mac](http://osxdaily.com/2010/08/08/lan-ip-address-mac/), [Windows](https://kb.netgear.com/20878/Finding-your-IP-address-without-using-the-command-prompt).
+Set the `ROS_IP` to your IP. Your IP can be found in a variety of ways: [Linux](https://ubuntu.com/server/docs/network-configuration), [Mac](https://www.wikihow.com/Find-Your-IP-Address-on-a-Mac), [Windows](https://support.microsoft.com/en-us/help/4026518/windows-10-find-your-ip-address).
 
 Note: the following commands in this section should be run in a terminal window connected to your local device, NOT the SSH window to the car.
 
