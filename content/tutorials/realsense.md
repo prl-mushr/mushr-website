@@ -41,13 +41,13 @@ $ roscore
 Normally, we would launch tele-op here in order to be able to drive the car around, but let's try launching just the camera.
 
 ## Launching the Intel RealSense Camera
-First, navigate to the directory containing the <code> realsense2 <\code> package for ROS.
+First, navigate to the directory containing the `realsense2` package for ROS.
 
 {{< highlight bash >}}
 $ cd ~/catkin_ws/src/realsense2/realsense2_camera/launch/
 {{< / highlight >}}
 
-Here, you can now launch the camera by running the launchfile. Ensure your RealSense camera is connected to the Jetson's USB port. You can verify this with the <code> lsusb <\code> command.
+Here, you can now launch the camera by running the launchfile. Ensure your RealSense camera is connected to the Jetson's USB port. You can verify this with the `lsusb` command.
 
 {{< highlight bash >}}
 $ roslaunch rs_camera.launch
@@ -89,9 +89,9 @@ Now, launch RViz.
 $ rviz
 {{< / highlight >}}
 
-If you get errors make sure the following are correct:  
+If you get errors make sure the following are correct:
 
-- Teleop is running  
+- Teleop is running
 - Your laptop is connnected properly
 {{< highlight bash >}}
 $ rostopic list
@@ -116,4 +116,4 @@ After selecting the topic, you should be able to see the camera feed in RViz.
 
 {{< figure src="/tutorials/realsense/camparams.png" caption="">}}
 
-It is also possible to change camera settings and parameters, like resolution, framerate, image compression, etc. You can do this by editing the launchfile we used previously to launch the camera in the <code> ~/catkin_ws/src/realsense2/realsense2_camera/launch/ <\code> directory. Make sure that it is not running when you do this. Open it with your text editor of choice and edit the parameters in the .launch file.
+It is also possible to change camera settings and parameters, like resolution, framerate, image compression, etc. You can do this by editing the launchfile we used previously to launch the camera in the `~/catkin_ws/src/realsense2/realsense2_camera/launch/` directory. Make sure that it is not running when you do this. Open it with your text editor of choice and edit the parameters in the .launch file.
