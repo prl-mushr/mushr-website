@@ -11,6 +11,8 @@ summary: Setup and launch the camera
 weight: 1
 ---
 
+<h2> By: Akkshaj Singh</h2>
+
 ### Introduction
 This tutorial will get your car's camera operational and teach you to modify your camera data.
 
