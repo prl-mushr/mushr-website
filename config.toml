@@ -74,7 +74,7 @@ unsafe = true
 
 [[menu.main]]
     identifier = "forum"
-    name = "Forum"
+    name = "Community Forum"
     url = "https://spectrum.chat/mushr"
     weight = 7
 
@@ -92,7 +92,7 @@ unsafe = true
 
 [[menu.footer]]
     identifier = "forum"
-	name = "Forum"
+	name = "Community Forum"
 	url ="https://spectrum.chat/mushr"
     weight = 2
 
