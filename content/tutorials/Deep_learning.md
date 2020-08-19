@@ -12,7 +12,7 @@ summary: A basic tutorial on using Imitation learning and Reinforcement learning
 weight: 2
 ---
 
-<h2> By: <a href=https://github.com/naughtyStark>Sidharth Talia</a></h2>
+<h2> By: <a href=https://www.sidharthtalia.com>Sidharth Talia</a></h2>
 
 {{< figure src="/tutorials/MUSHR-DL/mushr_DL.gif" width="800" >}}
 <br>
