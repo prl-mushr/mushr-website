@@ -115,12 +115,7 @@ Now it's time to initialize the particle filter, giving it an initial estimate o
 
 _Note: be sure that your `ROS_IP` and `ROS_MASTER_URI` environment variables are correctly set before initializaing `rviz`. See the workflow tutorial for more details._
 {{< highlight bash >}}
-$ rosrun rviz rviz -d $MUSHR/mushr_utils/rviz/real.rviz
-{{< / highlight >}}
-
-If you are running this tutorial in sim, run:
-{{< highlight bash >}}
-$ rosrun rviz rviz -d $MUSHR/mushr_utils/rviz/sim.rviz
+$ rosrun rviz rviz -d $MUSHR/mushr_utils/rviz/default.rviz
 {{< / highlight >}}
 
 Initializing `rviz` with the `.rviz` files allows you to configure RVIZ's settings, including which ROS topics, in advance. This is handy if you're working on a specific task, or have preferences in how you would like to view the car's telemetry. You can always modify the existing `.rviz` files and save new ones to taste.
