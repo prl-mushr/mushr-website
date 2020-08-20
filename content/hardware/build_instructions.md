@@ -861,7 +861,7 @@ In this section, we will configure the VESC firmware, pair the bluetooth control
 
 1. Attach the Jetson Nano to the computer monitor with the HDMI cable. Plug in the keyboard and mouse into its USB ports. Unplug the USB cables of the cameras if there are not enough open USB ports. Place a box underneath the chassis body such that the wheels are not touching the table/ground/surface.
 
-2. Power on the Jetson Nano. You may use either a 5V power adapter directly into the Jetson Nano's barrel connector, or use the 5000 mAH battery.
+2. Power on the Jetson Nano. You may use either a 5V power adapter directly into the Jetson Nano's barrel connector, or use the 5000 mAH battery. Some users have had trouble booting the Jetson Nano when using the provided Jetson Nano image. In this case, instructions for installing the necessary drivers to the stock image provided by NVIDIA can be found [here](/hardware/nano_install).
 
 3. Connect to the internet by setting up a Wi-Fi connection to an existing network. First, click on the Wi-Fi symbol in the upper right of the Ubuntu GUI and choose **Edit Connections**. Click the plus sign to create a new connection. On the **Choose a Connection Type** dialog, choose **Wi-Fi** from the drop down menu, and then click **Create...**. Enter a name into the **Connection Name** field. Enter the name of the network to connect to in the **SSID** field. Under the **Mode** field, choose **Client**. Under the **BSSID** field, choose the last option (there may only be one option). Then click **Save**. An example connection is shown below. (Fig. 15.1)
 
