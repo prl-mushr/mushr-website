@@ -28,7 +28,7 @@ We also provide a virtual machine image that already has the MuSHR stack setup, 
 Window Subsystem for Linux (WSL): There has also been success getting the quickstart to run using WSL. When running `rivz` you'll need to disable native `opengl`. There will be a note ([**Note for WSL**](#wsl-users-note)) in the section running `rviz`.
 
 Python2.7: If you have Python3 as your default version, download [Conda](https://docs.conda.io/en/latest/) to easily create/manage Python2.7 virtual environments.
-* To learn how to use condo environments please see the following [tutorial](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html)
+* To learn how to use conda environments please see the following [tutorial](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html)
 ## Setup
 First we need to make sure you have a few dependencies installed. All commands are to be executed in a terminal (CTRL + ALT + T). Here is what you need:
 
