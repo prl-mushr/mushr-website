@@ -1,5 +1,5 @@
 ---
-title: "Driving in the MuJoCo Simulator."
+title: "Navigating in the MuJoCo Simulator"
 date: 2020-07-15T15:14:54+10:00
 image: "/services/default.png"
 featured: false
@@ -23,8 +23,8 @@ This tutorial will introduce you to controlling the mushr car in the MuJoCo envi
 To command the MuSHR car to execute a figure 8 plan in the MuJoCo simulator.
 
 ### Requirements
-* Complete the [Quickstart tutorial](https://mushr.io/tutorials/quickstart/). 
-* 
+* Complete the [Quickstart Tutorial](https://mushr.io/tutorials/quickstart/)  
+* Complete the [MuJoco Simulation Tutorial](https://mushr.io/tutorials/mujoco/)  
 
 ## Setup
 
@@ -42,14 +42,14 @@ cd mushr_mujoco_figure8
 mkdir launch plans
 ```
 
-We first need to create our "figure 8" plain text file.
+We will now create a text file containing a sequence of control commands designed to produce a trajectory of figure-8 shape when executed by the vehicle
 
 ```bash
 $ cd plans
 $ nano figure8.txt
 ```
 
-Paste below initial pose and drive commands in figure8.txt
+Paste the following sequence of control commands into the figure8.txt file.  
 ```
 0,0,0.785
 2.0,0.09
