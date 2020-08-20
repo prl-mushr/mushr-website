@@ -11,7 +11,12 @@ summary: Fundamental Robot Operating System (ROS) concepts using MuSHR.
 weight: 2
 ---
 
-## Introduction
+<h2> By: <a href=https://github.com/Rockett8855>Matthew Rockett</a></h2>                              
+<br>
+{{< figure src="/tutorials/intro-to-ros/ros_logo.png" width="1000" >}}
+<br>
+
+### Introduction
 
 The [Robot Operating System (ROS)](https://en.wikipedia.org/wiki/Robot_Operating_System) is a robotics middleware framework (not actually an operating system) that is commonly used across robotics platforms. MuSHR uses ROS for several utilities, the most significant of which is communication between "nodes" which each contain seperate logical roles. To learn more about these nodes, see the [MuSHR System Overview](/tutorials/overview). Gaining a grasp of fundamental ROS concepts will help you make the most of the MuSHR system, and the [many other robots](https://robots.ros.org/) which use ROS. 
 

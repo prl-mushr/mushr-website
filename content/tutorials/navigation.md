@@ -11,6 +11,8 @@ summary: Initialize and operate MuSHRs out-of-the-box autonomous navigation stac
 weight: 3
 ---
 
+<h2> By: <a href=https://www.linkedin.com/in/michalove/>Johan Michalove</a> & <a href=https://github.com/Rockett8855>Matthew Rockett</a></h2>                              
+
 ## Introduction
 
 ### Goal 

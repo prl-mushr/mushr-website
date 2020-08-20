@@ -13,6 +13,10 @@ weight: 1
 
 <h2> By: Akkshaj Singh, Ramon Qu, Rosario Scalise</h2>
 
+<br>
+{{< figure src="/tutorials/realsense/cameras.jpg" width="1000" >}}
+<br>
+
 ### Introduction
 This tutorial will get your car's camera operational and teach you to modify your camera data.
 
