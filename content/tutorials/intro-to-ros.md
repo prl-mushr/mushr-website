@@ -182,7 +182,7 @@ def send_command(pub_controls, c):
 if __name__ == "__main__":
     rospy.init_node("path_publisher")
 
-    control_topic = rospy.get_param("~control_topic", "/mux/ackermann_cmd_mux/input/navigation")
+    control_topic = rospy.get_param("~control_topic", "/car/mux/ackermann_cmd_mux/input/navigation")
     pub_controls = rospy.Publisher(control_topic, AckermannDriveStamped, queue_size=1)
 
     init_pose_topic = rospy.get_param("~init_pose_topic", "/initialpose")
@@ -234,7 +234,7 @@ In python, the if-statement `if __name__ == "__main__"` is a guard agains runnin
 if __name__ == "__main__":
     rospy.init_node("path_publisher")
 
-    control_topic = rospy.get_param("~control_topic", "/mux/ackermann_cmd_mux/input/navigation")
+    control_topic = rospy.get_param("~control_topic", "/car/mux/ackermann_cmd_mux/input/navigation")
     pub_controls = rospy.Publisher(control_topic, AckermannDriveStamped, queue_size=1)
 
     init_pose_topic = rospy.get_param("~init_pose_topic", "/initialpose")
@@ -323,7 +323,7 @@ $ mkdir launch
 Create the file `launch/path_publisher.launch`, containing:
 {{< highlight xml "linenos=table" >}}
 <launch>
-    <arg name="control_topic" default="/mux/ackermann_cmd_mux/input/navigation" />
+    <arg name="control_topic" default="/car/mux/ackermann_cmd_mux/input/navigation" />
     <arg name="init_pose_topic" default="/initialpose" />
     <arg name="plan_file" default="$(find mushr_ros_intro)/plans/straight_line.txt" />
 
@@ -378,7 +378,7 @@ $ roslaunch mushr_sim teleop.launch
 
 In another, start `rviz` (a ROS tool that allows you to visualize simulated environments):
 ```bash
-$ rosrun rviz rviz -d $MUSHR/mush_utils/rviz/mushr_ros_intro.rviz
+$ rosrun rviz rviz -d $HOME/catkin_ws/src/mushr/mushr_utils/rviz/default.rviz
 ```
 This will launch rviz with a configuration that has all the right topics visualized.
 

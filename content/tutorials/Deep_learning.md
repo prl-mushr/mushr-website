@@ -1,5 +1,5 @@
 ---
-title: "Applying Deep Learning to Autonomus Driving"
+title: "Applying Deep Learning to Autonomous Driving"
 date: 2018-11-28T15:14:54+10:00
 image: "/services/default.png"
 featured: true
@@ -9,10 +9,10 @@ difficulty: Intermediate
 duration: 90
 summary: A basic tutorial on using Imitation learning and Reinforcement learning for driving the MuSHR car
 
-weight: 4
+weight: 2
 ---
 
-<h2> By: <a href=https://www.sidharthtalia.com/>Sidharth Talia</a></h2>
+<h2> By: <a href=https://www.sidharthtalia.com>Sidharth Talia</a></h2>
 
 {{< figure src="/tutorials/MUSHR-DL/mushr_DL.gif" width="800" >}}
 <br>
@@ -76,7 +76,7 @@ $ cd PATH\\TO\\DonkeySim
 Execute these commands in the DonkeySim directory:
 ```bash
 $ git clone https://github.com/prl-mushr/gym-donkeycar.git
-$ pip3 install gym-donkeycar
+$ pip3 install -e gym-donkeycar
 $ git clone https://github.com/prl-mushr/MUSHR-DL.git
 ```
 
@@ -121,7 +121,7 @@ b) Execute the following commands in the terminal:
 
 ```bash
 $ cd DonkeySim
-$ python gym-donkeycar/examples/reinforcement_learning/ddqn.py
+$ python3 gym-donkeycar/examples/reinforcement_learning/ddqn.py
 ```
 It is possible to start the simulator by passing an argument as well but it's not the most user-friendly method, so it has been omitted for the sake of simplicity. 
 
@@ -135,7 +135,7 @@ The trained model is saved as "rl_driver.h5" in the \MUSHR-DL\gym-donkeycar\exam
 You can test your model with the following command:
 ```bash
 $ cd DonkeySim
-$ python gym-donkeycar/examples/reinforcement_learning/ddqn.py --test
+$ python3 gym-donkeycar/examples/reinforcement_learning/ddqn.py --test
 ```
 
 
@@ -161,7 +161,7 @@ abort and change driving mode (auto or manual).
 
 ```bash
 $ cd DonkeySim
-$ python run_sim.py --dataset_name=testing
+$ python3 run_sim.py --dataset_name=testing
 ```
 
 You will notice a similar interface as before:
@@ -199,21 +199,21 @@ In this tutorial, we will create a dataset for training an image-to-steering net
 
 ```bash
 $ cd DonkeySim/MUSHR-DL
-$ python post_processing_mushr.py --dataset_name=test --model=steering
+$ python3 post_processing_mushr.py --dataset_name=test --model=steering
 ```
 
 3. **Training**:
 Execute the following command to begin training the steering predicting model (assuming the dataset for steering prediction has been generated in the previous step):
 ```bash
 $ cd DonkeySim/MUSHR-DL
-$ python pytorch_img_to_steering_train.py --dataset_name=test
+$ python3 pytorch_img_to_steering_train.py --dataset_name=test
 ```
 the model will be saved with a preset name. The same model name is used in testing as well as the model running script, and so for the sake of the tutorial, the name should be left as is.
 
 Testing:
 The following command can be used to test the model. The printed numbers are the error (or difference) between the ground truth (human driver or supervisor's response to the input image) and the network output.
 ```bash
-$ python pytorch_img_to_steering_test.py --dataset_name=test
+$ python3 pytorch_img_to_steering_test.py --dataset_name=test
 ```
 
 4. **Driving the car using the trained model**:
@@ -222,7 +222,7 @@ To use a model for driving the car (assuming that the model exists), start the s
 
 ```bash
 $ cd DonkeySim/MUSHR-DL
-$ python run_sim.py --test=True --model=steering --env_name=MUSHR_benchmark
+$ python3 run_sim.py --test=True --model=steering --env_name=MUSHR_benchmark
 ```
 The environment "MUSHR_benchmark" is a simpler, fixed environment that you can use to compare the performance of different networks.
 the model type is set to steering as we trained a simple image to steering prediction network.
@@ -305,9 +305,3 @@ The same file includes 2 other functions for utilizing a different approach towa
 The [pytorch_img_to_steer_train.py](https://github.com/prl-mushr/MUSHR-DL/blob/master/pytorch_img_to_steer_train.py) shows how the image-to-steering model can be trained. Here we assume that the model has already been defined and accepts a 320x240x1 image (or Tensor) and spits out a 2x1 output. The [pytorch_high_level.py](https://github.com/prl-mushr/MUSHR-DL/blob/master/pytorch_high_level.py) module provides a high-level interface for training any model.
 
 If you create a model with different outputs, like the Bezier or image-to-image model, you will have to write your own code for converting the model's output into control commands. The scripts mentioned here can be used as a template for you to make your own scripts.  
-
-
-
-
-
-
