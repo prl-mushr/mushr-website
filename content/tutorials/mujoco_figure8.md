@@ -8,7 +8,7 @@ active: true
 duration: 30
 difficulty: Beginner
 summary: Execute a plan/trajectory in the MuJoCo simulator.
-weight: 5
+weight: 3
 ---
 
 <h2> By: <a href=https://github.com/Alrick11>Alrick Dsouza</a></h2>

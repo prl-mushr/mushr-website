@@ -8,7 +8,7 @@ duration: 30
 active: true
 difficulty: Beginner
 summary: Run a MuSHR simulation with the MuJoCo physics engine.
-weight: 5
+weight: 3
 ---
 
 <h2> By: <a href=https://github.com/21WANGC>Caelen Wang</a></h2>
