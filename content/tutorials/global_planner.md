@@ -11,6 +11,11 @@ summary: Plan paths from start to goal in known map
 weight: 3
 ---
 
+<h2> By: <a href=https://www.mattschmittle.com/>Matt Schmittle</a></h2>                              
+<br>
+{{< figure src="/tutorials/global_planner/header.png" width="1000" >}}
+<br>
+
 ### Introduction
 The [Open Montion Planner Library(OMPL)](http://ompl.kavrakilab.org/index.html) contains modules for computing motion plans using sampling-based algorithms. OMPL is designed to be easily integrated into other systems and provide necessary components such as ROS, and Moveit. In this tutorial, we will be using the mushr_global_planner that provides [ROS services](http://wiki.ros.org/rospy/Overview/Services) as an API for planning a path from a start position to a goal position.
 

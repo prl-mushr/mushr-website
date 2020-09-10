@@ -8,8 +8,11 @@ active: true
 duration: 15 - 30
 difficulty: Beginner 
 summary: Get your car started and teleop running 
-weight: 1
+weight: 2
 ---
+
+<h2> By: <a href=https://www.mattschmittle.com/>Matt Schmittle</a></h2>  
+{{< figure src="/tutorials/first_steps/firststep.jpg" width="800" >}} <br>                           
 
 ### Introduction
 This tutorial will get your car up and running teleoperation.

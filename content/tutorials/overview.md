@@ -11,6 +11,8 @@ summary: Basic components of the car and their associated software counterparts.
 weight: 2
 ---
 
+<h2> By: <a href=https://www.mattschmittle.com/>Matt Schmittle</a></h2>                              
+
 ### Introduction
 This tutorial is largely informative and intended to read more like a manual. We will cover all the major software and hardware components of the car.
 

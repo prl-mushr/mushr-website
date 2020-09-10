@@ -8,8 +8,16 @@ active: true
 duration: 60
 difficulty: Beginner
 summary: Fine tuning car specific control parameters.
-weight: 4
+weight: 2
 ---
+
+<h2> By: <a href=https://github.com/Rockett8855>Matthew Rockett</a></h2>                              
+<figure>
+  <img src="/tutorials/tuning/steering_angle_offset/left.gif" style="width: 32%;" />
+  <img src="/tutorials/tuning/steering_angle_offset/straight.gif" style="width: 32%;" />
+  <img src="/tutorials/tuning/steering_angle_offset/right.gif" style="width: 32%;" />
+
+</figure>
 
 ### Introduction
 The VESC maps input velocities (m/s) and steering angles (radians) to Electrical RPMs and servo positions. Due to small physical differences in the car, the parameters of the conversion need to be tuned to the specific car. This guide will provide you with the steps needed to tune the parameters of the VESC.

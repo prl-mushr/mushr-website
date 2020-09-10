@@ -11,6 +11,7 @@ summary: Run the MuSHR platform on your machine!
 weight: 1
 ---
 
+<h2> By: <a href=https://www.mattschmittle.com/>Matt Schmittle</a></h2>                              
 {{< figure src="/tutorials/quickstart/quickstart_header.gif" width="800" >}}
 <br>
 
