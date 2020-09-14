@@ -120,7 +120,7 @@ Then, to go to the next tmux pane type `ctrl+b` then `[arrow key]`. Now, we will
 $ roslaunch mushr_rhc_ros sim.launch
 {{< / highlight >}}
 
-The default setting is to use the ground truth sim pose for localization. But if you would like to use the particle filter (noisier) we have to change one default value. Open `mushr_rhc/mushr_rhc_ros/launch/sim/sim.launch` using your favorite text editor. Replace `car_pose` with `pf/inferred_pose`.
+The default setting is to use the ground truth sim pose for localization. But if you would like to use the particle filter (noisier) we have to change one default value. Open `mushr_rhc/mushr_rhc_ros/launch/sim/sim.launch` using your favorite text editor. Replace `car_pose` with `particle_filter/inferred_pose`.
 {{< highlight bash >}}
 $ roslaunch mushr_pf sim.launch
 {{< / highlight >}}
