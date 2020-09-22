@@ -10,8 +10,7 @@ summary: Use a single-shot-detector to run inferences on the MuSHR Cars!
 weight: 3
 ---
 
-By: Adit Jha (Undergraduate)</a>
-
+<h2> By: <a href=https://www.linkedin.com/in/aditmjha/>Adit Jha (Undergrad)</a></h2>
 {{< figure src="/tutorials/people_detection/pose-example.PNG" width="800" >}}
 
 ## Introduction
