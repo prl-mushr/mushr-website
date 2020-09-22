@@ -13,11 +13,7 @@ weight: 3
 
 <h2> By: <a href=https://www.linkedin.com/in/michalove/>Johan Michalove</a> & <a href=https://github.com/Rockett8855>Matthew Rockett</a></h2>   
 
-<<<<<<< HEAD
 {{< figure src="/tutorials/autonomous_navigation/auto.gif" >}}<br>
-=======
-{{< figure src="/tutorials/autonomous-navigation/auto.gif" >}}<br>
->>>>>>> aba85a9a3dea0973cc726f9f3423f8a28f10fdb7
 
 ## Introduction
 
