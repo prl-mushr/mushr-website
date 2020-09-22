@@ -14,11 +14,8 @@ weight: 2
 <h2> By: <a href=https://www.mattschmittle.com/>Matt Schmittle</a></h2> 
 {{< figure src="/tutorials/workflow/work.jpg" >}}  <br>
 
-<<<<<<< HEAD
-=======
 ## Introduction
 
->>>>>>> aba85a9a3dea0973cc726f9f3423f8a28f10fdb7
 ### Goal 
 To learn common workflows with the software stack to speed up development on your own projects. It will also cover common problems and troubleshooting tips and tricks.
 
