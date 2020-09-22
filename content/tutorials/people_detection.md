@@ -5,12 +5,14 @@ featured: true
 draft: false
 duration: 45
 active: true
-difficulty: Easy
+difficulty: Beginner/Intermediate
 summary: Use a single-shot-detector to run inferences on the MuSHR Cars!
 weight: 3
 ---
 
 By: Adit Jha (Undergraduate)</a>
+
+{{< figure src="/tutorials/people_detection/pose-example.PNG" width="800" >}}
 
 ## Introduction
 
@@ -90,6 +92,8 @@ coordinates representing any people detected in the camera feed of the car.
     
 3. To see the detected bounding boxes with the confidence and labels, please go to rviz and subscribe
 to the topic `detected_image` where you should see a live stream of inference results.
+
+{{< figure src="/tutorials/people_detection/sample-inference.jpg" width="800" >}}
 
 4. To see Marker Spheres representing the detected people and their relative poses to the car, please go to rviz
 and subscribe to the topic `visualization_markers`. If there are people detected in the frame, you should
