@@ -47,7 +47,7 @@ The github repository that needs to be setup for using object detection is [`jet
     
 ## Getting Started with People Detection
 
-1. Please clone the following repository that contains the python package [`people-detection`](https://github.com/aditjha/people-detection).
+1. Please clone the following repository that contains the python package [`people-detection`](https://github.com/prl-mushr/people_detection).
 
     This repo contains a `src` directory that holds the code necessary to run object detections and 3D position estimates.
 
