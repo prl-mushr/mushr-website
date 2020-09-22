@@ -5,3 +5,6 @@
 	path = public
 	url = git@github.com:prl-mushr/prl-mushr.github.io.git
 	branch = master
+[submodule "themes/hugo-video"]
+	path = themes/hugo-video
+	url = https://github.com/martignoni/hugo-video.git

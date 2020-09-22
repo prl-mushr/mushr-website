@@ -8,7 +8,7 @@ active: true
 duration: 20 
 difficulty: Beginner 
 summary: Setup and launch the camera
-weight: 1
+weight: 2
 ---
 
 <h2> By: Akkshaj Singh, Ramon Qu, Rosario Scalise</h2>

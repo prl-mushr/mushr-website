@@ -8,7 +8,7 @@ active: true
 duration: 60
 difficulty: Beginner
 summary: Fine tuning car specific control parameters.
-weight: 4
+weight: 2
 ---
 
 <h2> By: <a href=https://github.com/Rockett8855>Matthew Rockett</a></h2>                              

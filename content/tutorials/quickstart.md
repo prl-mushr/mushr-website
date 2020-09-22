@@ -172,5 +172,19 @@ The main pane will show a map of an empty square space. The ligher areas are the
 
 Clicking and dragging will change the perspective of `rviz`, while `Shift + Click` and draging will move the map around.
 
+### Changing the map
+
+The current map is fine for driving around, but to do more interesting things you may want more interesting maps. To change the map follow these steps:
+
+{{< highlight bash >}}
+# To list what maps are available
+$ ls ~/catkin_ws/src/mushr_sim/maps/
+# Open map_server.launch
+$ nano ~/catkin_ws/src/mushr_sim/launch/map_server.launch
+# Change the the map server name
+{{< / highlight >}}
+
+You can make your own maps using SLAM based techniques like [gmapping](http://wiki.ros.org/gmapping) or [cartographer](https://google-cartographer-ros.readthedocs.io/en/latest/). But if you just want something quick and simple, you can make your own `.yaml` and `.png` files for the map. Use the current map files as a template. We use [Gimp](https://www.gimp.org/) to edit the map `.png` file but you can use any image editor you like.
+
 ## Going Further
 To learn about programming the car, continue to the [Intro to ROS Tutorial](/tutorials/intro-to-ros).
