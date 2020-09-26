@@ -47,22 +47,13 @@ The following steps will setup the required libraries on the Jetson Nano.
     {{< / highlight >}} <br/>
 If the upper right hand corner of the GUI recommends a firmware update, download and install the updated firmware.
 
-7. Open the file **~/catkin_ws/src/mushr/mushr_hardware/mushr_hardware/launch/sensors.launch**. Comment out the lines that launch **rs_camera.launch**, and add the following code as shown in Fig. 1.
-
-    {{< highlight bash >}}
-    <node pkg="timed_roslaunch" type="timed_roslaunch.sh"
-          args="10 realsense2_camera rs_camera.launch camera:=/$(arg car_name)/camera tf_prefix:=/$(arg car_name)/camera"
-          name="rs_camera_timed_roslaunch" output="screen" />
-    {{< / highlight >}} <br/>
-	{{< figure src="/hardware/nano_install/rs_camera_delayed_launch.png" caption="Fig. 1" width="800">}}
-
-8. Setup an access point on the robot. To do this, first click on the Wi-Fi symbol in the upper right of the Ubuntu GUI and choose **Edit Connections**. Click the plus sign to create a new connection. On the **Choose a Connection Type** dialog, choose **Wi-Fi** from the drop down menu, and then click **Create...**. Enter the name **Robot AP** into the **Connection Name** field. Under the **Wi-Fi** tab, also enter **Robot AP** into the **SSID** field. Under the **Mode** field, choose **Hotspot**. Under the **BSSID** field, choose the last option (there may only be one option). Under the **Wi-Fi Security** tab, choose the **WPA and WPA2 Personal** option in the **Security** field. Then enter a password into the **Password** field. Then click **Save**. This setup is shown below in Fig. 2 and 3.
+7. Setup an access point on the robot. To do this, first click on the Wi-Fi symbol in the upper right of the Ubuntu GUI and choose **Edit Connections**. Click the plus sign to create a new connection. On the **Choose a Connection Type** dialog, choose **Wi-Fi** from the drop down menu, and then click **Create...**. Enter the name **Robot AP** into the **Connection Name** field. Under the **Wi-Fi** tab, also enter **Robot AP** into the **SSID** field. Under the **Mode** field, choose **Hotspot**. Under the **BSSID** field, choose the last option (there may only be one option). Under the **Wi-Fi Security** tab, choose the **WPA and WPA2 Personal** option in the **Security** field. Then enter a password into the **Password** field. Then click **Save**. This setup is shown below in Fig. 2 and 3.
 
     {{< figure src="/hardware/nano_install/robot_ap_setup.png" caption="Fig. 2" width="800">}}  
 
     {{< figure src="/hardware/nano_install/robot_ap_pass.png" caption="Fig. 3" width="800">}}  
 
-9. Some changes only take effect after re-booting, so shutdown the robot.
+8. Some changes only take effect after re-booting, so shutdown the robot.
     {{< highlight bash >}}
     sudo shutdown -P now
     {{< / highlight >}} <br/>

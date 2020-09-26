@@ -875,64 +875,37 @@ In this section, we will configure the VESC firmware, pair the bluetooth control
 
     {{< figure src="/hardware/build_instructions/15_03_enable_networking.png" caption="Fig. 15.3" width="800">}} 
     
-6. Open a terminal and install gparted using the following command:
+6. We will now upload firmware to the VESC. First, plug the 3000 mAH battery into the VESC. Note that you should charge the battery if not done already.
 
-    {{< highlight bash >}}
-    sudo apt-get install gparted
-    {{< / highlight >}} <br/>
-
-7. Next, we will use gparted to expand the SD card partition. Open the gparted program, and right click on the **/dev/mmcblk0p1** partition. Choose **Resize/Move**. In the dialog that opens, drag the slider all the way to the right. Then click **Resize**. The dialog box will close. Click the green check mark, and click **Apply** in the resulting dialog. You should now have very little or no unallocated space. Close gparted. (Fig. 15.4)
-
-    {{< figure src="/hardware/build_instructions/15_04_gparted.png" caption="Fig. 15.4" width="800">}}
-    
-8. We will now upload firmware to the VESC. First, plug the 3000 mAH battery into the VESC. Note that you should charge the battery if not done already.
-
-9. Open a terminal and use the following command to open the VESC programming GUI:    
+7. Open a terminal and use the following command to open the VESC programming GUI:    
 
     {{< highlight bash >}}
     cd && ./bldc-tool/BLDC_Tool
     {{< / highlight >}} <br/>
 
-10. In the upper right corner of the GUI, there is a dropdown box, and two buttons - one with a circular arrow and one labeled **Connect**. Click on the circular arrow button until the dropdown box reads **VESC - ttyACM0**. Look in the lower right of the GUI, where it should say **Not Connected**. Click on the **Connect** button until the text in the lower right flashes green and then reads **Connected**. (Fig. 15.5)
+8. In the upper right corner of the GUI, there is a dropdown box, and two buttons - one with a circular arrow and one labeled **Connect**. Click on the circular arrow button until the dropdown box reads **VESC - ttyACM0**. Look in the lower right of the GUI, where it should say **Not Connected**. Click on the **Connect** button until the text in the lower right flashes green and then reads **Connected**. (Fig. 15.5)
 
     {{< figure src="/hardware/build_instructions/15_05_connect_vesc.png" caption="Fig. 15.5" width="800">}}
 
-11. Next, click on the **Firmware** tab. Under the **Upload New Firmware** section, click **Upload**. Read the warning and click **OK**. Choose the file at the path **bldc-tool/firmwares/hw_410_411_412/VESC_servoout.bin**. **It is VERY important to choose the correct file, as the previous warning described.** After verifying that you have chosen the correct file, click **Upload** to upload the firmware. (Fig. 15.6)
+9. Next, click on the **Firmware** tab. Under the **Upload New Firmware** section, click **Upload**. Read the warning and click **OK**. Choose the file at the path **bldc-tool/firmwares/hw_410_411_412/VESC_servoout.bin**. **It is VERY important to choose the correct file, as the previous warning described.** After verifying that you have chosen the correct file, click **Upload** to upload the firmware. (Fig. 15.6)
 
     {{< figure src="/hardware/build_instructions/15_06_upload_vesc_firmware.png" caption="Fig. 15.6" width="800">}}
     
-12. After uploading the firmware, the VESC will automatically reboot. If the **BLDC Tool** GUI closes, re-open as described in step 9. Click on the **Motor Configuration** tab (in the case that the GUI did not close), and re-connect to the VESC as described in step 10.
+10. After uploading the firmware, the VESC will automatically reboot. If the **BLDC Tool** GUI closes, re-open as described in step 9. Click on the **Motor Configuration** tab (in the case that the GUI did not close), and re-connect to the VESC as described in step 10.
 
-13. In the lower left corner of the GUI, click the **Read configuration** button. Many of the fields should now be populated with non-zero values. Next, click the **Load XML** button. Choose the file at the path **catkin_ws/src/mushr/mushr_base/vesc/vesc_configs/mushr_vesc_sensorless_config.xml**. Then click **Write configuration** (which is to the right of the **Read configuration** button). Next, **make sure that the robot's wheels are suspended in air, because we are about to make the wheels move**. Press (and hold) any of the arrow keys. This should cause the wheels to move. Close the **BLDC Tool** GUI. (Fig. 15.7)
+11. In the lower left corner of the GUI, click the **Read configuration** button. Many of the fields should now be populated with non-zero values. Next, click the **Load XML** button. Choose the file at the path **catkin_ws/src/mushr/mushr_base/vesc/vesc_configs/mushr_vesc_sensorless_config.xml**. Then click **Write configuration** (which is to the right of the **Read configuration** button). Next, **make sure that the robot's wheels are suspended in air, because we are about to make the wheels move**. Press (and hold) any of the arrow keys. This should cause the wheels to move. Close the **BLDC Tool** GUI. (Fig. 15.7)
 
     {{< figure src="/hardware/build_instructions/15_07_load_xml.png" caption="Fig. 15.7" width="800">}}
     
-14. Note the column of icons on the left-side of the Ubuntu GUI. Click on the uppermost one, and type **Bluetooth**. Use the search result to open the **Bluetooth** dialog. Turn on the PS4 controller by pressing on the **Playstation** button. **Note that the controller must first be charged using a USB-mini cable.** The LED on the front of the controller should flash. Put the controller into pairing mode by simultaneously holding down the **Playstation** button and the **Share** button. The LED on the front of the controller should continuously emit quick flashes. Next, in the **Bluetooth dialog**, click on the plus icon in the lower left corner. In the dialog that pops up, choose **Input devices(mice,keyboards,etc.)** in the **Device type** drop down. There should now be a single entry labelled **Wireless Controller**. Click it, and then click **Next** in the lower right corner. After the dialog reports **Successfully set up new device 'Wireless Controller'**, close the **Bluetooth** dialog. (Fig. 15.8)
+12. Note the column of icons on the left-side of the Ubuntu GUI. Click on the uppermost one, and type **Bluetooth**. Use the search result to open the **Bluetooth** dialog. Turn on the PS4 controller by pressing on the **Playstation** button. **Note that the controller must first be charged using a USB-mini cable.** The LED on the front of the controller should flash. Put the controller into pairing mode by simultaneously holding down the **Playstation** button and the **Share** button. The LED on the front of the controller should continuously emit quick flashes. Next, in the **Bluetooth dialog**, click on the plus icon in the lower left corner. In the dialog that pops up, choose **Input devices(mice,keyboards,etc.)** in the **Device type** drop down. There should now be a single entry labelled **Wireless Controller**. Click it, and then click **Next** in the lower right corner. After the dialog reports **Successfully set up new device 'Wireless Controller'**, close the **Bluetooth** dialog. (Fig. 15.8)
 
     {{< figure src="/hardware/build_instructions/15_08_pair_controller.png" caption="Fig. 15.8" width="800">}}
     
-15. Open the file **/home/robot/catkin_ws/src/mushr/mushr_base/mushr_base/config/joy_teleop.yaml** for editing. Note the hierarchal structure of this file. Under the field **teleop->human_control->axis_mappings**, there are two sections, each consisting of an **axis**, **target**, **scale**, and **offset** field. We will edit the section whose **target** field has a value of **drive.steering_angle**. The value of the **axis** field should be changed from **3** to **2**. Note that this may have already been done for you as a result of future updates. Save and close the file. (Fig. 15.9)
+13. Re-open the **Network Connections** by clicking on the Wi-Fi symbol in the upper right of the Ubuntu GUI and choosing **Edit Connections**. Highlight the connection that you created in step 3, and click the minus icon to delete it. Afterwards, **Robot AP** should be the only remaining connection under the **Wi-Fi** section. Double-click on the **Robot AP** connection to edit it. Click on the **General** tab, and re-enable the **Automatically connect to this network when it available** option. Click **Save**. Disable and re-enable networking (as described in step 5) so that the robot uses the **Robot AP** connection. Verify that this connection is being used by entering the **ifconfig** command into the terminal and checking that there is an entry containing the IP **10.42.0.1**. (Fig. 15.9)
 
-    {{< figure src="/hardware/build_instructions/15_09_edit_joy_config.png" caption="Fig. 15.9" width="800">}}  
+    {{< figure src="/hardware/build_instructions/15_09_robot_ap_reconnect.png" caption="Fig. 15.9" width="800">}} 
     
-16. Open the file **/home/robot/catkin_ws/src/mushr/mushr_base/vesc/vesc_main/config/racecar-uw-nano/vesc.yaml** for editing. Change the **speed_to_erpm_gain** field to have a value of **-3500**, and the **steering_angle_to_servo_gain** field to have a value of **0.95**. These parameters affect the computation of the robot's odometry. While these values serve as a starting point, they will need to be tuned for your own car. More information about these parameters and how to tune them will be given in a soon-to-be-released [tutorial](/tutorials). Save and close the file. (Fig. 15.10)
-
-    {{< figure src="/hardware/build_instructions/15_10_vesc_params.png" caption="Fig. 15.10" width="800">}}  
-    
-17. Open the file **/etc/rc.local** for editing. **Note that you will need to use sudo to edit it**. On the line before the line that reads **nvpmodel -m 0**, add the following: 
-
-    {{< highlight bash >}}
-    rs-enumerate-devices &> /dev/null
-    {{< / highlight >}} <br/>
-    This causes the Jetson Nano to correctly recognize all of the camera devices on startup. Note that this line already may have been added for you as a result of future updates. Save and close the file. (Fig. 15.11)
-
-    {{< figure src="/hardware/build_instructions/15_11_enumerate_devices.png" caption="Fig. 15.11" width="800">}}   
-
-18. Re-open the **Network Connections** by clicking on the Wi-Fi symbol in the upper right of the Ubuntu GUI and choosing **Edit Connections**. Highlight the connection that you created in step 3, and click the minus icon to delete it. Afterwards, **Robot AP** should be the only remaining connection under the **Wi-Fi** section. Double-click on the **Robot AP** connection to edit it. Click on the **General** tab, and re-enable the **Automatically connect to this network when it available** option. Click **Save**. Disable and re-enable networking (as described in step 5) so that the robot uses the **Robot AP** connection. Verify that this connection is being used by entering the **ifconfig** command into the terminal and checking that there is an entry containing the IP **10.42.0.1**. (Fig. 15.12)
-
-    {{< figure src="/hardware/build_instructions/15_12_robot_ap_reconnect.png" caption="Fig. 15.12" width="800">}} 
-    
-19. Note that this step will cause the LIDAR to spin. Enter the following command into the terminal:
+14. Note that this step will cause the LIDAR to spin. Enter the following command into the terminal:
 
     {{< highlight bash >}}
     roslaunch ydlidar lidar.launch
@@ -940,7 +913,7 @@ In this section, we will configure the VESC firmware, pair the bluetooth control
     
     If you get the error **YDLIDAR Cannot bind to the specified serial port /dev/ydlidar**, this means that the **USB micro end** of the LIDAR cable was plugged in backwards. Use **CTRL-C** to shutdown the node. Then swap the two USB micro ends of the LIDAR cable so that they are plugged into the opposite receptacles, and then try the above command again. When they are plugged in correctly, the LIDAR will begin spinning. Use **CTRL-C** to shutdown the node.
     
-20. Shutdown the robot with the following command:  
+15. Shutdown the robot with the following command:  
 
     {{< highlight bash >}}
     sudo shutdown -P now
@@ -948,7 +921,7 @@ In this section, we will configure the VESC firmware, pair the bluetooth control
     
     Once the robot has shutdown, unplug the monitor, keyboard and mouse. Re-insert any sensor USB cables that were removed at the beginning of this section.
     
-21. You have now completely configured the MuSHR robot's software!
+16. You have now completely configured the MuSHR robot's software!
 ___
 ## Teleoperate the Robot
 
