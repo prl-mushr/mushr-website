@@ -97,7 +97,14 @@ To enable the robot's sensors and hardware including the motor controller, you w
 $ roslaunch mushr_base teleop.launch
 {{< / highlight >}}
 
-Then, to go to the next tmux pane type `ctrl+b` then `[arrow key]`. Now, we will launch the localization node in the second tmux pane:
+Then, to go to the next tmux pane type `ctrl+b` then `[arrow key]`. Now launch the `map_server`:
+{{< highlight bash >}}
+# Make sure mushr/mushr_base/mushr_base/mushr_base/maps has your map 
+# and mushr_base/launch/includes/map_server.launch is set to your map
+$ roslaunch mushr_base map_server.launch
+{{< / highlight >}}
+
+Now, we will launch the localization node:
 {{< highlight bash >}}
 $ roslaunch mushr_pf real.launch
 {{< / highlight >}}
