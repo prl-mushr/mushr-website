@@ -17,7 +17,7 @@ weight: 3
 ## Introduction
 
 ### Goal 
-In the multi-agent system, car detection is one of the most important components to ensure all cars to communicate and run normally, as well as avoid collision. This tutorial will introduce you to produce bounding prisms to label cars based on mocap car pose data.
+In a multi-agent system, car detection is one of the fundamental processes that must take place in order for cars to make decisions from their oberservations. This applies to collision avoidance & navigation, as well as any other form of cooperative task. This tutorial will introduce you to produce bounding prisms to label cars based on mocap car pose data, and training a model from your newly labeled data.
 
 ### Requirements
 - Complete the [quickstart tutorial](https://mushr.io/tutorials/quickstart/)
@@ -29,27 +29,28 @@ In the multi-agent system, car detection is one of the most important components
 
 ### Mathematical Explanations
 
-When generating labels using motion capture data, there are three offsets to consider: the base_link to the marker, the centroid to base_link, and the camera to base_link. Using these, we can derive the true position of a car on a camera frame, and create a corresponding label. In this example, car 1 is the subscriber, car 2 is the publisher. 
+It's important to remember that the sensor measurements from the cars and mocap all have their own frame of reference. In order to combine these into a bounding box on a single car's camera frame, we need to be able to switch between frames of reference in a computationally effective way. This is done through the use of transforms.
+There are 4 important frames of reference: the world (where the mocap marker is tracked), the base_link (root of a car's tf tree), the camera on the car, and the centroid of a car (used to generate a bounding prism). Being able to move between these frames of reference is necessary to derive the true position of a car on a camera frame, and create a corresponding label.
 
-Assuming x_T_y means the transform of x w.r.t. y:
+In this example, car 1 is the subscriber, car 2 is the publisher. 
+Let x_T_y mean the transform of x w.r.t. y:
 
-- mark1_T_cam2 = base2_T_cam2 * mark2_T_base2 * world_T_mark2 * mark1_T_world
-- center1_T_cam2 = mark1_T_cam2 * base1_T_mark1 * center1_T_base1
+- marker1_T_cam2 = base2_T_cam2 * marker2_T_base2 * world_T_marker2 * marker1_T_world
+- center1_T_cam2 = marker1_T_cam2 * base1_T_marker1 * center1_T_base1
 
-mark2_T_world and mark1_T_world is given by the mocap data
-world_T_mark2 is the inverse of mark2_T_world
-base_T_cam, mark_T_base, center_T_base are all constants depending on how you set up your system
+marker1_T_world and marker2_T_world are given by the mocap data
+world_T_marker2 is the inverse of marker2_T_world
+base_T_cam, marker_T_base, center_T_base are all constants depending on how you set up your system
 
-##  Setup
 
-### Bag Creation:
+## Bag Creation:
 
 Whether you create your own dataset using your own bag(s), or you use ours, these are the key ROS topics for each car:
 - d435 color camera: /carXX/camera/color/image_throttled
 - mocap pose: /vrpn_client_node/carXX/pose
 - camera parameters: /carXX/camera/color/camera_info
 
-### Creating Your Dataset:
+## Creating Your Dataset:
 
 Now that you have a bag, you will use gen_darknet_label.py to create your labels & dataset in the darknet format. The implementation of YOLOv5 we are using requires the dataset to be in darknet format:
 - bounding boxes are represented by (x_center, y_center, w, h)
@@ -69,7 +70,7 @@ dataset/
 		...
 {{< / highlight >}}
 
-## Implementation
+### Labeling Implementation
 
 The entire implementation code can be found at the [car pose detection repo](https://github.com/prl-mushr/pose_prediction).
 
@@ -168,7 +169,7 @@ for topic, msg, t in bag.read_messages(topics=topics):
 
 {{< / highlight >}}
 
-Next, it will step over each video frame. Since the motion capture data is more dense, we must find the corresponding data point to each frame. Each message of a rostopic has a timestamp, so we pick the message with the closest timestamp to the frame’s timestamp.
+Next, it will step over each video frame. Since the motion capture data is published at a much higher rate, we must find the mocap data to each video frame. Each message of a rostopic has a timestamp, so we pick the mocap message with the closest timestamp to the video frame’s timestamp.
 
 {{< highlight python "linenos=table,linenostart=88" >}}
 idx35 = 0
@@ -363,7 +364,7 @@ names: ['Car']
 
 This file should be in yolov5/data.
 
-### Training Your Model
+## Training Your Model
 Now we can begin training our model! YOLOv5 has four different model sizes: S, M, L, and XL. We used the smallest: yolov5s.yaml.
 The parameters we used were:
 python train.py --data ./data/carpose.yaml --cfg ./models/yolov5s.yaml --logdir /mnt/hard_data/Checkpoints/carpose/runs/ --workers 0 --img-size 640 --single-cls --device 1 --batch 16 --epochs 10 --weights '’
