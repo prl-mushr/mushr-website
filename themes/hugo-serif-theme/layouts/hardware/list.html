@@ -18,8 +18,8 @@
 
 <div class="container pt-6 pb-md-12">
   <div class="row">
-    {{ $tutorials := where (where .Site.RegularPages "Type" "hardware") ".Params.active" true }}
-    {{ range $tutorials.ByWeight }}
+    {{ $hardware := where (where .Site.RegularPages "Type" "hardware") ".Params.active" true }}
+    {{ range $hardware.ByWeight }}
     <div class="col-12 col-md-6 mb-2 ">{{ .Render "summary" }}</div>
     {{ end }}
   </div>

@@ -5,7 +5,7 @@ intro_image: imgs/single-car.jpg
 image: "/services/default.png"
 featured: false
 draft: false
-active: false
+active: true
 summary: Use a script to setup your SD card
 weight: 2
 ---
