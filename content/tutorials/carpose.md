@@ -50,6 +50,8 @@ Whether you create your own dataset using your own bag(s), or you use ours, thes
 - mocap pose: /vrpn_client_node/carXX/pose
 - camera parameters: /carXX/camera/color/camera_info
 
+[Our bag](https://drive.google.com/file/d/188FisqxHnleVF0pH2rgzhl2GQax44CwF/view?usp=sharing)
+
 ## Creating Your Dataset:
 
 Now that you have a bag, you will use gen_darknet_label.py to create your labels & dataset in the darknet format. The implementation of YOLOv5 we are using requires the dataset to be in darknet format:
@@ -69,6 +71,8 @@ dataset/
 		img_000001.jpg
 		...
 {{< / highlight >}}
+
+[Our dataset](https://drive.google.com/file/d/1OlQMDoQdRHgOkPv0MNK6GRmy67pbF8c_/view?usp=sharing)
 
 ### Labeling Implementation
 
@@ -371,6 +375,9 @@ python train.py --data ./data/carpose.yaml --cfg ./models/yolov5s.yaml --logdir 
 
 
 Change the logdir to wherever you want the output to be, this will include model checkpoints, plots, and examples from each epoch. The --workers parameter only worked when set to 0 for us. The --device parameter selects which cuda device to use. You can increase/decrease the batch size based on your GPU, and change the training length (epochs). You can also use previously stored weights by filling in the --weights parameter.
+
+[Our trained model](https://drive.google.com/file/d/1P3yP3Jq1Om5sCu4UxNh2ctcXkRiMI0s0/view?usp=sharing)
+
 
 ## Demo Video
 
