@@ -50,7 +50,7 @@ Whether you create your own dataset using your own bag(s), or you use ours, thes
 - mocap pose: /vrpn_client_node/carXX/pose
 - camera parameters: /carXX/camera/color/camera_info
 
-Alternatively, you can download [our bag](https://drive.google.com/file/d/188FisqxHnleVF0pH2rgzhl2GQax44CwF/view?usp=sharing).
+You can download [our bag](https://drive.google.com/file/d/188FisqxHnleVF0pH2rgzhl2GQax44CwF/view?usp=sharing) to see how we gathered data, or to follow along the rest of the tutorial with.
 
 ## Creating Your Dataset:
 
@@ -72,7 +72,7 @@ dataset/
 		...
 {{< / highlight >}}
 
-Alternatively, you can download [our dataset](https://drive.google.com/file/d/1OlQMDoQdRHgOkPv0MNK6GRmy67pbF8c_/view?usp=sharing).
+You can download [our dataset](https://drive.google.com/file/d/1OlQMDoQdRHgOkPv0MNK6GRmy67pbF8c_/view?usp=sharing) to jump right into the machine-learning aspect of this tutorial.
 
 ### Labeling Implementation
 
