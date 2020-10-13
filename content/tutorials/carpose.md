@@ -60,16 +60,17 @@ Now that you have a bag, you will use gen_darknet_label.py to create your labels
 
 Create a dataset directory, and create two subdirectories: images & labels. Run the gen_darknet_label.py script to populate the directories with images and labels. When finished, your dataset directory should look like this:
 {{< highlight bash >}}
-dataset/
 
-	images/
-		img_000000.jpg
-		img_000001.jpg
-		...
-	labels/
-		img_000000.txt
-		img_000001.jpg
-		...
+	dataset/
+
+		images/
+			img_000000.jpg
+			img_000001.jpg
+			...
+		labels/
+			img_000000.txt
+			img_000001.jpg
+			...
 {{< / highlight >}}
 
 You can download [our dataset](https://drive.google.com/file/d/1OlQMDoQdRHgOkPv0MNK6GRmy67pbF8c_/view?usp=sharing) to jump right into the machine-learning aspect of this tutorial.
@@ -83,129 +84,133 @@ After importing all the necessary modules and defining constants, the first thin
 - The camera frames and camera info from one car
 
 {{< highlight python "linenos=table" >}}
-import rosbag
-import numpy as np
-import tf
-import rospy
-import cv2
-from cv_bridge import CvBridge
-from image_geometry import PinholeCameraModel
 
-PATH_TO_INPUT_BAG = '/home/tudorf/mushr/catkin_ws/src/learning-image-geometry/car37_longtrim.bag'
-OUTPUT_VIDEO_NAME = 'test'
-OUTPUT_VIDEO_FPS = 9
+	import rosbag
+	import numpy as np
+	import tf
+	import rospy
+	import cv2
+	from cv_bridge import CvBridge
+	from image_geometry import PinholeCameraModel
 
-transformerROS = tf.TransformerROS()
-bridge = CvBridge()
-camModel = PinholeCameraModel()
-vid_out = cv2.VideoWriter(OUTPUT_VIDEO_NAME + '.avi', cv2.VideoWriter_fourcc(*'MJPG'), OUTPUT_VIDEO_FPS, (640,480))
+	PATH_TO_INPUT_BAG = '/home/tudorf/mushr/catkin_ws/src/learning-image-geometry/car37_longtrim.bag'
+	OUTPUT_VIDEO_NAME = 'test'
+	OUTPUT_VIDEO_FPS = 9
 
-def translate_transform(p):
-    t = np.eye(4)
-    t[0,3] = p[0]
-    t[1,3] = p[1]
-    t[2,3] = p[2]
-    return t
+	transformerROS = tf.TransformerROS()
+	bridge = CvBridge()
+	camModel = PinholeCameraModel()
+	vid_out = cv2.VideoWriter(OUTPUT_VIDEO_NAME + '.avi', cv2.VideoWriter_fourcc(*'MJPG'), OUTPUT_VIDEO_FPS, (640,480))
 
-def inverse_transform(t):
-    R_inv = t[:3,:3].T
-    p_inv = np.matmul(-R_inv,t[:3,3])
-    t_inv = np.eye(4)
-    t_inv[0,0] = R_inv[0,0]
-    t_inv[0,1] = R_inv[0,1]
-    t_inv[0,2] = R_inv[0,2]
-    t_inv[1,0] = R_inv[1,0]
-    t_inv[1,1] = R_inv[1,1]
-    t_inv[1,2] = R_inv[1,2]
-    t_inv[2,0] = R_inv[2,0]
-    t_inv[2,1] = R_inv[2,1]
-    t_inv[2,2] = R_inv[2,2]
-    t_inv[0,3] = p_inv[0]
-    t_inv[1,3] = p_inv[1]
-    t_inv[2,3] = p_inv[2]
-    return t_inv
+	def translate_transform(p):
+		t = np.eye(4)
+		t[0,3] = p[0]
+		t[1,3] = p[1]
+		t[2,3] = p[2]
+		return t
 
-def get_corners(center_T_cam):
-    # center_T_cam is the transform of centerXX in terms of camYY, where we want the corners of carXX in terms of camYY
-    # dx,y,z are the dimensions of the car in the x,y,z directions from the center
-    dx = 0.22
-    dy = 0.134
-    dz = 0.079
-    return [
-        np.matmul(center_T_cam, translate_transform([ dx,  dy,  dz])),
-        np.matmul(center_T_cam, translate_transform([ dx, -dy,  dz])),
-        np.matmul(center_T_cam, translate_transform([ dx,  dy, -dz])),
-        np.matmul(center_T_cam, translate_transform([ dx, -dy, -dz])),
-        np.matmul(center_T_cam, translate_transform([-dx,  dy,  dz])),
-        np.matmul(center_T_cam, translate_transform([-dx, -dy,  dz])),
-        np.matmul(center_T_cam, translate_transform([-dx,  dy, -dz])),
-        np.matmul(center_T_cam, translate_transform([-dx, -dy, -dz]))
-    ]
+	def inverse_transform(t):
+		R_inv = t[:3,:3].T
+		p_inv = np.matmul(-R_inv,t[:3,3])
+		t_inv = np.eye(4)
+		t_inv[0,0] = R_inv[0,0]
+		t_inv[0,1] = R_inv[0,1]
+		t_inv[0,2] = R_inv[0,2]
+		t_inv[1,0] = R_inv[1,0]
+		t_inv[1,1] = R_inv[1,1]
+		t_inv[1,2] = R_inv[1,2]
+		t_inv[2,0] = R_inv[2,0]
+		t_inv[2,1] = R_inv[2,1]
+		t_inv[2,2] = R_inv[2,2]
+		t_inv[0,3] = p_inv[0]
+		t_inv[1,3] = p_inv[1]
+		t_inv[2,3] = p_inv[2]
+		return t_inv
 
-# constant transforms
-trackedPt_T_baselink = translate_transform([-0.058325, 0, 0.08125])
-colorCam_T_baselink = translate_transform([0.02, 0.033, 0.068])
-center_T_baselink = translate_transform([-0.015, 0.0, 0.003])
-baselink_T_trackedPt = inverse_transform(trackedPt_T_baselink)
+	def get_corners(center_T_cam):
+		# center_T_cam is the transform of centerXX in terms of camYY, where we want the corners of carXX in terms of camYY
+		# dx,y,z are the dimensions of the car in the x,y,z directions from the center
+		dx = 0.22
+		dy = 0.134
+		dz = 0.079
+		return [
+			np.matmul(center_T_cam, translate_transform([ dx,  dy,  dz])),
+			np.matmul(center_T_cam, translate_transform([ dx, -dy,  dz])),
+			np.matmul(center_T_cam, translate_transform([ dx,  dy, -dz])),
+			np.matmul(center_T_cam, translate_transform([ dx, -dy, -dz])),
+			np.matmul(center_T_cam, translate_transform([-dx,  dy,  dz])),
+			np.matmul(center_T_cam, translate_transform([-dx, -dy,  dz])),
+			np.matmul(center_T_cam, translate_transform([-dx,  dy, -dz])),
+			np.matmul(center_T_cam, translate_transform([-dx, -dy, -dz]))
+		]
 
-bag = rosbag.Bag(PATH_TO_INPUT_BAG)
-# subscribe to all /vrpn_client_node/carXX/pose for cars in dataset
-# subscribe to '/carXX/camera/color/camera_info' and '/carXX/camera/color/image_throttled' for camera car
-topics = ['/vrpn_client_node/car35/pose','/vrpn_client_node/car37/pose','/vrpn_client_node/car38/pose','/car37/camera/color/camera_info','/car37/camera/color/image_throttled']
+	# constant transforms
+	trackedPt_T_baselink = translate_transform([-0.058325, 0, 0.08125])
+	colorCam_T_baselink = translate_transform([0.02, 0.033, 0.068])
+	center_T_baselink = translate_transform([-0.015, 0.0, 0.003])
+	baselink_T_trackedPt = inverse_transform(trackedPt_T_baselink)
 
-ps_35 = []
-ps_37 = []
-ps_38 = []
-camInfo = None
-cam_37 = []
+	bag = rosbag.Bag(PATH_TO_INPUT_BAG)
+	# subscribe to all /vrpn_client_node/carXX/pose for cars in dataset
+	# subscribe to '/carXX/camera/color/camera_info' and '/carXX/camera/color/image_throttled' for camera car
+	topics = ['/vrpn_client_node/car35/pose','/vrpn_client_node/car37/pose','/vrpn_client_node/car38/pose','/car37/camera/color/camera_info','/car37/camera/color/image_throttled']
 
-for topic, msg, t in bag.read_messages(topics=topics):
-    if topic == '/vrpn_client_node/car35/pose':
-        ps_35.append((t, msg.pose))
-    elif topic == '/vrpn_client_node/car37/pose':
-        ps_37.append((t, msg.pose))
-    elif topic == '/vrpn_client_node/car38/pose':
-        ps_38.append((t, msg.pose))
-    elif topic == '/car37/camera/color/camera_info':
-        camInfo = msg
-    elif topic == '/car37/camera/color/image_throttled':
-        cam_37.append((t, msg))
+	ps_35 = []
+	ps_37 = []
+	ps_38 = []
+	camInfo = None
+	cam_37 = []
+
+	for topic, msg, t in bag.read_messages(topics=topics):
+		if topic == '/vrpn_client_node/car35/pose':
+			ps_35.append((t, msg.pose))
+		elif topic == '/vrpn_client_node/car37/pose':
+			ps_37.append((t, msg.pose))
+		elif topic == '/vrpn_client_node/car38/pose':
+			ps_38.append((t, msg.pose))
+		elif topic == '/car37/camera/color/camera_info':
+			camInfo = msg
+		elif topic == '/car37/camera/color/image_throttled':
+			cam_37.append((t, msg))
 
 {{< / highlight >}}
 
 Next, it will step over each video frame. Since the motion capture data is published at a much higher rate, we must find the mocap data to each video frame. Each message of a rostopic has a timestamp, so we pick the mocap message with the closest timestamp to the video frame’s timestamp.
 
 {{< highlight python "linenos=table,linenostart=88" >}}
-idx35 = 0
-idx37 = 0
-idx38 = 0
 
-for idxImg in range(len(cam_37)):
-    targetT = cam_37[idxImg][0]
-    while idx35< len(ps_35)-1   and ps_35[idx35][0]   < targetT: idx35 += 1
-    while idx37< len(ps_37)-1   and ps_37[idx37][0]   < targetT: idx37 += 1
-    while idx38< len(ps_38)-1   and ps_38[idx38][0]   < targetT: idx38 += 1
+	idx35 = 0
+	idx37 = 0
+	idx38 = 0
 
-    # pick closest mocap data, not next
-    if idx35 > 0 and targetT - ps_35[idx35-1][0] < ps_35[idx35][0] - targetT:
-        idx35 -= 1
-    if idx37 > 0 and targetT - ps_37[idx37-1][0] < ps_37[idx37][0] - targetT:
-        idx37 -= 1
-    if idx38 > 0 and targetT - ps_38[idx38-1][0] < ps_38[idx38][0] - targetT:
-        idx38 -= 1
-    
-    # unwrap mocap pose into position, orientation
-    pos35 = ps_35[idx35][1].position
-    ori35 = ps_35[idx35][1].orientation
-    pos37 = ps_37[idx37][1].position
-    ori37 = ps_37[idx37][1].orientation
-    pos38 = ps_38[idx38][1].position
-    ori38 = ps_38[idx38][1].orientation   
+	for idxImg in range(len(cam_37)):
+		targetT = cam_37[idxImg][0]
+		while idx35< len(ps_35)-1   and ps_35[idx35][0]   < targetT: idx35 += 1
+		while idx37< len(ps_37)-1   and ps_37[idx37][0]   < targetT: idx37 += 1
+		while idx38< len(ps_38)-1   and ps_38[idx38][0]   < targetT: idx38 += 1
+
+		# pick closest mocap data, not next
+		if idx35 > 0 and targetT - ps_35[idx35-1][0] < ps_35[idx35][0] - targetT:
+			idx35 -= 1
+		if idx37 > 0 and targetT - ps_37[idx37-1][0] < ps_37[idx37][0] - targetT:
+			idx37 -= 1
+		if idx38 > 0 and targetT - ps_38[idx38-1][0] < ps_38[idx38][0] - targetT:
+			idx38 -= 1
+
+		# unwrap mocap pose into position, orientation
+		pos35 = ps_35[idx35][1].position
+		ori35 = ps_35[idx35][1].orientation
+		pos37 = ps_37[idx37][1].position
+		ori37 = ps_37[idx37][1].orientation
+		pos38 = ps_38[idx38][1].position
+		ori38 = ps_38[idx38][1].orientation  
+		
 {{< / highlight >}}
 
 Next, we create and use transforms to identify where the other cars’ corners are on the frame. We load in the frame as an OpenCV image. Should you need to debug, you can draw the points of interest on the frame.
 
 {{< highlight python "linenos=table,linenostart=113" >}}
+
     # create Transforms for TrackedPts w.r.t. World
     pt35_T_w = transformerROS.fromTranslationRotation((pos35.x, pos35.y, pos35.z), (ori35.x, ori35.y, ori35.z, ori35.w))
     pt37_T_w = transformerROS.fromTranslationRotation((pos37.x, pos37.y, pos37.z), (ori37.x, ori37.y, ori37.z, ori37.w))
@@ -230,11 +235,11 @@ Next, we create and use transforms to identify where the other cars’ corners a
     corners38 = get_corners(center38_T_cam37)
 {{< / highlight >}}
 
-
 Once we’ve found where each bounding box is, we have to decide whether or not to include it in the dataset. First we reject all labels of cars behind the camera. We also wish to throw out a label when one car is occluding another - we only want the front car to be labeled in this case. 
 Finally we save the image and its label in their corresponding locations.
 
 {{< highlight python "linenos=table,linenostart=135" >}}
+
     # convert to OpenCV image
     car37_image = bridge.imgmsg_to_cv2(cam_37[idxImg][1], "bgr8")
 
@@ -334,8 +339,9 @@ Finally we save the image and its label in their corresponding locations.
     # Add frame to video
     vid_out.write(car37_image.astype('uint8'))
 
-# end video
-vid_out.release()
+	# end video
+	vid_out.release()
+
 {{< / highlight >}}
 
 ## Setting Up YOLOv5
