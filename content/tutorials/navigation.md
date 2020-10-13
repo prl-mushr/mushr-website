@@ -89,6 +89,8 @@ $ tmux
 
 Then, to create two vertical panes, type `ctrl+b` (`ctrl` and `b`) then `%` (or alternatively `"` to split horizontally). We will need three panes for this tutorial.
 
+**Note:** If the map you are using is very large (greater than 100 x 100 meters) including the unknown region than the controller will be sampling points for a really long time causing it to seem like it is not working. Save yourself the headache and shrink/crop your map ([Gimp](https://www.gimp.org/) is a good tool) before beginning.
+
 First, we will launch `teleop.launch`, 
 
 ### On Real Car
