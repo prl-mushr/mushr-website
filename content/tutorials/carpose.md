@@ -17,22 +17,22 @@ weight: 3
 ## Introduction
 
 ### Goal 
-In a multi-agent system, car detection is one of the fundamental processes that must take place in order for cars to make decisions from their oberservations. This applies to collision avoidance & navigation, as well as any other form of cooperative task. This tutorial will introduce you to produce bounding prisms to label cars based on mocap car pose data, and training a model from your newly labeled data.
+In a multi-agent system, car detection is one of the fundamental processes that must take place in order for cars to make decisions from their oberservations. This applies to collision avoidance & navigation, as well as any other form of cooperative task. This tutorial will provide instructions for producing bounding prisms to label cars based on mocap car pose data, and training a model from your newly labeled data.
 
 ### Requirements
+- Understanding of Linear Algebra
 - Complete the [quickstart tutorial](https://mushr.io/tutorials/quickstart/)
 - Complete the [Intro to ROS tutorial](https://mushr.io/tutorials/intro-to-ros/)
-- Linear Algebra matrix computation
 - Recommended Readings:
     - [Projecting a TF frame onto an image (C++)](http://wiki.ros.org/image_geometry/Tutorials/ProjectTfFrameToImage)
     - [Image Projection](http://www.cs.toronto.edu/~jepson/csc420/notes/imageProjection.pdf)
 
 ### Mathematical Explanations
 
-It's important to remember that the sensor measurements from the cars and mocap all have their own frame of reference. In order to combine these into a bounding box on a single car's camera frame, we need to be able to switch between frames of reference in a computationally effective way. This is done through the use of transforms.
+It is important to remember that the sensor measurements from the cars and mocap all have their own frame of reference. In order to combine these into a bounding box within a single car's camera frame, we need to be able to switch between frames of reference in a computationally effective way. This is done through the use of transforms.
 There are 4 important frames of reference: the world (where the mocap marker is tracked), the base_link (root of a car's tf tree), the camera on the car, and the centroid of a car (used to generate a bounding prism). Being able to move between these frames of reference is necessary to derive the true position of a car on a camera frame, and create a corresponding label.
 
-In this example, car 1 is the subscriber, car 2 is the publisher. 
+In this example, car 1 is being viewed by car 2's camera. 
 Let x_T_y mean the transform of x w.r.t. y:
 
 - marker1_T_cam2 = base2_T_cam2 * marker2_T_base2 * world_T_marker2 * marker1_T_world
