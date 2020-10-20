@@ -3,10 +3,10 @@ title: "Logo Modification"
 date: 2018-11-28T15:14:54+10:00
 intro_image: imgs/single-car.jpg
 image: "/services/default.png"
-featured: false
+featured: false 
 draft: false
-active: false
-summary: Change the MuSHR Racecar's logo!
+active: true
+summary: Change the MuSHR logo!
 weight: 2
 ---
 
