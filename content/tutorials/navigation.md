@@ -148,8 +148,8 @@ $ rosrun rviz rviz -d $MUSHR/mushr_utils/rviz/default.rviz
 Initializing `rviz` with the `.rviz` files allows you to configure RVIZ's settings, including which ROS topics, in advance. This is handy if you're working on a specific task, or have preferences in how you would like to view the car's telemetry. You can always modify the existing `.rviz` files and save new ones to taste.
 
 Add the navigation topics if they are not selected already by clicking `ADD` &rarr; `By Topic` in rviz. Add the following:
-- `/car/pf/inferred_pose`: The particle filter's estimate of the car position
-- `/car/pf/particles`: The particle filter's distribution of particles (OPTIONAL) 
+- `/car/particle_filter/inferred_pose`: The particle filter's estimate of the car position
+- `/car/particle_filter/particles`: The particle filter's distribution of particles (OPTIONAL) 
 - `/car/rhccontroller/traj_chosen`: The trajectory the controller is choosing 
 
 You may now set the initial pose of the car on the map, in a similar position to where you would expect it to be. Press the button labeled "2D Pose Estimate". The cursor will become an arrow, and you can press it where you think the car is. Try driving the car around using the joystick, and notice to what extent the localization is able to track the car's position.
