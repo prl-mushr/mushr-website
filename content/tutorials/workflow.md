@@ -1,7 +1,6 @@
 ---
 title: "Workflow & Troubleshooting"
 date: 2018-11-28T15:14:54+10:00
-image: "/services/default.png"
 active: true
 featured: false
 draft: false

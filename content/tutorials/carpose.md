@@ -1,7 +1,6 @@
 ---
 title: "Car Pose Detection and Yolo Learning"
 date: 2020-09-10T15:14:54+10:00
-image: "/services/default.png"
 featured: true
 draft: false
 duration: 60

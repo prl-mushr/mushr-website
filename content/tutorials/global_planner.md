@@ -1,7 +1,6 @@
 ---
 title: "Global Planner"
 date: 2020-01-25T15:14:54+10:00
-image: "/services/default.png"
 featured: false
 draft: false
 active: true
