@@ -53,13 +53,13 @@ Open-Source Robotic Racecar for Education and Research
 <br>
 
 ## Acknowledgements 
-<img src="/imgs/pr_logo.900x900.jpg" style="height: 100px;">
-<img src="/imgs/intel-logo.png" style="padding-left: 20px; height: 100px;">
-<img src="/imgs/hri-us-logo-2018-hd.png" style="padding-left: 25px; height: 100px;">
+<img src="/imgs/acknowledgements/personalrobotics.jpg" style="height: 100px;">
+<img src="/imgs/acknowledgements/intel.png" style="padding-left: 20px; height: 100px;">
+<img src="/imgs/acknowledgements/hri-us-logo-2018-hd.png" style="padding-left: 25px; height: 100px;">
 <br>
 <br>
-<img src="/imgs/nvidia-logo.jpg" style="height: 100px">
-<img src="/imgs/ydlidar-logo.png" style="padding-left: 20px; height: 100px">
+<img src="/imgs/acknowledgements/nvidia-logo.jpg" style="height: 100px">
+<img src="/imgs/acknowledgements/ydlidar-logo.png" style="padding-left: 20px; height: 100px">
 <br>
 <br>
-<img src="/imgs/Allen-School-purple-RGB-lg.png" style="max-height: 70px;">
+<img src="/imgs/acknowledgements/allen-school-logo.png" style="max-height: 70px;">
