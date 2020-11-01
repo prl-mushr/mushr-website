@@ -250,7 +250,7 @@ Before we get to the code part, lets first quickly consider what we get from the
 
 <img src="/tutorials/MUSHR-DL/left.png" width="200">
 <img src="/tutorials/MUSHR-DL/center.png" width="200">
-<img src="/tutorials/MUSHR-DL/center.png" width="200">
+<img src="/tutorials/MUSHR-DL/right.png" width="200">
 
 
 ## Main script:
