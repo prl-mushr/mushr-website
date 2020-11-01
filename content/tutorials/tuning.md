@@ -135,7 +135,7 @@ rostopic echo /vesc/odom/pose/pose/position/x
 This will echo all the odometry information -- how far the car has driven (in meters) in the `x` direction since teleop started. The value should be `0.0` at the start, as the car hasn't moved yet.
 -  Drive the car forward about 7-8 ft. The car will drive slightly further as it decelerates and stops. Make sure you only drive forward, not altering the servo position, otherwise you'll have both `x` and `y` directional changes (which makes it only slightly harder to check distance traveled).
 -  Record the distance traveled. If your tape measure is in inches, convert to meters.
-{{<figure src="/tutorials/tuning/erpm_gain/end-with-line.jpg" width="400px">}}
+{{<figure src="/tutorials/tuning/erpm_gain/end_with_line.jpg" width="400px">}}
 -  Compare to output of the `rostopic echo` command's `x` value. If the reported distance traveled is larger than the actual, decrease the gain. If the reported distance is smaller, increase the gain. At the begining increasing or decreasing by 500 should allow you to quickly hone in on the value.
 -  Stop teleop. Go back to step 1 if the values are not sufficiently close (within 2-3 cm).
 
