@@ -1,7 +1,6 @@
 ---
 title: "Applying Deep Learning to Autonomous Driving"
 date: 2018-11-28T15:14:54+10:00
-image: "/services/default.png"
 featured: true
 draft: false
 active: true
@@ -251,7 +250,7 @@ Before we get to the code part, lets first quickly consider what we get from the
 
 <img src="/tutorials/MUSHR-DL/left.png" width="200">
 <img src="/tutorials/MUSHR-DL/center.png" width="200">
-<img src="/tutorials/MUSHR-DL/center.png" width="200">
+<img src="/tutorials/MUSHR-DL/right.png" width="200">
 
 
 ## Main script:

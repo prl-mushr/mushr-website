@@ -20,6 +20,7 @@ stages:
       displayName: 'Generate Hugo site'
       inputs:
         hugoVersion: '0.61.0'
+        extendedVersion: true
         destination: '$(Build.ArtifactStagingDirectory)'
     - publish: '$(Build.ArtifactStagingDirectory)'
       artifact: 'hugo-site'

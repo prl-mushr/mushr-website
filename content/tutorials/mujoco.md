@@ -1,7 +1,6 @@
 ---
 title: "MuJoCo Simulation"
 date: 2020-07-13T15:14:54+10:00
-image: "/services/default.png"
 featured: true
 draft: false
 duration: 30
