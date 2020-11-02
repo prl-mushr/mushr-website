@@ -13,9 +13,7 @@ weight: 3
 
 <h2> By: <a href=https://www.sidharthtalia.com>Sidharth Talia</a></h2>
 
-<figure>
-{{< mp4gif src="/tutorials/MUSHR-DL/mushr_DL.mp4" width="800" >}}
-</figure>
+{{< mp4gif src="/tutorials/MUSHR-DL/mushr_DL.mp4" width="800" figure=true >}}
 <br>
 
 ### Introduction
@@ -128,9 +126,7 @@ It is possible to start the simulator by passing an argument as well but it's no
 
 You can expect the car to start moving erratically and resetting to its initial position every time it hits something or crosses the lane boundary like so:
 
-<figure>
-{{< mp4gif src="/tutorials/MUSHR-DL/RL.mp4" width="800" >}}
-</figure>
+{{< mp4gif src="/tutorials/MUSHR-DL/RL.mp4" width="800" figure=true >}}
 
 The trained model is saved as "rl_driver.h5" in the \MUSHR-DL\gym-donkeycar\examples\reinforcement_learning directory. The training can be aborted at any time by pressing "Ctrl+C". The model is saved after each episode (an episode lasts until the car hits something or crosses the lane).
 

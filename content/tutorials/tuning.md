@@ -11,7 +11,6 @@ weight: 2
 ---
 
 <h2> By: <a href=https://github.com/Rockett8855>Matthew Rockett</a></h2>
-
 <figure>
   {{< mp4gif src="/tutorials/tuning/steering_angle_offset/left.mp4"     width="32%" >}}
   {{< mp4gif src="/tutorials/tuning/steering_angle_offset/straight.mp4" width="32%" >}}
