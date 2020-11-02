@@ -1,0 +1,3 @@
+<video {{ with .Get "width" }}width="{{.}}"{{ end }} muted controls autoplay loop>
+  <source src="{{ .Get "src" }}" type="video/mp4" />
+</video>
