@@ -10,12 +10,12 @@ summary: Fine tuning car specific control parameters.
 weight: 2
 ---
 
-<h2> By: <a href=https://github.com/Rockett8855>Matthew Rockett</a></h2>                              
-<figure>
-  <img src="/tutorials/tuning/steering_angle_offset/left.gif" style="width: 32%;" />
-  <img src="/tutorials/tuning/steering_angle_offset/straight.gif" style="width: 32%;" />
-  <img src="/tutorials/tuning/steering_angle_offset/right.gif" style="width: 32%;" />
+<h2> By: <a href=https://github.com/Rockett8855>Matthew Rockett</a></h2>
 
+<figure>
+  {{< mp4gif src="/tutorials/tuning/steering_angle_offset/left.mp4"     width="32%" >}}
+  {{< mp4gif src="/tutorials/tuning/steering_angle_offset/straight.mp4" width="32%" >}}
+  {{< mp4gif src="/tutorials/tuning/steering_angle_offset/right.mp4"    width="32%" >}}
 </figure>
 
 ### Introduction
@@ -99,9 +99,9 @@ roslaunch mushr_base teleop.launch
 **Note: Usually this value is between 0.4 and 0.6**
 
 <figure>
-  <img src="/tutorials/tuning/steering_angle_offset/left.gif" style="width: 32%;" />
-  <img src="/tutorials/tuning/steering_angle_offset/straight.gif" style="width: 32%;" />
-  <img src="/tutorials/tuning/steering_angle_offset/right.gif" style="width: 32%;" />
+  {{< mp4gif src="/tutorials/tuning/steering_angle_offset/left.mp4"     width="32%" >}}
+  {{< mp4gif src="/tutorials/tuning/steering_angle_offset/straight.mp4" width="32%" >}}
+  {{< mp4gif src="/tutorials/tuning/steering_angle_offset/right.mp4"    width="32%" >}}
 
   <figcaption>
 	<p>The car during the tuning process. In all tests, the car is commanded to drive straight forward. In the left image, the car's steering angle offset is too high. In the center image, the offset is good. In the right image the offset is too low. <b>Note: the car will never drive perfectly straight. It just has to be good enough. In the future your controller will be able to make small corrections!</b></p>

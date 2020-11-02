@@ -11,8 +11,11 @@ weight: 1
 ---
 
 <h2> By: <a href=https://www.mattschmittle.com/>Matt Schmittle</a></h2>                              
-{{< figure src="/tutorials/quickstart/quickstart_header.gif" width="800" >}}
-<br>
+
+<figure>
+{{< mp4gif src="/tutorials/quickstart/quickstart_header.mp4" width="800" >}}
+</figure>
+<br/>
 
 ### Introduction
 This tutorial will get you started with MuSHR in simulation!

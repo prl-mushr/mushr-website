@@ -12,7 +12,13 @@ weight: 3
 
 <h2> By: <a href=https://github.com/Alrick11>Alrick Dsouza</a></h2>
 
-{{< figure src="/tutorials/mujoco_figure8/side_shot.gif" width="800" caption="MuSHR car making a figure 8" >}}
+<figure>
+{{< mp4gif src="/tutorials/mujoco_figure8/side_shot.mp4" width="800" >}}
+
+<figcaption>
+    <p>MuSHR car making a figure 8</p>
+</figcaption>
+</figure>
 
 ### Introduction
 This tutorial will introduce you to controlling the mushr car in the MuJoCo environment. Why MuJoCo??? MuJoCo is a physics simulator which provides a unique combination of speed, accuracy and modeling power for the purpose of model based optimization, and in particular optimization through contacts. MuJoCo is your goto simulator for RL and Deep RL projects. A well-known example would be DeepMind's humanoid simulations. You can find some very interesting OpenAI+MuJoCo projects [here](https://gym.openai.com/envs/#mujoco).
