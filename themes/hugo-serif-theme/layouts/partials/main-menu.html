@@ -1,13 +1,14 @@
 <div id="main-menu" class="main-menu">
   <ul>
-    {{ $currentPage := . }}
-    {{ range .Site.Menus.main }}
-    <li class="menu-item-{{ .Name | lower }}{{ if $currentPage.IsMenuCurrent "main" . }} active{{ end }}">
-      <a href="{{.URL}}">
-        {{ .Pre }}
-        <span>{{ .Name }}</span>
-      </a>
+    {{- $currentPage := . -}}
+    {{- $isQuickstart := (eq .LinkTitle "Quickstart") -}}
+    {{- range .Site.Menus.main }}
+    {{ $isQuickstartTutorialEntry := (and $isQuickstart (eq .KeyName "tutorials")) -}}
+    {{/* temporary hack around Is/HasMenuCurrent, since the config MenuEntry page is nil */}}
+    {{- $hasMenuCurrent := (and (hasPrefix $currentPage.RelPermalink .URL) (not $isQuickstartTutorialEntry)) -}}
+    <li class="menu-item-{{ .KeyName }}{{ if $hasMenuCurrent }} active{{ end }}">
+      <a href="{{.URL}}"><span>{{ .Name }}</span></a>
     </li>
-    {{end}}
+    {{- end }}
   </ul>
 </div>
