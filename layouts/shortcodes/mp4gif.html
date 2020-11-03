@@ -1,5 +1,5 @@
 {{ if .Get "figure" }}<figure>{{ end }}
-<video {{ with .Get "width" }}width="{{.}}"{{ end }} muted controls autoplay loop>
+<video {{ with .Get "width" }}width="{{.}}"{{ end }} muted autoplay loop>
   <source src="{{ .Get "src" }}" type="video/mp4" />
 </video>
 {{ if .Get "figure" }}
