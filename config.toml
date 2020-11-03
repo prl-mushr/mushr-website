@@ -33,76 +33,70 @@ unsafe = true
 # Main Menu
 [[menu.main]]
     identifier = "quickstart"
-	name = "Quickstart"
-	url = "/tutorials/quickstart/"
+    name = "Quickstart"
+    url = "/tutorials/quickstart/"
     weight = 1
 
 [[menu.main]]
     identifier = "about"
-	name = "About"
-	url = "/about/"
-	weight = 2
-
-[[menu.main]]
-    identifier = "tutorials"
-	name = "Tutorials"
-	url = "/tutorials/"
+    name = "About"
+    url = "/about/"
     weight = 2
 
 [[menu.main]]
+    identifier = "docs"
     name = "Docs"
     url = "https://github.com/prl-mushr/mushr#component-documentation"
-    weight = 2
+    weight = 3
 
 [[menu.main]]
     identifier = "hardware"
     name = "Hardware"
     url = "/hardware/"
-    weight = 2
+    weight = 4
+
+[[menu.main]]
+    identifier = "tutorials"
+    name = "Tutorials"
+    url = "/tutorials/"
+    weight = 5
 
 [[menu.main]]
     identifier = "press"
-	name = "Press"
-	url = "/press/"
-	weight = 3
+    name = "Press"
+    url = "/press/"
+    weight = 6
 
 [[menu.main]]
     identifier = "team"
     name = "Team"
     url = "https://personalrobotics.cs.washington.edu/people/"
-    weight = 4
+    weight = 7
 
 [[menu.main]]
     identifier = "forum"
     name = "Community Forum"
     url = "https://spectrum.chat/mushr"
-    weight = 7
+    weight = 8
 
 [[menu.main]]
     identifier = "contact"
     name = "Contact"
     url = "/contact/"
-    weight = 8
+    weight = 9
 
 # Footer Menu
 [[menu.footer]]
-	name = "Home"
-	url = "/"
-    weight = 1
+    identifier = "home"
+    name = "Home"
+    url = "/"
 
 [[menu.footer]]
     identifier = "forum"
-	name = "Community Forum"
-	url ="https://spectrum.chat/mushr"
-    weight = 2
+    name = "Community Forum"
+    url ="https://spectrum.chat/mushr"
 
 [[menu.footer]]
     identifier = "contact"
-	name = "Contact"
-	url = "/contact/"
-    weight = 3
-
-#[[menu.footer]]
-	#name = "Newsletter"
-	#url = "https://tinyletter.com/mushr"
-    #weight = 4
+    name = "Contact"
+    url = "/contact/"
