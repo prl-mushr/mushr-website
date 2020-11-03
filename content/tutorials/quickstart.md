@@ -11,7 +11,7 @@ weight: 1
 ---
 
 <h2> By: <a href=https://www.mattschmittle.com/>Matt Schmittle</a></h2>                              
-{{< figure src="/tutorials/quickstart/quickstart_header.gif" width="800" >}}
+{{< mp4gif src="/tutorials/quickstart/quickstart_header.mp4" width="800" figure=true >}}
 <br>
 
 ### Introduction
