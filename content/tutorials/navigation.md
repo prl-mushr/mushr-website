@@ -12,7 +12,7 @@ weight: 3
 
 <h2> By: <a href=https://www.linkedin.com/in/michalove/>Johan Michalove</a> & <a href=https://github.com/Rockett8855>Matthew Rockett</a></h2>   
 
-{{< figure src="/tutorials/autonomous-navigation/auto.gif" >}}<br>
+{{< mp4gif src="/tutorials/autonomous-navigation/auto.mp4" figure=true >}}<br/>
 
 ## Introduction
 
