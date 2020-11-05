@@ -8,4 +8,10 @@ The MuSHR website is generated using the Hugo static site generator. Please refe
 There is an [Azure Pipeline](https://dev.azure.com/prl-mushr/mushr-website/_build) that automatically deploys the website on merge to master. Create a branch to make edits in, then merge to master when you want to push.
 
 ## Editing content
-All website content can be found in the `content` folder. Merely update one of the existing markdown files, or add your own (I recommend merely duplicating an existing one, unless you're making extensive changes).
+
+All website content can be found in the `content` folder. Update one of the
+existing Markdown files, or add your own.
+
+To start a new tutorial, run `hugo new tutorials/<tutorial-name>.md`. This will
+create the `content/tutorials/<tutorial-name>.md` file and fill in some parts
+for you.
