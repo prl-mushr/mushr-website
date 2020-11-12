@@ -155,7 +155,7 @@ You may now set the initial pose of the car on the map, in a similar position to
 
 Now, we will choose a goal for the car to navigate towards. We recommend starting with simple goal poses and gradually increasing the complexity. To select a goal position, choose the button labeled "2D Nav Goal" and select the goal pose.
 
-Once you've seen the session for the rhc node output the text `Goal set`, hold the left-hand deadman switch to allow the car to track towards its goal. Release the button if you suspect the car is close to a collision.
+Once you've seen the session for the rhc node output the text `Goal set` your car should start moving in sim. In real, hold the right-hand deadman switch (R1) to allow the car to track towards its goal. Release the button if you suspect the car is close to a collision.
 
 If the car loses localization, simply re-click with the "2D Pose Estimate" button. You can set a new goal at any time, even if the car has not reached the goal you specified.
 
