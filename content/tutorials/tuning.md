@@ -149,9 +149,9 @@ This gain takes a steering angle in radians and converts it to a servo position.
 
 <center>`R = L/2sin(beta)`,</center>
 
-where `L` is the length of the car (0.3 meters), and beta is `arctan(1/2 * tan(delta))`, where delta is the turn radius. We will be setting the turn radius to the max turn radius (0.34 by default).
+where `L` is the length of the car (0.3 meters), and beta is `arctan(1/2 * tan(delta))`, where delta is the steering angle. We will be setting the steering angle to the max (0.34 by default).
 
-We will instead the length of a half cirlce, so `2 * R`. Calculting this with the defaults, comes out to 1.722 meters (67.79 inches). If you tweak the max turning radius, or change the chassis, you will have to recompute this number.
+We will instead the length of a half cirlce, so `2 * R`. Calculting this with the defaults, comes out to 1.722 meters (67.79 inches). If you tweak the max steering angle, or change the chassis, you will have to recompute this number.
 
 ### How to Tune
 
