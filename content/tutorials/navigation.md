@@ -26,6 +26,9 @@ This tutorial will teach you to set up and operating MuSHR's baseline autonomous
 - If on real car, complete the [first steps tutorial](https://mushr.io/tutorials/first_steps/)
 - Python dependencies for [`mushr_rhc`](https://github.com/prl-mushr/mushr_rhc)
 
+#### Note on dependecies: 
+This tutorial will only work with a working installation of pytorch on python2 (we plan to move to python3 ASAP). This means that newer Jetpack versions that do not support python2/torch will not work. Please check that you can properly install pytorch on your Jetpack version before diving into this tutorial or use our [prebuilt image](https://drive.google.com/file/d/17Xn63ZWA_e3DVxt_ajhzu-uKW0hUG4iX/view) which is compatible with torch (see `mushr_rhc` install instructions to install pytorch).
+
 If you intend to run this tutorial on the real car, construct a map of the environment in which you'll be building the car. Our team recommends using [gmapping](https://wiki.ros.org/slam_gmapping) or [cartographer](https://google-cartographer-ros.readthedocs.io/en/latest/) We will also assume you have built your car with the LiDaR. We recommend access to a secondary linux computer for viewing the visualizations of the localization module, as well as for initializing the particle filter.
 
 If you are in sim we don't recommend testing with the `sandbox.yaml` default map because the localization struggles in an open environment (all positions look the same!). See the [quickstart tutorial](https://mushr.io/tutorials/quickstart/) for how to change maps.
