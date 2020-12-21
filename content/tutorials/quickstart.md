@@ -49,6 +49,7 @@ $ sudo apt install python-tk
 
 - A github account. You can sign up for one [here](https://github.com/join?source=header-home).
 - [vcstool](https://github.com/dirk-thomas/vcstool.git)
+- [pip](https://pip.pypa.io/en/stable/installing/)
 
 
 Once you have these, you're good to go!
