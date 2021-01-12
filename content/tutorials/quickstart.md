@@ -133,7 +133,7 @@ Putting these lines in the `~/.bashrc` guarantee they run on the startup of a ne
 
 Finally, move the "Outrun" themed `.rviz` file to `~/.rviz` to get our default setup:
 {{< highlight bash >}}
-$ cp ~/catkin_ws/src/mushr/mushr_utils/rviz/default.rviz ~/.rviz/
+$ cp ~/catkin_ws/src/mushr/mushr_utils/rviz/default.rviz ~/.rviz
 {{< / highlight >}}
 
 That's it! Time to run it.
