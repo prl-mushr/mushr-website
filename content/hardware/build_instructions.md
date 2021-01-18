@@ -122,7 +122,7 @@ In this section, we will prepare the VESC's connectors for installation. Note th
 
 19. Open **VESC Tool**, and then read through the *VESC Tool* Introduction dialog. Click **Yes** in the **modemmanager** dialog, as well as in the subsequent **udev** related dialogs. Then click the **AutoConnect** button located in the lowest third of the GUI in order to connect to the VESC. Click **OK** to dismiss the dialogs that pop up. Note that the lower right corner of the GUI should now display that the VESC is connected in limited mode. (Fig. 1.8)
 
-    {{< figure src="/hardware/build_instructions/01_08_vesc_tool_connect.png" caption="Fig. 1.8" width="800">}}
+    {{< figure src="/hardware/build_instructions/01_10_vesc_tool_connect.png" caption="Fig. 1.8" width="800">}}
 
 20. Click on the **Firmware** tab in the left column of the GUI. Then click the **Custom File** tab near the top of the GUI. Click on the folder icon and choose the file located at **bldc-tool/firmwares/hw_410_411_412/VESC_servoout.bin**. Note that **it is VERY important to choose the correct file**. After verifying that you have chosen the correct file, click the downwards arrow icon to upload the firmware. Read the warning and click **Yes** to continue uploading firmware. (Fig. 1.9)
 
@@ -393,11 +393,11 @@ In this section, we will install the car's lower platform, which will serve as a
 
     {{< figure src="/hardware/build_instructions/06_01_attach_crossbar.png" caption="Fig. 6.1" width="800">}}
 
-4. Turn the foundation over so that the metal crossbar is on top. If using the **DZS Elec LM2596** buck converter, insert four M2.5 hex nuts into the holes outlined in red in Fig. 6.2. If using the **DROK 180051US** buck converter, insert four M2.5 hex nuts into the holes outlined in blue in Fig. 6.2. Add super glue into the spaces between the edge of the hole and the hex nuts in order to keep the hex nuts in place. Be careful not to get super glue into the threads of the hex nuts. Allow the super glue to dry before continuing. 
+4. Turn the foundation over so that the metal crossbar is on top. If using the **DZS Elec LM2596** buck converter, insert four M2.5 hex nuts into the holes outlined in red in Fig. 6.2. If using the **DROK 180051US** buck converter, insert four M2.5 hex nuts into the holes outlined in blue in Fig. 6.2. Add super glue into the spaces between the edge of the hole and the hex nuts in order to keep the hex nuts in place. Be careful not to get super glue into the threads of the hex nuts. Allow the super glue to dry before continuing. (Fig. 6.2)
 
     {{< figure src="/hardware/build_instructions/06_02_insert_hex_nuts.png" caption="Fig. 6.2" width="800">}}
 
-5. Insert two M2.5 hex nuts into the inlets below the screw holes of the lower right foundation support. Align the lower right foundation support with the corresponding screw holes on the foundation, and then use two M2.5 flat head screws to secure it to the foundation.
+5. Insert two M2.5 hex nuts into the inlets below the screw holes of the lower right foundation support. Align the lower right foundation support with the corresponding screw holes on the foundation, and then use two M2.5 flat head screws to secure it to the foundation. (Fig. 6.3)
 
     {{< figure src="/hardware/build_instructions/06_03_attach_lower_right_support.png" caption="Fig. 6.3" width="800">}}
 
@@ -475,7 +475,7 @@ In this section, we will configure the buck converter. The buck converter steps 
 
 2. Strip approximately 7.5 mm of insulation off of the ends of the wires.
 
-3. Use a flathead screwdriver to unscrew the output terminals of the buck converter. This allows the exposed ends of the barrel connector's wire to be slipped into the output terminals. **The red wire should go into the terminal marked OUT+, and the black wire should go into the terminal marked OUT-.** Push them in far enough such that no exposed copper hangs out of the output terminals (use wire cutters to shorten the exposed ends if necessary). 
+3. Use a flathead screwdriver to unscrew the output terminals of the buck converter. This allows the exposed ends of the barrel connector's wire to be slipped into the output terminals. **The red wire should go into the terminal marked OUT+, and the black wire should go into the terminal marked OUT-.** Push them in far enough such that no exposed copper hangs out of the output terminals (use wire cutters to shorten the exposed ends if necessary). (Fig. 7.1)
 
     {{< figure src="/hardware/build_instructions/07_01_open_output_terminals.png" caption="Fig. 7.1" width="800">}}
 
@@ -637,7 +637,7 @@ In this section, we will install a Wi-Fi card and antennas into the Jetson Nano.
 
 **Steps**
 
-1. Connect the Wi-Fi antennae to the Wi-Fi card. To do this, first place the card on a flat surface. To connect an antenna, align the neck of its connector to be perpendicular to the back edge of the card. Tilt the antenna connector so that only the back part is making contact with the connector on the card as shown in Fig 10.1. Place your thumb on top, and then apply firm pressure as you roll your thumb forward along the antenna connector. It should snap into place. It is a tight fit and can be difficult to make the connection, but do not force it as the connectors can break.
+1. Connect the Wi-Fi antennae to the Wi-Fi card. To do this, first place the card on a flat surface. To connect an antenna, align the neck of its connector to be perpendicular to the back edge of the card. Tilt the antenna connector so that only the back part is making contact with the connector on the card as shown in Fig 10.1. Place your thumb on top, and then apply firm pressure as you roll your thumb forward along the antenna connector. It should snap into place. It is a tight fit and can be difficult to make the connection, but do not force it as the connectors can break. (Fig. 10.1)
 
     {{< figure src="/hardware/build_instructions/10_01_attach_antennas.png" caption="Fig. 10.1" width="800">}}
 
