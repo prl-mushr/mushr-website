@@ -684,6 +684,8 @@ In this section, we will write a system image with pre-installed MuSHR software 
 1. Download and decompress the MuSHR system image from *[here](https://drive.google.com/file/d/17Xn63ZWA_e3DVxt_ajhzu-uKW0hUG4iX/view?usp=sharing)*.
 
 2. Flash the MuSHR image onto the SD card following the instructions *[here](https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit#write)*.
+    - username: `robot`
+    - password: `prl_robot`
 
 3. Insert the SD card into the Jetson Nano's SD card slot.
 
