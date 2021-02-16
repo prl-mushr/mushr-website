@@ -192,5 +192,8 @@ To learn about programming the car, continue to the [Intro to ROS Tutorial](/tut
 ## Troubleshooting
 Commonly encountered problems during this tutorial.
 
-#### "Failed to open ovf descriptor" when importing the virtual machine image
-- This is a known issue with .ova file extensions downloading as .ovf from Google Suite. To fix, rename the file extension to .ova.
+### Virtual Machines
+#### Failed to open ovf descriptor" when importing the virtual machine image
+This is a known issue with .ova file extensions downloading as .ovf from Google Suite. To fix, rename the file extension to .ova.
+#### Can't copy and paste into VirtualBox
+Power down the virtual machine. Select Settings -> General -> Advanced -> SharedClipboard and select bidirectional. Restart the virtual machine.
