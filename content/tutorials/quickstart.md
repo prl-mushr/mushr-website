@@ -23,7 +23,7 @@ To get the simulator running on your machine so that you can begin hacking immed
 ### Requirements
 A Ubuntu 16.04 or 18.04 Linux machine (20.04 not supported yet!). If you don't run linux natively then get a Ubuntu VM: [OSX](https://www.instructables.com/id/How-to-Create-an-Ubuntu-Virtual-Machine-with-Virtu/), [Windows](https://itsfoss.com/install-linux-in-virtualbox/). 
 
-We also provide a virtual machine image that already has the MuSHR stack setup, it can be downloaded [here](https://drive.google.com/a/cs.washington.edu/file/d/1mOzSzVx9BF_e2U1OeK58NS42UIPcnIZq/view?usp=sharing). The username is **robot** and the password is **prl_robot**. If you use this image, you can start the VM and then skip to the [**Running the Simulator**](#running-the-simulator) section.
+We also provide a virtual machine image that already has the MuSHR stack setup, it can be downloaded [here](https://drive.google.com/a/cs.washington.edu/file/d/1mOzSzVx9BF_e2U1OeK58NS42UIPcnIZq/view?usp=sharing). The username is **robot** and the password is **prl_robot**. If you use this image, you can start the VM and then skip to the [**Running the Simulator**](#running-the-simulator) section. If you're using VirtualBox, here is a tutorial for [setting up the virtual machine image](https://docs.oracle.com/cd/E26217_01/E26796/html/qs-import-vm.html).
 
 Window Subsystem for Linux (WSL): There has also been success getting the quickstart to run using WSL. When running `rivz` you'll need to disable native `opengl`. There will be a note ([**Note for WSL**](#wsl-users-note)) in the section running `rviz`.
 
@@ -188,3 +188,9 @@ You can make your own maps using SLAM based techniques like [gmapping](http://wi
 
 ## Going Further
 To learn about programming the car, continue to the [Intro to ROS Tutorial](/tutorials/intro-to-ros).
+
+## Troubleshooting
+Commonly encountered problems during this tutorial.
+
+#### "Failed to open ovf descriptor" when importing the virtual machine image
+- This is a known issue with .ova file extensions downloading as .ovf from Google Suite. To fix, rename the file extension to .ova.
