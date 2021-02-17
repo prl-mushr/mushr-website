@@ -197,3 +197,8 @@ Commonly encountered problems during this tutorial.
 This is a known issue with .ova file extensions downloading as .ovf from Google Suite. To fix, rename the file extension to .ova.
 #### Can't copy and paste into VirtualBox
 Power down the virtual machine. Select Settings -> General -> Advanced -> SharedClipboard and select bidirectional. Restart the virtual machine.
+#### Ubuntu runs slowly/freezes on VirtualBox
+This likely occured because the default settings for new virtual machines
+are low. For better performance, it's a good idea to double the default memory
+(from 1024 to 2048 MB). Select Settings -> System and you should see a slider
+which allows you to increase RAM.
