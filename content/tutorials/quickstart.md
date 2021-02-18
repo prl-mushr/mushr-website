@@ -21,13 +21,16 @@ This tutorial will get you started with MuSHR in simulation!
 To get the simulator running on your machine so that you can begin hacking immediately!
 
 ### Requirements
-A Ubuntu 16.04 or 18.04 Linux machine (20.04 not supported yet!). If you don't run linux natively then get a Ubuntu VM: [OSX](https://www.instructables.com/id/How-to-Create-an-Ubuntu-Virtual-Machine-with-Virtu/), [Windows](https://itsfoss.com/install-linux-in-virtualbox/). 
+* **A Ubuntu 16.04 or 18.04 Linux machine** (20.04 not supported yet!). If you don't run linux natively you can use an [Ubuntu VM](https://www.freecodecamp.org/news/how-to-install-ubuntu-with-oracle-virtualbox/).
 
-We also provide a virtual machine image that already has the MuSHR stack setup, it can be downloaded [here](https://drive.google.com/a/cs.washington.edu/file/d/1mOzSzVx9BF_e2U1OeK58NS42UIPcnIZq/view?usp=sharing). The username is **robot** and the password is **prl_robot**. If you use this image, you can start the VM and then skip to the [**Running the Simulator**](#running-the-simulator) section.
+We also provide a virtual machine image that already has the MuSHR stack setup, it can be downloaded [here](https://drive.google.com/a/cs.washington.edu/file/d/1mOzSzVx9BF_e2U1OeK58NS42UIPcnIZq/view?usp=sharing). The username is **robot** and the password is **prl_robot**. If you use this image, you can start the VM and then skip to the [**Running the Simulator**](#running-the-simulator) section. If you're using VirtualBox, here is a tutorial for [setting up the virtual machine image](https://docs.oracle.com/cd/E26217_01/E26796/html/qs-import-vm.html).
 
-Window Subsystem for Linux (WSL): There has also been success getting the quickstart to run using WSL. When running `rivz` you'll need to disable native `opengl`. There will be a note ([**Note for WSL**](#wsl-users-note)) in the section running `rviz`.
+For good performance, it's a good idea to set the RAM used by your VM to at least 2048 MB. If using VirtualBox, navigate to Settings -> System and you should see a slider
+which allows you to modify RAM.
 
-Python2.7: If you have Python3 as your default version, download [Conda](https://docs.conda.io/en/latest/) to easily create/manage Python2.7 virtual environments.
+* **Window Subsystem for Linux (WSL):** There has also been success getting the quickstart to run using WSL. When running `rivz` you'll need to disable native `opengl`. There will be a note ([**Note for WSL**](#wsl-users-note)) in the section running `rviz`.
+
+* **Python2.7:** If you have Python3 as your default version, download [Conda](https://docs.conda.io/en/latest/) to easily create/manage Python2.7 virtual environments.
 * To learn how to use conda environments please see the following [tutorial](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html)
 ## Setup
 First we need to make sure you have a few dependencies installed. All commands are to be executed in a terminal (CTRL + ALT + T). Here is what you need:
@@ -188,3 +191,17 @@ You can make your own maps using SLAM based techniques like [gmapping](http://wi
 
 ## Going Further
 To learn about programming the car, continue to the [Intro to ROS Tutorial](/tutorials/intro-to-ros).
+
+## Troubleshooting
+Commonly encountered problems during this tutorial.
+
+### Virtual Machines
+#### Failed to open ovf descriptor when importing the virtual machine image
+This is a known issue with .ova file extensions downloading as .ovf from Google Suite. To fix, rename the file extension to .ova.
+#### Can't copy and paste into VirtualBox
+Power down the virtual machine. Select Settings -> General -> Advanced -> SharedClipboard and select bidirectional. Restart the virtual machine.
+#### Ubuntu runs slowly/freezes on VirtualBox
+This likely occured because the default settings for new virtual machines
+are low. For better performance, it's a good idea to double the default memory
+(from 1024 to 2048 MB). Select Settings -> System and you should see a slider
+which allows you to increase RAM.
