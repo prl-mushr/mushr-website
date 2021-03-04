@@ -30,19 +30,23 @@ To allow you to drive the car over radio.
   - [FPV Camera Hardware](https://www.getfpv.com/fpv/cameras.html) (camera, transmitter, receiver)
   - [FPV Camera 3D Printed Mount](https://github.com/prl-mushr/mushr-radio-controller/blob/main/FPV%20Camera%20Mount.stl)
   - A desktop/laptop computer that can ssh into the car.
-  - An SSH-capable text editor, like Vim or Visual Studio Code (requires the SSH plugin)
 
 
 ## Setting up CrazyRadio
 
 Plug one CrazyRadio USB transceiver into the jetson on the racecar, and one into your computer. Download the code from [this GitHub repository](https://github.com/prl-mushr/mushr-radio-controller) onto both the jetson and the computer. Connect the dualshock controller to your teleoperating laptop over Bluetooth or USB.
 
+First, run `tx.py` on the transmitting computer.
+
 {{< highlight bash >}} $ sudo python tx.py {{< / highlight >}}
+
+Then, run `rx.py` on the Jetson. Verify that joystick input appears on your screen and is being sent to the car with the acknowledgements.
+
 {{< highlight bash >}} $ sudo python rx.py {{< / highlight >}}
 
-Run `tx.py` on the transmitting laptop, and run `rx.py` on the Jetson. Verify that joystick input appears on your screen and is being sent to the car with the acknowledgements.
-
 ## Teleoperation
+
+Launch teleop as per normal on the jetson by SSH-ing into the car. (ensure the python scripts from the previous step are still running on both the PC & the racecar). 
 
 {{< highlight bash >}}
 $ ssh <user>@<car ip> 
@@ -52,7 +56,7 @@ $ ssh <user>@<car ip>
 $ roslaunch racecar teleop.launch 
 {{< / highlight >}}
 
-Launch teleop as per normal on the jetson by SSH-ing into the car. (ensure the python scripts from the previous step are still running on both the PC & the racecar). The controller should now be able to drive the car. This system should have a much higher range when compared to the traditional Bluetooth teleoperation system, and will continue to work outside WiFi or Bluetooth range, provided that line-of-sight is maintained. This may be particularly advantageous in dynamic outdoors environments.
+The controller should now be able to drive the car. This system should have a much higher range when compared to the traditional Bluetooth teleoperation system, and will continue to work outside WiFi or Bluetooth range, provided that line-of-sight is maintained. This may be particularly advantageous in dynamic outdoors environments.
 
 ## Pairing this system with an FPV camera
 
