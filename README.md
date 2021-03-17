@@ -5,7 +5,8 @@ refer to Hugo's documentation for any major changes.
 
 ## Requirements
 
-Install [Hugo](https://gohugo.io/getting-started/installing/) v0.61.0 to match the deployment pipeline version!
+Install [Hugo](https://gohugo.io/getting-started/installing/) v0.81.0 to match
+the deployment pipeline version!
 
 ## Running the site locally
 
@@ -22,12 +23,15 @@ To create a new tutorial, run:
 
 `hugo new tutorials/<tutorial-name>.md`  
 
-This will create the `content/tutorials/<tutorial-name>.md` template file for you to get started. Once you are done, make a PR and set @schmittlema as the reviewer.
+This will create the `content/tutorials/<tutorial-name>.md` template file for
+you to get started. Once you are done, make a PR and set @schmittlema as the
+reviewer.
 
 ## Editing content
 
 All website content can be found in the `content` folder. Update one of the
-existing Markdown files, or add your own. Once done, make a PR and set @schmittlema as the reviewer.
+existing Markdown files, or add your own. Once done, make a PR and set
+@schmittlema as the reviewer.
 
 ## Deploying website edits
 
