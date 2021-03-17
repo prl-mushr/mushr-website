@@ -8,8 +8,6 @@ After installing Hugo, you can test the site locally by cloning this repository
 and running `hugo server`. If you have draft content that you want to generate,
 add the `-D` or `--buildDrafts` flag.
 
-**Talk to @schmittle before pushing major changes.**
-
 ## Deploying website edits
 
 We use [GitHub Actions](.github/workflows/pages.yaml) to automatically deploy
