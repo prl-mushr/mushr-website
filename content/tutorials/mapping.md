@@ -26,7 +26,7 @@ Create a custom map of an area by driving the car to survey the surroundings.
   - A desktop/laptop that can ssh into the car
 
 ### Ssh into the car
-Boot up the car and connect the controller. Ssh into the car on your computer, replacing the IP address with your robot IP when connected with the ROBOT_AP network.
+Boot up the car and connect the controller. Ssh into the car on your computer, replacing the IP address with your robot IP when connected with the ROBOT_AP network, or using the Wifi connect from the [first steps](/tutorials/first_steps) tutorial.
 ```bash
 $ ssh robot@10.42.0.1 -X
 ```
