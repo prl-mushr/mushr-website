@@ -102,7 +102,12 @@ To load your new map into the simulator, move both files to `~/catkin_ws/src/mus
 $ mv map_name.pgm ~/catkin_ws/src/mushr_sim/maps/
 $ mv map_name.yaml ~/catkin_ws/src/mushr_sim/maps/
 ```
-Then, edit `~/catkin_ws/src/mushr_sim/launch/map_server.launch` to set the map to the name of the .yaml file. 
+Then, edit `~/catkin_ws/src/mushr_sim/launch/map_server.launch` to set the map to the name of the .yaml file.
+
+```bash
+$ nano ~/catkin_ws/src/mushr_sim/launch/map_server.launch
+```
+
 It should look like the following, replacing map_name with the name of your map.
 
 {{< highlight python "linenos=table" >}}
@@ -112,9 +117,7 @@ It should look like the following, replacing map_name with the name of your map.
 </launch>
 {{< / highlight >}}
 
-Now, launch the sim and rviz to use your new map!
-
-Start sim.
+Now, launch the sim to use your new map!
 ```bash
 $ roslaunch mushr_sim teleop.launch
 ```
@@ -122,12 +125,12 @@ In a new terminal, run rviz.
 ```bash
 $ rviz
 ```
-Your new map should appear in the sim! If you don't see it, make sure you are subscribed to the `/map` topic in the left sidebar.
+Your new map and the car should appear in the sim! If you don't see the map, make sure you are subscribed to the `/map` topic in the left sidebar. The map might not be in the center of the grid, and you may have to zoom out to see it.
 
 ### Touching up the map
 The map may have some stray pixels or jagged lines. To touch this up, we recommend using [gimp](https://www.gimp.org/) to edit the .pgm file.
 
-When doing this, use solid black (`#000000`) pixels for edges, solid white (`#FFFFFF`) areas for areas valid for the car, and solid gray areas (`#CDCDCD`) for invalid space for the car.
+When doing this, use solid black (hex: `#000000`) pixels for edges, solid white (hex: `#FFFFFF`) areas for areas valid for the car, and solid gray areas (hex: `#CDCDCD`) for invalid space for the car.
 
 {{< figure src="/tutorials/mapping/edited_map.png" width="400" >}}
 
