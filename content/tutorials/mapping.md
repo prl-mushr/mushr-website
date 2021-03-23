@@ -1,7 +1,7 @@
 ---
 title: "Using SLAM for Map Building"
 date: 2021-03-20T17:15:01-07:00
-summary: "Learn how to create custom maps of your car's surroundings"
+summary: Create custom maps with your car
 difficulty: Intermediate
 duration: 0
 featured: true  # whether this is listed at / (must also be top 6 by weight)
@@ -13,8 +13,8 @@ weight: 100
 ## By: Madison Doerr and Markus Schiffer
 
 ### Introduction
-The MuSHr car operates in a mapped area to determine its position, orientation, and plans. We can create 
-custom 2D maps for our cars by using [ROS's slam](http://wiki.ros.org/slam_toolbox) and our car's laser scanner to 
+The MuSHR car uses a map of its environment to localize itself. We can create 
+custom 2D maps for our cars by using [gmapping](http://wiki.ros.org/gmapping) and our car's laser scanner to 
 survey the area to be mapped.
 
 ### Goal
@@ -26,9 +26,15 @@ Create a custom map of an area by driving the car to survey the surroundings.
   - A desktop/laptop that can ssh into the car
 
 ### Ssh into the car
-Boot up the car and connect the controller. Ssh into the car on your computer, replacing the IP address with your robot IP when connected with the ROBOT_AP network, or using the Wifi connect from the [first steps](/tutorials/first_steps) tutorial.
+Boot up the car and connect the controller. 
+
+Ssh into the car on your computer, using the following command while connected to the ROBOT_AP network.
 ```bash
 $ ssh robot@10.42.0.1 -X
+```
+Or, if you set up Wifi connect in the [first steps](/tutorials/first_steps) tutorial, use the following command while connected to the same wifi network as your robot. Replace the IP listed below with the IP of your robot.
+```bash
+$ ssh robot@172.16.77.37 -X
 ```
 
 ### Install gmapping
@@ -90,13 +96,38 @@ $ rosrun map_server map_saver -f map_name map:=/car/map
 ```
 This should create a .pgm file with the map and a .yaml file with the map metadata. 
 
-To load your new map into the simulator, move both files to `~/catkin_ws/src/mushr_sim/maps/` and edit `~/catkin_ws/src/mushr_sim/launch/map_server.launch` to set the map to the name of the .yaml file.
+### Using the map
+To load your new map into the simulator, move both files to `~/catkin_ws/src/mushr_sim/maps/`, replacing map_name with the name of your map.
+```bash
+$ mv map_name.pgm ~/catkin_ws/src/mushr_sim/maps/
+$ mv map_name.yaml ~/catkin_ws/src/mushr_sim/maps/
+```
+Then, edit `~/catkin_ws/src/mushr_sim/launch/map_server.launch` to set the map to the name of the .yaml file. 
+It should look like the following, replacing map_name with the name of your map.
 
-### Touch up the map
-The map may have some stray pixels or jagged lines. To touch this up, we recommend using gimp to edit the .pgm file.
+{{< highlight python "linenos=table" >}}
+<launch>
+    <arg name="map" default="$(find mushr_base)/maps/map_name.yaml" />
+    <node pkg="map_server" name="map_server" type="map_server" args="$(arg map)" />
+</launch>
+{{< / highlight >}}
 
-When doing this, use solid black pixels for edges, solid white areas for areas valid for the car, and solid gray areas 
-for invalid space for the car.
+Now, launch the sim and rviz to use your new map!
+
+Start sim.
+```bash
+$ roslaunch mushr_sim teleop.launch
+```
+In a new terminal, run rviz.
+```bash
+$ rviz
+```
+Your new map should appear in the sim! If you don't see it, make sure you are subscribed to the `/map` topic in the left sidebar.
+
+### Touching up the map
+The map may have some stray pixels or jagged lines. To touch this up, we recommend using [gimp](https://www.gimp.org/) to edit the .pgm file.
+
+When doing this, use solid black (`#000000`) pixels for edges, solid white (`#FFFFFF`) areas for areas valid for the car, and solid gray areas (`#CDCDCD`) for invalid space for the car.
 
 {{< figure src="/tutorials/mapping/edited_map.png" width="400" >}}
 
