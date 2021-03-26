@@ -10,12 +10,14 @@ draft: false      # whether Hugo considers this a draft
 weight: 100
 ---
 
-## By: Madison Doerr and Markus Schiffer
+## By: [Madison Doerr](https://mcdoerr.github.io/) and Markus Schiffer
 
 ### Introduction
 The MuSHR car uses a map of its environment to localize itself. We can create 
 custom 2D maps for our cars by using [gmapping](http://wiki.ros.org/gmapping) and our car's laser scanner to 
 survey the area to be mapped.
+
+{{< figure src="/tutorials/mapping/map-demo.png" width="500" >}}
 
 ### Goal
 Create a custom map of an area by driving the car to survey the surroundings.
@@ -37,7 +39,7 @@ Or, if you set up Wifi connect in the [first steps](/tutorials/first_steps) tuto
 $ ssh robot@172.16.77.37 -X
 ```
 
-### Install gmapping
+### Update/Install gmapping
 In a terminal sshed into the car using the above steps, make sure gmapping is installed.
 
 If you installed ros-kinetic in the quickstart tutorial:
@@ -107,8 +109,7 @@ Then, edit `~/catkin_ws/src/mushr_sim/launch/map_server.launch` to set the map t
 ```bash
 $ nano ~/catkin_ws/src/mushr_sim/launch/map_server.launch
 ```
-
-It should look like the following, replacing map_name with the name of your map.
+Set the map variable to the path to the .yaml file, like the code below. Replace map_name with the name of your map.
 
 {{< highlight python "linenos=table" >}}
 <launch>
