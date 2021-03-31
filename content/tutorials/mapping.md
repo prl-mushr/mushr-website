@@ -10,7 +10,7 @@ draft: false      # whether Hugo considers this a draft
 weight: 100
 ---
 
-## By: [Madison Doerr](https://mcdoerr.github.io/) and Markus Schiffer
+## By: [Madison Doerr](https://mcdoerr.github.io/) and [Markus Schiffer](www.linkedin.com/in/markusschiffer)
 
 ### Introduction
 The MuSHR car uses a map of its environment to localize itself. We can create 
@@ -81,7 +81,7 @@ Now, in the same terminal, start rviz.
 ```bash
 $ rviz
 ```
-A screen should appear of the robot and the map it is creating. If you don't see the map, make sure the `/car/map` topic is added to the left sidebar. The map will dynamically update and refine as the laser scanner gathers new data.
+A screen should appear of the robot and the map it is creating. If you don't see the map, make sure the `/car/map` topic is added to the left sidebar (different from the /map/ topic!). You may also need to set the Fixed Frame value in the Displays > Global Options menu in rviz to /car/map/ instead of /map/. The map will dynamically update and refine as the laser scanner gathers new data.
 
 {{< figure src="/tutorials/mapping/start_map.png" width="400" >}}
 </br>
@@ -117,6 +117,8 @@ Set the map variable to the path to the .yaml file, like the code below. Replace
     <node pkg="map_server" name="map_server" type="map_server" args="$(arg map)" />
 </launch>
 {{< / highlight >}}
+
+At this point, make sure that the current terminal instance you're using has the default values for `ROS_IP` (undefined) and `ROS_MASTER_URI` (http://localhost:11311/). You should not need to do anything if you have not set `ROS_IP` or `ROS_MASTER_URI` in the current terminal instance.
 
 Now, launch the sim to use your new map!
 ```bash
