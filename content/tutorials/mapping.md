@@ -83,7 +83,7 @@ $ rviz
 ```
 A screen should appear of the robot and the map it is creating. If you don't see the map, make sure the `/car/map` topic is added to the left sidebar (different from the /map/ topic!). You may also need to set the Fixed Frame value in the Displays > Global Options menu in rviz to /car/map/ instead of /map/. The map will dynamically update and refine as the laser scanner gathers new data.
 
-{{< figure src="/tutorials/mapping/start_map.png" width="400" >}}
+{{< figure src="/tutorials/mapping/start_map_large.png" width="400" >}}
 </br>
 
 ### Survey the surroundings
@@ -135,6 +135,6 @@ The map may have some stray pixels or jagged lines. To touch this up, we recomme
 
 When doing this, use solid black (hex: `#000000`) pixels for edges, solid white (hex: `#FFFFFF`) areas for areas valid for the car, and solid gray areas (hex: `#CDCDCD`) for invalid space for the car.
 
-{{< figure src="/tutorials/mapping/edited_map.png" width="400" >}}
+{{< figure src="/tutorials/mapping/edited_map_large.png" width="400" >}}
 
 
