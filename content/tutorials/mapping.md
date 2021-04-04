@@ -130,12 +130,12 @@ $ rviz
 ```
 Your new map and the car should appear in the sim! If you don't see the map, make sure you are subscribed to the `/map` topic in the left sidebar. The map might not be in the center of the grid, and you may have to zoom out to see it.
 #### On the car
-To get the map from your computer to the robot, we need to use `scp`, replacing `map_name` with the name of your map and `ROBOT_IP` with the IP of your robot:
+To get the map from your computer to the robot, we need to use `scp`, replacing `map_name` with the name of your map and `ROBOT_IP` with the IP of your robot. From your computer, run the following from where you saved your maps:
 ```bash
 $ scp map_name.pgm robot@ROBOT_IP:~/catkin_ws/src/mushr/mushr_base/mushr_base/mushr_base/maps/
 $ scp map_name.yaml robot@ROBOT_IP:~/catkin_ws/src/mushr/mushr_base/mushr_base/mushr_base/maps/
 ```
-Then, edit `~/catkin_ws/src/mushr/mushr_base/mushr_base/mushr_base/launch/includes/map_server` to set the map to the name of the .yaml file.
+Then, edit `~/catkin_ws/src/mushr/mushr_base/mushr_base/mushr_base/launch/includes/map_server.launch` on the robot to set the map to the name of the .yaml file.
 
 ```bash
 $ nano ~/catkin_ws/src/mushr/mushr_base/mushr_base/mushr_base/launch/includes/map_server.launch
@@ -155,7 +155,6 @@ Now, start teleop on the robot:
 $ roslaunch mushr_base teleop.launch
 ```
 And on your computer, set the IPs and start rviz to see the map!
-Set `ROS_IP`.
 ```bash
 $ export ROS_IP=YOUR-IP
 $ export ROS_MASTER_URI=http://ROBOT_IP:11311
