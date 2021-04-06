@@ -58,27 +58,17 @@ $ roslaunch mushr_base teleop.launch
 ```
 Verify that the controller is working and you can move the car. If not, try reconnecting the controller and/or restarting teleop.
 
-In a separate terminal sshed into the robot, using the above process, start slam. Slam will take the data gathered from the laser 
-scanner started by teleop and transform that into a 2D map. 
+In a separate terminal sshed into the robot, using the above process, set `ROS_IP` to the IP of your robot, then start slam. Slam will take the data gathered from the laser scanner started by teleop and transform that into a 2D map. 
 ```bash
+$ export ROS_IP=YOUR-IP
 $ roslaunch mushr_base slam.launch
 ```
 
 ### Start rviz to visualize the map building
-In a terminal on your computer (not ssh-ed into the robot), set `ROS_IP` to your IP and `ROS_MASTER_URI` to the IP of the car.
-
-Set `ROS_IP`.
+In a terminal on your computer (not ssh-ed into the robot), set `ROS_IP` to your IP and `ROS_MASTER_URI` to the IP of the car, and then start rviz.
 ```bash
 $ export ROS_IP=YOUR-IP
-```
-
-Set the `ROS_MASTER_URI` to the IP of the car.
-```bash
 $ export ROS_MASTER_URI=http://ROBOT_IP:11311
-```
-
-Now, in the same terminal, start rviz.
-```bash
 $ rviz
 ```
 A screen should appear of the robot and the map it is creating. If you don't see the map, make sure the `/car/map` topic is added to the left sidebar (different from the /map/ topic!). You may also need to set the Fixed Frame value in the Displays > Global Options menu in rviz to /car/map/ instead of /map/. The map will dynamically update and refine as the laser scanner gathers new data.
@@ -165,7 +155,7 @@ The map should appear, and you can move your robot into the map using `Set 2D Po
 ### Touching up the map
 The map may have some stray pixels or jagged lines. To touch this up, we recommend using [gimp](https://www.gimp.org/) to edit the .pgm file.
 
-When doing this, use solid black (hex: `#000000`) pixels for edges, solid white (hex: `#FFFFFF`) areas for areas valid for the car, and solid gray areas (hex: `#CDCDCD`) for invalid space for the car.
+When doing this, use solid black (hex: `#000000`) pixels for edges, solid white (hex: `#FEFEFE`) areas for areas valid for the car, and solid gray areas (hex: `#CDCDCD`) for invalid space for the car.
 
 {{< figure src="/tutorials/mapping/edited_map_large.png" width="400" >}}
 
