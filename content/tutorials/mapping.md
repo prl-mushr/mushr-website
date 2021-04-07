@@ -84,6 +84,8 @@ When you're satisfied with the map in rviz, you can save it to your computer usi
 
 In a local terminal, ensure `ROS_IP` is set to your IP and `ROS_MASTER_URI` is set to the IP of the car. Then, in that terminal, run map_saver using the following command, replacing `map_name` with the desired name of the map.
 ```bash
+$ export ROS_IP=YOUR-IP
+$ export ROS_MASTER_URI=http://ROBOT_IP:11311
 $ rosrun map_server map_saver -f map_name map:=/car/map
 ```
 This should create a .pgm file with the map and a .yaml file with the map metadata. 
@@ -95,7 +97,7 @@ To load your new map into the simulator, move both files to `~/catkin_ws/src/mus
 $ mv map_name.pgm ~/catkin_ws/src/mushr/mushr_base/mushr_base/mushr_base/maps/
 $ mv map_name.yaml ~/catkin_ws/src/mushr/mushr_base/mushr_base/mushr_base/maps/
 ```
-Then, edit `~/catkin_ws/src/mushr/mushr_base/mushr_base/mushr_base/launch/includes/map_server` to set the map to the name of the .yaml file.
+Then, edit `~/catkin_ws/src/mushr/mushr_base/mushr_base/mushr_base/launch/includes/map_server.launch` to set the map to the name of the .yaml file.
 
 ```bash
 $ nano ~/catkin_ws/src/mushr/mushr_base/mushr_base/mushr_base/launch/includes/map_server.launch
