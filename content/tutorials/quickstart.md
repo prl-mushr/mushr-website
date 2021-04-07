@@ -181,7 +181,7 @@ The current map is fine for driving around, but to do more interesting things yo
 
 {{< highlight bash >}}
 # To list what maps are available
-$ ls ~/catkin_ws/src/mushr_sim/maps/
+$ ls ~/catkin_ws/src/mushr_base/mushr_base/mushr_base/maps/
 # Open map_server.launch
 $ nano ~/catkin_ws/src/mushr/mushr_base/mushr_base/mushr_base/launch/includes/map_server.launch
 {{< / highlight >}}
