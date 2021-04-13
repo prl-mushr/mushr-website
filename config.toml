@@ -76,7 +76,7 @@ unsafe = true
 [[menu.main]]
     identifier = "forum"
     name = "Community Forum"
-    url = "https://spectrum.chat/mushr"
+    url = "https://github.com/prl-mushr/mushr/discussions"
     weight = 8
 
 [[menu.main]]
