@@ -10,7 +10,7 @@ draft: true      # whether Hugo considers this a draft
 weight: 3        # 2 = intro tutorial 3 = anything else
 ---
 
-<h2> By: <a href=https://mushr.io/>Sidharth Talia</a></h2>
+<h2> By: <a href=https://www.sidharthtalia.com/>Sidharth Talia</a></h2>
 
 <!-- Header figure required! -->
 <br>
