@@ -3,7 +3,7 @@ title: "Global Planner"
 date: 2020-01-25T15:14:54+10:00
 featured: false
 draft: false
-active: true
+active: false
 duration: 60
 difficulty: Advanced 
 summary: Plan paths from start to goal in known map
