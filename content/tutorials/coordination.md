@@ -88,12 +88,45 @@ Topic | Type | Description
 ## Running the coordination planner
 
 ```
-roslaunch mushr_coordination mushr_coordination.launch
+roslaunch mushr_coordination mushr_coordination.launch cars_file:={car's team config file}
 ```
 for sample environment setup and tasks run:
 ```
 rviz
-roslauncuh mushr_coordination init_planner.launch
+roslauncuh mushr_coordination init_planner.launch cars_file:={car's team config file} task_file:={task benchmark file}
 ```
+
+### Sample #1
+```
+roslaunch mushr_coordination mushr_coordination.launch cars_file:=4cars.yaml
+rviz
+roslauncuh mushr_coordination init_planner.launch cars_file:=4cars.yaml task_file:=4cars4tasks5x3.yaml
+```
+
+In this example, each car get their respective task, in which their accumulated distanse would be minimal.
+
+{{< figure src="/tutorials/coordination_planner/4cars4tasks5x3.png" width="800" >}}
+
+### Sample #2
+```
+roslaunch mushr_coordination mushr_coordination.launch cars_file:=4cars.yaml
+rviz
+roslauncuh mushr_coordination init_planner.launch cars_file:=4cars.yaml task_file:=4cars6tasks6x6.yaml
+```
+
+In this example, number of tasks is more than number of cars by two, therefore the blue car and the green car have to finish additional task after the first one.
+
+{{< figure src="/tutorials/coordination_planner/4cars6tasks6x6.png" width="800" >}}
+
+### Sample #3
+```
+roslaunch mushr_coordination mushr_coordination.launch cars_file:=4cars.yaml
+rviz
+roslauncuh mushr_coordination init_planner.launch cars_file:=4cars.yaml task_file:=4cars2tasks5x3.yaml
+```
+
+In this example, the red car and green car are idle since there is no task assigned to them. 
+
+{{< figure src="/tutorials/coordination_planner/4cars2tasks5x3.png" width="800" >}}
 
 
