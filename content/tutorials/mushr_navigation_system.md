@@ -1,9 +1,9 @@
 ---
-title: "MuSHR_navigation_system_tutorial"
+title: "MuSHR multi-agent navigation system tutorial"
 date: 2021-04-18T22:17:25+05:30
 summary: "This tutorial covers running the MuSHR multi-agent navigation stack in simulation"
 difficulty: "Advanced"
-duration: 60
+duration: 30
 featured: false  # whether this is listed at / (must also be top 6 by weight). 
 active: true     # whether this is listed at /tutorials/
 draft: true      # whether Hugo considers this a draft
@@ -18,13 +18,13 @@ weight: 3        # 2 = intro tutorial 3 = anything else
 <br>
 
 ### Introduction
-A navigation system enables a robot to navigate quickly between different poses while avoiding collisions with the environment or other agents. The navigation system in this project uses the NH-TTC [backend](https://github.com/davisbo/NHTTC), which is a decentralized multi-agent navigation system. The Non-holonomic-Time-To-Collision (NH-TTC) backend considers the Non-holonomic constraints of the car and considers the time to collision with other cars in the optimization process. The reader may peruse the [paper](http://motion.cs.umn.edu/r/NH-TTC/arxiv-NHTTC.pdf) to better understand how it works.
+A navigation system enables a robot to navigate quickly between different poses while avoiding collisions with the environment or other agents. The navigation system in this project uses the NH-TTC [backend](https://github.com/davisbo/NHTTC), which is a decentralized multi-agent navigation system. The Non-holonomic-Time-To-Collision (NH-TTC) backend considers the Non-holonomic constraints of the car and considers the time to collision with other cars in the optimization process. To learn more about how it works, checkout the paper [here](http://motion.cs.umn.edu/r/NH-TTC/arxiv-NHTTC.pdf)!
 
 ### Goal
-The goal of this tutorial is to get the reader familiar with the multi-agent navigation framework used for the MuSHR car.
+The goal of this tutorial is to get the multi-agent navigation system up and running on your system.
 
 ### Requirements
-Completed the [quick-start](https://mushr.io/tutorials/quickstart/) tutorial (familiarity with ROS and python is assumed).
+Completed the [quickstart](https://mushr.io/tutorials/quickstart/) tutorial (familiarity with ROS and python is assumed).
 
 ## Environment setup
 Clone the nhttc_ros repository into your catkin workspace: 
@@ -36,9 +36,14 @@ $ git submodule init
 $ git submodule update --force --recursive --init --remote
 {{< / highlight >}}
 
+install python requirements (assuming you are already in the nhttc_ros directory):
+{{< highlight bash >}}
+$ pip install -r requirements.txt
+{{< / highlight >}}
+
 Compile using catkin_make:
 {{< highlight bash >}}
-$ cd ~/catkin_mushr
+$ cd ~/catkin_ws
 $ catkin_make
 {{< / highlight >}}
 
@@ -109,9 +114,13 @@ Note that the z axis data in `/car/waypoints` topic represents the time differen
 ## Tuning the parameters
 The multi-agent navigation system _can_ work out of the box for most applications, however, it is possible to tune it should the user feel that it needs to be tuned. The parameters can be changed inside the launch file (in this case the nhttc_demo.launch file). Please note that the navigation system uses a solver which has some level of stochasticity to it, which can lead to slightly different behavior. The demonstrations shown here are to explain the effect of changing the parameters.
 
-<br>
-{{< figure src="/tutorials/MuSHR_multiagent_navigation/params.png" width="800" >}} <br>                           
-<br>
+{{<highlight xml >}}
+<param name="carrot_goal_ratio" value="1.5"/>
+<param name="max_ttc" value="3.0"/>
+<param name="solver_time" value="20"/>
+<param name="obey_time" value = "true" />
+<param name="allow_reverse" value = "false" />
+{{</highlight>}}
 
 * **1) Carrot-goal ratio:** The ROS wrapper implements a carrot-goal navigation system where waypoints are selected from a prescribed path. The waypoints are selected such that they are some “lookahead” distance away from the car. Keeping the car aimed at a waypoint farther away prevents it from getting stuck in a local minimum. Keeping this lookahead closer to the car makes sure the car does not deviate too far away from the prescribed path while getting to the point farther down the line. The ratio of this lookahead distance or carrot-goal distance to the turning radius has been defined as the carrot-goal ratio. The reason for that name is that the way the system works is akin to sitting on top of a donkey (the car) and keeping a carrot(waypoint) hung from a stick that you(navigation system) are holding:
 
