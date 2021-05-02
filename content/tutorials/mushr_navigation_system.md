@@ -1,5 +1,5 @@
 ---
-title: "MuSHR multi-agent navigation system tutorial"
+title: "Multi-agent navigation system"
 date: 2021-04-18T22:17:25+05:30
 summary: "This tutorial covers running the MuSHR multi-agent navigation stack in simulation"
 difficulty: "Advanced"
@@ -25,9 +25,10 @@ The goal of this tutorial is to get the multi-agent navigation system up and run
 
 ### Requirements
 Completed the [quickstart](https://mushr.io/tutorials/quickstart/) tutorial (familiarity with ROS and python is assumed).
+Make sure your mushr_base is using the sandbox map. The quickstart tutorial explains how to change the map.
 
 ## Environment setup
-Clone the nhttc_ros repository into your catkin workspace: 
+Clone the [nhttc_ros](https://github.com/naughtyStark/nhttc_ros.git) repository into your catkin workspace: 
 {{< highlight bash >}}
 $ cd catkin_ws/src
 $ git clone --branch devel https://github.com/naughtyStark/nhttc_ros.git
@@ -53,13 +54,16 @@ $ roslaunch nhttc_ros nhttc_demo.launch
 {{< / highlight >}}
 
 Wait till you see the highlighted text on the terminal:
-<br>
-{{< figure src="/tutorials/MuSHR_multiagent_navigation/start-up-message.jpg" width="800" >}} <br>                           
-<br>
+```
+[ INFO] [1619972044.806652208]: node started
+[ INFO] [1619972044.806919877]: max_ttc: 6.000000, carrot_goal_ratio: 1.000000
+[ INFO] [1619972044.806943270]: carrot_goal_dist: 1.092528
+[ INFO] [1619972044.806955298]: obey_time:1
+```
 
 In a new tab, open rviz:
 {{< highlight bash >}}
-$ rosrun rviz rviz
+$ rviz -d ~/catkin_ws/src/nhttc_ros/nhttc_ros/rviz/nhttc.rviz
 {{< / highlight >}}
 
 Select the rviz configuration corresponding to the nhttc_ros. Run the route publisher node:
@@ -73,43 +77,30 @@ You should see something like this on rviz:
 <br>
 This should be considered the default case henceforth.
 
-# API
-
-The nhttc_ros wrapper has the following parameters:
-#### car_name (string):
-The name assigned to the car (can be any string but prefer car{index number})
-
-#### solver_time (int):
-The maximum time in milliseconds for which the solver is allowed to run
-
-#### max_ttc (float):
-The maximum time-to-collision used by the solver: any agents that have a time to collision larger than this will not be considered in the cost function
-
-#### carrot_goal_ratio (float):
-The ratio of the carrot-goal/lookahead distance to the turning radius. value of 1 means that the lookahead distance is the same as the turning radius.
-
-#### obey_time" value(boolean):
-Set to true if the car is supposed to adhere to the time coordinate of the waypoints (as in, to arrive at a waypoint at a given time and not before/after).
-
-#### allow_reverse (boolean):
-Set to true if the car is allowed to go in reverse.
-
-### Publishers
-Topic | Type | Description
-------|------|------------
-`/car_name/mux/ackermann_cmd_mux/input/navigation` | [ackermann_msgs/AckermannDriveStamped](http://docs.ros.org/en/jade/api/ackermann_msgs/html/msg/AckermannDriveStamped.html)| steering and speed control of car corresponding to car_name.
-`/car_name/cur_goal` | [geometry_msgs/PoseStamp](http://docs.ros.org/en/melodic/api/geometry_msgs/html/msg/PoseStamped.html)| topic on which current waypoint is published.
-`/car_name/time_goal` | [geometry_msgs/PoseStamp](http://docs.ros.org/en/melodic/api/geometry_msgs/html/msg/PoseStamped.html)| waypoint being used for timing purposes.
-
-### Subscribers
-Topic | Type | Description
-------|------|------------
-`/car1/car_pose` | [geometry_msgs/PoseStamp](http://docs.ros.org/en/melodic/api/geometry_msgs/html/msg/PoseStamped.html)| position of car 1
-...
-`/car{n}/car_pose` | [geometry_msgs/PoseStamp](http://docs.ros.org/en/melodic/api/geometry_msgs/html/msg/PoseStamped.html)| position of car {n}
+## Using the wrapper for your own intents and purposes:
+The system takes a set of waypoints rather than single points. The message to publish for this is:
 `/car_name/waypoints` | [geometry_msgs/PoseArray](http://docs.ros.org/en/melodic/api/geometry_msgs/html/msg/PoseArray.htmll)| waypoint array corresponding to car_name. The z axis coordinate represents the time difference between 2 waypoints.
 
-Note that the z axis data in `/car/waypoints` topic represents the time difference between two consecutive waypoints in a unitless fashion, and the number should be pre-multiplied by 0.001 before publishing (so that the visualization on rviz does not look elevated). 1 unit of time here is equal to (distance between two waypoints/expected speed of the agent). If the car moves at 0.5 m/s and the distance between two waypoints is 1 meter, then 1 unit of time would equal to 2 seconds. 
+To adjust the number of cars used, their colors and so on, you can modify the launch file (or create your own launch file using the ones provided as a template). For instance, if you wish to run 4 cars instead of 2, simply add these lines to the launch file:
+{{ <highlight xml >}}
+	    <group ns="$(arg car_name)">
+        <include file="$(find mushr_sim)/launch/single_car.launch" >
+            <arg name="car_name" value="$(arg car_name)"/>
+            <arg name="racecar_version" value="racecar-uw-nano"/>
+            <arg name="racecar_color" value="-red-white" />
+        </include>
+        <node pkg="nhttc_ros" type="nhttc_ros_node" name="controller3">
+            <param name="car_name" value="car_name"/>
+            <param name="solver_time" value="$(arg SolT)"/>
+            <param name="max_ttc" value="$(arg mttc)"/>
+            <param name="carrot_goal_ratio" value="$(arg cgr)"/>
+            <param name="obey_time" value = "$(arg follow_time)" />
+            <param name="allow_reverse" value = "$(arg reverse)" />
+        </node>
+    </group>
+{{ </highlight>}}
+
+Note that the route_publisher.py file used for the demo only publishes paths for two cars (`car1` and `car2`). If you add another car, you will have to modify the route-publisher to publish a route for the third car (we recommend writing a separate route publishing file by taking inspiration from the route_publisher.py).
 
 ## Tuning the parameters
 The multi-agent navigation system _can_ work out of the box for most applications, however, it is possible to tune it should the user feel that it needs to be tuned. The parameters can be changed inside the launch file (in this case the nhttc_demo.launch file). Please note that the navigation system uses a solver which has some level of stochasticity to it, which can lead to slightly different behavior. The demonstrations shown here are to explain the effect of changing the parameters.
