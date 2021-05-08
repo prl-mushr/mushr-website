@@ -1,5 +1,5 @@
 ---
-title: "Multi-agent navigation system"
+title: "Multi-agent Navigation System"
 date: 2021-04-18T22:17:25+05:30
 summary: "This tutorial covers running the MuSHR multi-agent navigation stack in simulation"
 difficulty: "Advanced"
@@ -75,7 +75,10 @@ You should see something like this on rviz:
 <br>
 {{< figure src="/tutorials/MuSHR_multiagent_navigation/demo_default.gif" width="800" >}}                           
 
-This should be considered the default case henceforth. In this demo, the blue car is trying to follow the blue arrows and the green car is trying to follow the green arrows. The green car is supposed to stop a small distance after crossing the intersection of the two paths whereas the blue car is supposed to move towards the top after the intersection of the two paths. The two paths coincide to force the navigation system to display its capabilities.
+This should be considered the default case henceforth. In this demo, the blue car is trying to follow the blue arrows and the green car is trying to follow the green arrows. The green car is supposed to stop a small distance after crossing the intersection of the two paths whereas the blue car is supposed to move towards the top after the intersection of the two paths. The two paths coincide to force the navigation system to display its capabilities. **Note that you may observe slightly different behaviour when you launch this on your system, the provided gif is only for reference.**
+
+**Note:** In order to rerun this example you must relaunch the nhttc_demo.launch
+
 
 ## Using the wrapper for your own intents and purposes:
 The system takes a set of waypoints rather than single points. The message to publish for this is:
@@ -111,14 +114,14 @@ Note that the route_publisher.py file used for the demo only publishes paths for
 The multi-agent navigation system _can_ work out of the box for most applications, however, it is possible to tune it should the user feel that it needs to be tuned. The parameters can be changed inside the launch file (in this case the nhttc_demo.launch file). Please note that the navigation system uses a solver which has some level of stochasticity to it, which can lead to slightly different behavior. The demonstrations shown here are to explain the effect of changing the parameters.
 
 {{<highlight xml >}}
-<param name="carrot_goal_ratio" value="1.5"/>
-<param name="max_ttc" value="3.0"/>
-<param name="solver_time" value="20"/>
-<param name="obey_time" value = "true" />
-<param name="allow_reverse" value = "false" />
+<param name="cgr" value="1.5"/>
+<param name="mttc" value="3.0"/>
+<param name="SolT" value="20"/>
+<param name="follow_time" value = "true" />
+<param name="reverse" value = "false" />
 {{</highlight>}}
 
-* **1) Carrot-goal ratio:** The ROS wrapper implements a carrot-goal navigation system where waypoints are selected from a prescribed path. The waypoints are selected such that they are some “lookahead” distance away from the car. Keeping the car aimed at a waypoint farther away prevents it from getting stuck in a local minimum. Keeping this lookahead closer to the car makes sure the car does not deviate too far away from the prescribed path while getting to the point farther down the line. The ratio of this lookahead distance or carrot-goal distance to the turning radius has been defined as the carrot-goal ratio. The reason for that name is that the way the system works is akin to sitting on top of a donkey (the car) and keeping a carrot(waypoint) hung from a stick that you(navigation system) are holding:
+* **1) Carrot-goal ratio (cgr):** The ROS wrapper implements a carrot-goal navigation system where waypoints are selected from a prescribed path. The waypoints are selected such that they are some “lookahead” distance away from the car. Keeping the car aimed at a waypoint farther away prevents it from getting stuck in a local minimum. Keeping this lookahead closer to the car makes sure the car does not deviate too far away from the prescribed path while getting to the point farther down the line. The ratio of this lookahead distance or carrot-goal distance to the turning radius has been defined as the carrot-goal ratio. The reason for that name is that the way the system works is akin to sitting on top of a donkey (the car) and keeping a carrot(waypoint) hung from a stick that you(navigation system) are holding:
 
 <br>
 {{< figure src="/tutorials/MuSHR_multiagent_navigation/carrot_goal_meme.jpg" width="800" >}} <br>                           
@@ -131,28 +134,28 @@ A value of 1.0 means the carrot goal distance is the same as the turning radius.
 
 If the car tends to get stuck around turns, increase the carrot-goal ratio in increments of 0.1. If the car appears to be rounding off the turns too much or significantly deviating from the path near turns, causing issues with other agents, reduce the carrot-goal-ratio in decrements of 0.1. 
 
-* **2) Max_ttc:** Stands for maximum time to collision. This parameter decides which agents to consider and which to not consider when optimizing for the next control action. The time to collision is calculated using the current state (pose as well as twist) of all agents. A larger max_ttc results in a larger time horizon for optimization. A larger max_ttc will make the car respond earlier to other agents but can result in the car deviating from its path too early. A smaller max_ttc will make the car less sensitive to agents far away but may result in the car responding too late to the other agents and ending up in deadlocks more often. The first figure shows the performance with a max_ttc of 3.0 and the second shows the performance with max_ttc of 6.0 seconds. Notice how the cars start avoiding each other earlier in the second example.
+* **2) Max_ttc (mttc):** Stands for maximum time to collision. This parameter decides which agents to consider and which to not consider when optimizing for the next control action. The time to collision is calculated using the current state (pose as well as twist) of all agents. A larger max_ttc results in a larger time horizon for optimization. A larger max_ttc will make the car respond earlier to other agents but can result in the car deviating from its path too early. A smaller max_ttc will make the car less sensitive to agents far away but may result in the car responding too late to the other agents and ending up in deadlocks more often. The first figure shows the performance with a max_ttc of 3.0 and the second shows the performance with max_ttc of 6.0 seconds. Notice how the cars start avoiding each other earlier in the second example.
 <br>
 {{< figure src="/tutorials/MuSHR_multiagent_navigation/demo_default.gif" width="600" height="400" >}}
 {{< figure src="/tutorials/MuSHR_multiagent_navigation/demo_maxttc.gif"  width="600" height="400" >}}                           
 
 In this particular example, it may appear to be helping the agents. However, had there been another agent above/below these agents, it may have affected the performance adversely.
 
-* **3) Solution time:** The amount of time in milliseconds to be used for calculating the solution and is not to be confused with the time to collision. Increasing the solution time may lead to a better solution, however, as the system has to operate in real-time, this will reduce the control-loop frequency. A slower control-loop frequency results in a delayed response. A multi-agent navigation system responds to the actions of the agents around it. If the control loop is slower, the other agents may appear out of sync at times as they aren't running the control loop fast enough to respond to the other agent's actions. In multi-agent situations when the intent of the other agent isn't clear, all the agents are essentially guessing what they should do. If the first guess is wrong, it may lead to sub-optimal behavior. In the first figure, the solution time is 20 milliseconds and 30 milliseconds for the second case. Notice how the blue car takes the wrong course of action initially in the second case.
+* **3) Solution time (SolT):** The amount of time in milliseconds to be used for calculating the solution and is not to be confused with the time to collision. Increasing the solution time may lead to a better solution, however, as the system has to operate in real-time, this will reduce the control-loop frequency. A slower control-loop frequency results in a delayed response. A multi-agent navigation system responds to the actions of the agents around it. If the control loop is slower, the other agents may appear out of sync at times as they aren't running the control loop fast enough to respond to the other agent's actions. In multi-agent situations when the intent of the other agent isn't clear, all the agents are essentially guessing what they should do. If the first guess is wrong, it may lead to sub-optimal behavior. In the first figure, the solution time is 20 milliseconds and 30 milliseconds for the second case. Notice how the blue car takes the wrong course of action initially in the second case.
 <br>
 {{< figure src="/tutorials/MuSHR_multiagent_navigation/demo_default.gif" width="600" height="400" >}}
 {{< figure src="/tutorials/MuSHR_multiagent_navigation/demo_SolT.gif"    width="600" height="400" >}}
 
 However, reducing the time may lead to the solution not converging at all, again, leading to sub-optimal solutions. Keeping the solution time between 20-40 milliseconds will yield feasible solutions, with larger times resulting in the above behavior appearing more often.
 
-* **4) Obey_time:** The navigation system generally takes a waypoint array from a global planner. In multi-agent systems, the global planner will specify both space and time coordinates, as in, where the agent is supposed to be and when it is supposed to be there. If this parameter is set to false (as in the default demo), the car will disregard the timing. The first figure shows the behaviour for when this parameter is false and the second shows what happens when it is true:
+* **4) Obey_time (follow_time):** The navigation system generally takes a waypoint array from a global planner. In multi-agent systems, the global planner will specify both space and time coordinates, as in, where the agent is supposed to be and when it is supposed to be there. If this parameter is set to false (as in the default demo), the car will disregard the timing. The first figure shows the behaviour for when this parameter is false and the second shows what happens when it is true:
 <br>
 {{< figure src="/tutorials/MuSHR_multiagent_navigation/demo_default.gif" width="600" height="400" >}}
 {{< figure src="/tutorials/MuSHR_multiagent_navigation/demo_time.gif"    width="600" height="400" >}}
 
 As you can see, the blue car stops at the turn for a while before continuing. This happens because the blue car rounded the turn and arrived a little too early at the next waypoint, and therefore slowed down before continuing.
 
-* **5) allow_reverse:** In some applications, it may be important to prevent the car from ever moving backward. This parameter allows you to decide whether the car can or can not go backward in a given situation. This parameter is fairly self-explanatory and is thus not accompanied by a demo.
+* **5) allow_reverse (reverse):** In some applications, it may be important to prevent the car from ever moving backward. This parameter allows you to decide whether the car can or can not go backward in a given situation. This parameter is fairly self-explanatory and is thus not accompanied by a demo.
 
 
 ## Troubleshooting
