@@ -10,34 +10,60 @@ summary: Initialize and operate multiple MuSHRs car to coordinationally complete
 weight: 3
 ---
 
-<h2> By: <a href=www.linkedin.com/in/p-chanrun>Podshara Chanrungmaneekul</a> </h2>
+<h2> By: <a href='https://www.linkedin.com/in/p-chanrun/'>Podshara Chanrungmaneekul</a> </h2>
+<img src="/tutorials/coordination_planner/header.gif" width="800" >
 
 ## Introduction
 
 ### Goal 
 
-This tutorial will teach you to set up and planning the navigation paths for set of MuSHR's car to complete certain set of tasks using Enhanced Conflict-Based Search(ECBS). By the end of the tutorial, a set of cars would be able to generate path that avoiding each other and complete the given set of tasks.
+This tutorial will teach you how to setup the Enhance Conflict-Based Search with Optimal Task Assignment (ECBS-TA) planning algorithm on a set of MuSHR cars. ECBS-TA produces a set of collision free trajectories, one for each car, from start to goal. By the end of the tutorial, a set of cars will be able to generate path that avoiding each other and complete the given set of tasks.
 
 ### Requirements
 
 - If in sim, complete the [quickstart tutorial](https://mushr.io/tutorials/quickstart/)
 - If on real car, complete the [first steps tutorial](https://mushr.io/tutorials/first_steps/)
-- Navigation System [`mushr_navigation_system`](https://github.com/naughtyStark/nhttc_ros)
+- Navigation System [mushr_navigation_system](https://github.com/naughtyStark/nhttc_ros)
 
 ## Coordination Planner Problem Statement
 
-There is a team of `num_agents` MuSHR race cars and a set of `num_goals` tasks. Each tasks requires one same race car to follow all `num_waypoints` intermediate points and stop at the last one. The environment is based on a gridworld domain where the movement of the car is restricted to orthogonal movement. Also, it is possible for one car not taking any job or taking multiple jobs, but it have to finish the previous one before executing the next task. 
+There is a team of `num_agents` MuSHR cars and a set of `num_goals` tasks. Each task requires one car to follow all of the `num_waypoints` points and stop at the last one. The environment is a grid world where the movement of the car is restricted to orthongonal movement. This approximate approach can work well when combined with the [nhttc controller](https://github.com/naughtyStark/nhttc_ros). It is possible that some cars will not have any tasks and others will have multiple to complete sequentially.
+
 ## Install
-Clone repo: 
-``` 
-cd ~/catkin_ws/src/ && git clone https://github.com/prl-mushr/mushr_coordination.git
-cd mushr_coordination && git clone https://github.com/whoenig/libMultiRobotPlanning.git
-```
+Clone repo and install the package: 
+{{< highlight bash >}}
+$ cd ~/catkin_ws/src/
+$ git clone https://github.com/prl-mushr/mushr_coordination.git
+$ cd mushr_coordination
+$ git clone https://github.com/whoenig/libMultiRobotPlanning.git
+$ cd ~/catkin_ws/
+$ catkin_make
+{{< / highlight >}}
 
 ## API
 For adjusting params see `launch/mushr_coordination.launch` it has the environment params for the planner. Change number of waypoints for each goal by setting parameter `num_waypoint`. Change the car team setting by editing or creating new config file. 
 
-### [Example](https://github.com/prl-mushr/mushr_coordination/blob/main/config/4cars1.yaml)
+## Running the coordination planner
+
+Run the planner that will set up the environment publishers and subscribers.
+{{< highlight bash >}}
+$ roslaunch mushr_coordination mushr_coordination.launch cars_file:={car's team config file}
+{{< / highlight >}}
+
+For simulation, run `rviz` then and subscribe to planner's topics. 
+{{< highlight bash >}}
+$ rviz
+{{< / highlight >}}
+
+Set up the car's initial position and give planner the task to complete. 
+{{< highlight bash >}}
+$ roslauncuh mushr_coordination init_planner.launch cars_file:={car's team config file} task_file:={task benchmark file}
+{{< / highlight >}}
+
+### [Car's team configuration Example](https://github.com/prl-mushr/mushr_coordination/blob/main/config/4cars1.yaml)
+This `4cars1.yaml` file shows how to edit and create a config file. The file will have the number of agent (`num_agent`) following with `car{n}`'s `name` and `color` in hex. 
+
+Note that, It would be advised to use the same config file for both `mushr_coordination` and `init_planner`.
 ```
 num_agent: 4
 car1:
@@ -54,79 +80,42 @@ car4:
     color: "DB921D" #orange
 ```
 
-### Publishers
-Topic | Type | Description
-------|------|------------
-`/{car_1's name}/waypoints` | [geometry_msgs/PoseArray](http://docs.ros.org/en/melodic/api/geometry_msgs/html/msg/PoseArray.htmll)| Pathway assigned to car_1
-...
-`/{car_n's name}/waypoints`| [geometry_msgs/PoseArray](http://docs.ros.org/en/melodic/api/geometry_msgs/html/msg/PoseArray.htmll) | Pathway assigned to car_n
-`/{car_1's name}/marker` | [visualization_msgs/Marker](http://docs.ros.org/en/api/visualization_msgs/html/msg/Marker.html)| Intermediate points of task(s) assigned to car_1 
-...
-`/{car_n's name}/marker`| [visualization_msgs/Marker](http://docs.ros.org/en/api/visualization_msgs/html/msg/Marker.html) | Intermediate points of task(s) assigned to car_n 
-`/mushr_coodination/border` | [visualization_msgs/Marker](http://docs.ros.org/en/api/visualization_msgs/html/msg/Marker.html) | Borderline of the current setup environment for the planner
+## Example of Initializing the Planner
 
+### Example #1
+In this environment, there are 4 cars and have been given 4 tasks to complete within a 5 by 3 space. 
+{{< highlight bash >}}
+$ roslaunch mushr_coordination mushr_coordination.launch cars_file:=4cars.yaml
+$ rviz
+$ roslauncuh mushr_coordination init_planner.launch cars_file:=4cars.yaml task_file:=4cars4tasks5x3.yaml
+{{< / highlight >}}
 
-### Subscribers
-Topic | Type | Description
-------|------|------------
-`/{car_1's name}/init_pose` | [geometry_msgs/PoseStamp](http://docs.ros.org/en/melodic/api/geometry_msgs/html/msg/PoseStamped.html)| Initial position of car_1
-...
-`/{car_n's name}/init_pose` | [geometry_msgs/PoseStamp](http://docs.ros.org/en/melodic/api/geometry_msgs/html/msg/PoseStamped.html)| Initial position of car_n
-`/mushr_coordination/obstacles` | [geometry_msgs/PoseArray](http://docs.ros.org/en/melodic/api/geometry_msgs/html/msg/PoseArray.htmll)| List of obstacles in the map
-`/mushr_coordination/goals` | [/mushr_coordination/GoalPoseArray](#mushr_coordination/GoalPoseArray ) | List of goals for {n} cars to complete
+Each car get assigned to their respective task, in which their accumulated distanse would be minimal.
 
-### Message Definition
-#### mushr_coordination/GoalPoseArray  
-[`std_msgs/Header`](http://docs.ros.org/en/melodic/api/std_msgs/html/msg/Header.html) Header \
-`float64` scale `#scala for converting continous space to grid space`   
-`float64` minx \
-`float64` miny \
-`float64` maxx \
-`float64` maxy \
-[`geometry_msgs/PoseArray`](http://docs.ros.org/en/melodic/api/geometry_msgs/html/msg/PoseArray.html)[] goals 
+<img src="/tutorials/coordination_planner/4cars4task5x3.png" width="800" >
 
-## Running the coordination planner
+### Example #2
+In this environment, there are 4 cars and have been given 6 tasks to complete within a 6 by 6 space. 
+{{< highlight bash >}}
+$ roslaunch mushr_coordination mushr_coordination.launch cars_file:=4cars.yaml
+$ rviz
+$ roslauncuh mushr_coordination init_planner.launch cars_file:=4cars.yaml task_file:=4cars6tasks6x6.yaml
+{{< / highlight >}}
 
-```
-roslaunch mushr_coordination mushr_coordination.launch cars_file:={car's team config file}
-```
-for sample environment setup and tasks run:
-```
-rviz
-roslauncuh mushr_coordination init_planner.launch cars_file:={car's team config file} task_file:={task benchmark file}
-```
+Number of tasks is more than number of cars, so the blue car and the green car have been given one task more than the others to complete. 
 
-### Sample #1
-```
-roslaunch mushr_coordination mushr_coordination.launch cars_file:=4cars.yaml
-rviz
-roslauncuh mushr_coordination init_planner.launch cars_file:=4cars.yaml task_file:=4cars4tasks5x3.yaml
-```
+<img src="/tutorials/coordination_planner/4cars6task6x6.png" width="800" >
 
-In this example, each car get their respective task, in which their accumulated distanse would be minimal.
+### Example #3
+In this environment, there are 4 cars and have been given 2 tasks to complete within a 5 by 3 space. 
+{{< highlight bash >}}
+$ roslaunch mushr_coordination mushr_coordination.launch cars_file:=4cars.yaml
+$ rviz
+$ roslauncuh mushr_coordination init_planner.launch cars_file:=4cars.yaml task_file:=4cars2tasks5x3.yaml
+{{< / highlight >}}
 
-{{< figure src="/tutorials/coordination_planner/4cars4tasks5x3.png" width="800" >}}
+There is not enough task to assign to every cars. In this case, the red car and green car are idle and stay in place.
 
-### Sample #2
-```
-roslaunch mushr_coordination mushr_coordination.launch cars_file:=4cars.yaml
-rviz
-roslauncuh mushr_coordination init_planner.launch cars_file:=4cars.yaml task_file:=4cars6tasks6x6.yaml
-```
-
-In this example, number of tasks is more than number of cars by two, therefore the blue car and the green car have to finish additional task after the first one.
-
-{{< figure src="/tutorials/coordination_planner/4cars6tasks6x6.png" width="800" >}}
-
-### Sample #3
-```
-roslaunch mushr_coordination mushr_coordination.launch cars_file:=4cars.yaml
-rviz
-roslauncuh mushr_coordination init_planner.launch cars_file:=4cars.yaml task_file:=4cars2tasks5x3.yaml
-```
-
-In this example, the red car and green car are idle since there is no task assigned to them. 
-
-{{< figure src="/tutorials/coordination_planner/4cars2tasks5x3.png" width="800" >}}
+<img src="/tutorials/coordination_planner/4cars2task5x3.png" width="800" >
 
 
