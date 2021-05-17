@@ -18,7 +18,7 @@ weight: 3        # 2 = intro tutorial 3 = anything else
 <br>
 
 ### Introduction
-A navigation system enables a robot to navigate quickly between different poses while avoiding collisions with the environment or other agents. The navigation system in this project uses a slightly modified version of the NH-TTC [backend](https://github.com/davisbo/NHTTC), which is a decentralized multi-agent navigation system. The Non-holonomic-Time-To-Collision (NH-TTC) backend considers the Non-holonomic constraints of the car and the time to collision with other cars when finding the optimal thing to do. To learn more about how it works, check out the paper [here](http://motion.cs.umn.edu/r/NH-TTC/arxiv-NHTTC.pdf)!
+A navigation system enables a robot to move quickly between different poses while avoiding collisions with the environment or other agents. The navigation system in this project uses a slightly modified version of the [NH-TTC system](https://github.com/davisbo/NHTTC). It is a decentralized, multi-agent navigation system. It considers the Non-holonomic constraints of the car and the time to collision with other cars when finding the optimal thing to do. To learn more about how it works, check out the paper [here](http://motion.cs.umn.edu/r/NH-TTC/arxiv-NHTTC.pdf)!
 
 ### Goal
 The goal of this tutorial is to get the multi-agent navigation system up and running on your system.
@@ -37,8 +37,9 @@ $ git submodule init
 $ git submodule update --force --recursive --init --remote
 {{< / highlight >}}
 
-Install python requirements (assuming you are already in the nhttc_ros directory):
+Install python requirements:
 {{< highlight bash >}}
+$ cd ~/catkin_ws/src/nhttc_ros
 $ pip install -r requirements.txt
 {{< / highlight >}}
 
@@ -48,7 +49,8 @@ $ cd ~/catkin_ws
 $ catkin_make
 {{< / highlight >}}
 
-If everything compiles, you should be ready to try out the simulation example. Launch the nhttc_demo.launch:
+## Running the example:
+When everything compiles, you should be ready to try out the simulation example. Launch the nhttc_demo.launch with the following command:
 {{< highlight bash >}}
 $ roslaunch nhttc_ros nhttc_demo.launch
 {{< / highlight >}}
@@ -61,12 +63,12 @@ Wait till you see the highlighted text on the terminal:
 [ INFO] [1619972044.806955298]: obey_time:1
 ```
 
-In a new tab, open rviz:
+In a new tab of the terminal (use Ctrl + Shift + T), open rviz:
 {{< highlight bash >}}
 $ rviz -d ~/catkin_ws/src/nhttc_ros/nhttc_ros/rviz/nhttc.rviz
 {{< / highlight >}}
 
-Select the rviz configuration corresponding to the nhttc_ros. Run the route publisher node:
+In another new tab, run the route publisher script:
 {{< highlight bash >}}
 $ rosrun nhttc_ros route_publisher.py
 {{< / highlight >}}
@@ -77,17 +79,17 @@ You should see something like this on rviz:
 
 This should be considered the default case henceforth. In this demo, the blue car is trying to follow the blue arrows and the green car is trying to follow the green arrows. The green car is supposed to stop a small distance after crossing the intersection of the two paths whereas the blue car is supposed to move towards the top after the intersection of the two paths. The two paths coincide to force the navigation system to display its capabilities. **Note that you may observe slightly different behaviour when you launch this on your system, the provided gif is only for reference.**
 
-**Note:** In order to rerun this example you must relaunch the nhttc_demo.launch
+**Note:** In order to rerun this example you must close all the process we started here and follow the steps from the beginning of this section.
 
 
 ## Using the wrapper for your own intents and purposes:
-The system takes a set of waypoints rather than single points. The message to publish for this is:
+The system takes a set of waypoints rather than a single goal point. The message to publish for this is:
 
 {{<highlight bash>}} /car_name/waypoints 
 {{</highlight>}}
 of type: [geometry_msgs/PoseArray](http://docs.ros.org/en/melodic/api/geometry_msgs/html/msg/PoseArray.htmll). Note that "car_name" refers to the name of the car, such as car1, car2, and so on.
 
-The z axis coordinate represents the time difference between 2 waypoints. Note that a z axis value of 0.001 equals a time difference of 1 unit. This is done so that the waypoints don't look like they're floating off the ground when visualized in rviz. The unit of time is equal to the time it takes for the car to cover the distance between two waypoints in a straight line at the rated speed. The reason for this is to allow the system's speed to be scaled up or down without changing the global plan timing itself. 
+The z axis coordinate represents the time difference between 2 waypoints. Note that a z axis value of 0.001 equals a time difference of 1 unit. This is done so that the waypoints don't look like they're floating off the ground when visualized in rviz. The unit of time is equal to the time it takes for the car to cover the distance between two waypoints in a straight line at the rated speed. The reason for this is to allow the system's speed to be scaled up or down without changing the global plan's timing itself. 
 
 To adjust the number of cars used, their colors and so on, you can modify the launch file (or create your own launch file using the ones provided as a template). For instance, if you wish to add another car, simply add these lines to the launch file:
 {{<highlight xml>}}
@@ -108,10 +110,16 @@ To adjust the number of cars used, their colors and so on, you can modify the la
 </group>
 {{</highlight>}}
 
-Note that the route_publisher.py file used for the demo only publishes paths for two cars (`car1` and `car2`). If you add another car, you will have to modify the route-publisher to publish a route for the third car. We recommend writing a separate route publishing file by taking inspiration from the route_publisher.py).
+By default, a script called nhttc_pose_init.py is used for initializing the poses of the cars. It places the cars in a particular pattern (right now, the cars sit on the circumference of an ellipse). If there are 2 cars, they will be kept 180 degrees apart as in the default case. If there are 3 cars, they will be kept 120 degrees apart. Four will be kept 90 degrees apart. This script is only used to make adding agents as simple as copy pasting some lines in the launch files. If you want to set the initial pose to be something else, all you have to do is publish to the the initial pose to the topic:
+
+{{<highlight bash>}} /car_name/initial_pose 
+{{</highlight>}}
+of type: [geometry_msgs/PoseWithCovarianceStamped](http://docs.ros.org/en/melodic/api/geometry_msgs/html/msg/PoseWithCovarianceStamped.html) where `car_name` corresponds to the name of the car.
+
+Furthermore, the route_publisher.py file used for the demo only publishes paths for two cars (`car1` and `car2`). This script is hardcoded to publish paths only for two agents. If you wish to add another car, you will have to create your own route-publisher to publish a route for the third car. You should use the route_publisher.py file as a reference.
 
 ## Tuning the parameters
-The multi-agent navigation system _can_ work out of the box for most applications, however, it is possible to tune it should the user feel that it needs to be tuned. The parameters can be changed inside the launch file (in this case the nhttc_demo.launch file). Please note that the navigation system uses a solver which has some level of stochasticity to it, which can lead to slightly different behavior. The demonstrations shown here are to explain the effect of changing the parameters.
+The multi-agent navigation system _can_ work out of the box for most applications, however, it is possible to tune it. The parameters can be changed inside the launch file (in this case the nhttc_demo.launch file). Please note that the navigation system uses a solver which has some level of stochasticity to it, which can lead to slightly different behavior. The demonstrations shown here are to explain the effect of changing the parameters and do not indicate the exact performance.
 
 {{<highlight xml >}}
 <param name="cgr" value="1.5"/>
@@ -132,28 +140,30 @@ A value of 1.0 means the carrot goal distance is the same as the turning radius.
 {{< figure src="/tutorials/MuSHR_multiagent_navigation/demo_default.gif"   width="600" height="400" >}}
 {{< figure src="/tutorials/MuSHR_multiagent_navigation/demo_lookahead.gif" width="600" height="400" >}}                           
 
-If the car tends to get stuck around turns, increase the carrot-goal ratio in increments of 0.1. If the car appears to be rounding off the turns too much or significantly deviating from the path near turns, causing issues with other agents, reduce the carrot-goal-ratio in decrements of 0.1. 
+If the car tends to get stuck around turns, increase the carrot-goal ratio in increments of 0.1. If the car appears to be rounding off the turns too much or significantly deviating from the path near turns, causing issues with other agents, reduce the carrot-goal-ratio in decrements of 0.1.
 
-* **2) Max_ttc (mttc):** Stands for maximum time to collision. This parameter decides which agents to consider and which to not consider when optimizing for the next control action. The time to collision is calculated using the current state (pose as well as twist) of all agents. A larger max_ttc results in a larger time horizon for optimization. A larger max_ttc will make the car respond earlier to other agents but can result in the car deviating from its path too early. A smaller max_ttc will make the car less sensitive to agents far away but may result in the car responding too late to the other agents and ending up in deadlocks more often. The first figure shows the performance with a max_ttc of 3.0 and the second shows the performance with max_ttc of 6.0 seconds. Notice how the cars start avoiding each other earlier in the second example.
+Note that we use the turning radius and not the wheelbase or the track width as the turning radius already encapsulates the wheelbase and the steering angle in itself. The reason why we take a ratio is that humans [think logarithmically](https://rss.onlinelibrary.wiley.com/doi/pdf/10.1111/j.1740-9713.2013.00636.x), so ratios can make more sense than absolute values to us (although this isn't valid everywhere, which is why the other parameters aren't ratios).
+
+* **2) Max_ttc (mttc):** Stands for maximum time to collision. This parameter decides which agents to consider and which to not consider when optimizing for the next control action. The time to collision is calculated using the current state (pose as well as twist) of all agents. A larger max_ttc results in a larger time horizon for considering potential collisions. A larger max_ttc will make the car respond earlier to other agents but can result in the car deviating from its path too early. A smaller max_ttc will make the car less sensitive to agents far away but may result in the car responding too late and ending up in deadlocks more often. The first figure shows the performance with a max_ttc of 3.0 and the second shows the performance with max_ttc of 6.0 seconds. Notice how the cars start avoiding each other earlier in the second example.
 <br>
 {{< figure src="/tutorials/MuSHR_multiagent_navigation/demo_default.gif" width="600" height="400" >}}
 {{< figure src="/tutorials/MuSHR_multiagent_navigation/demo_maxttc.gif"  width="600" height="400" >}}                           
 
 In this particular example, it may appear to be helping the agents. However, had there been another agent above/below these agents, it may have affected the performance adversely.
 
-* **3) Solution time (SolT):** The amount of time in milliseconds to be used for calculating the solution and is not to be confused with the time to collision. Increasing the solution time may lead to a better solution, however, as the system has to operate in real-time, this will reduce the control-loop frequency. A slower control-loop frequency results in a delayed response. A multi-agent navigation system responds to the actions of the agents around it. If the control loop is slower, the other agents may appear out of sync at times as they aren't running the control loop fast enough to respond to the other agent's actions. In multi-agent situations when the intent of the other agent isn't clear, all the agents are essentially guessing what they should do. If the first guess is wrong, it may lead to sub-optimal behavior. In the first figure, the solution time is 20 milliseconds and 30 milliseconds for the second case. Notice how the blue car takes the wrong course of action initially in the second case.
+* **3) Solution time (SolT):** The amount of time in milliseconds to be used for calculating the solution. It is not to be confused with the time to a collision. Increasing the solution time may lead to a better solution, however, as the system has to operate in real-time, this will reduce the control-loop frequency. A slower control-loop frequency results in a delayed response. A multi-agent navigation system responds to the actions of the agents around it. If the control loop is slower, the other agents may appear out of sync at times as they aren't running the control loop fast enough to respond to the other agent's actions. In multi-agent situations when the intent of the other agent isn't clear, all the agents are essentially guessing what they should do. If the first guess is wrong, it may lead to sub-optimal behavior. In the following figures, the solution time is 20 milliseconds for the first case and 30 milliseconds for the second. Notice how the blue car takes the wrong course of action initially in the second case.
 <br>
 {{< figure src="/tutorials/MuSHR_multiagent_navigation/demo_default.gif" width="600" height="400" >}}
 {{< figure src="/tutorials/MuSHR_multiagent_navigation/demo_SolT.gif"    width="600" height="400" >}}
 
-However, reducing the time may lead to the solution not converging at all, again, leading to sub-optimal solutions. Keeping the solution time between 20-40 milliseconds will yield feasible solutions, with larger times resulting in the above behavior appearing more often.
+At the same time, reducing the solution time may lead to the solution not converging at all, again, leading to sub-optimal solutions. Keeping the solution time between 15-30 milliseconds will yield feasible solutions, with larger times resulting in the above behavior appearing more often.
 
-* **4) Obey_time (follow_time):** The navigation system generally takes a waypoint array from a global planner. In multi-agent systems, the global planner will specify both space and time coordinates, as in, where the agent is supposed to be and when it is supposed to be there. If this parameter is set to false (as in the default demo), the car will disregard the timing. The first figure shows the behaviour for when this parameter is false and the second shows what happens when it is true:
+* **4) Obey_time (follow_time):** The navigation system generally takes a waypoint array from a global planner. In multi-agent systems, the global planner will specify both space and time coordinates, as in, where the agent is supposed to be and when it is supposed to be there. If this parameter is set to false (as in the default demo), the car will disregard the timing. The first figure shows the behaviour for when this parameter is set to "false" and the second shows what happens when it is set to "true":
 <br>
 {{< figure src="/tutorials/MuSHR_multiagent_navigation/demo_default.gif" width="600" height="400" >}}
 {{< figure src="/tutorials/MuSHR_multiagent_navigation/demo_time.gif"    width="600" height="400" >}}
 
-As you can see, the blue car stops at the turn for a while before continuing. This happens because the blue car rounded the turn and arrived a little too early at the next waypoint, and therefore slowed down before continuing.
+As you can see, the blue car stops at the turn for a while before continuing. This happens because the blue car rounded the turn and arrived a little too early at the next waypoint. It therefore slowed down before continuing in order to maintain the timing.
 
 * **5) allow_reverse (reverse):** In some applications, it may be important to prevent the car from ever moving backward. This parameter allows you to decide whether the car can or can not go backward in a given situation. This parameter is fairly self-explanatory and is thus not accompanied by a demo.
 
