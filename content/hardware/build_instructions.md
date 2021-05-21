@@ -36,17 +36,7 @@ ___
 ___
 ## Prerequisites
 
-In this section, we will provide resources for obtaining the parts necessary to build the MuSHR Racecar.
-
-**Bill of Materials**
-
-The bill of materials  below describes the necesssary materials for building the MuSHR Racecar, including links to vendors. It can be downloaded [here](https://github.com/prl-mushr/mushr/raw/master/mushr_docs/hardware/mushr_nano_bill_of_materials.pdf).
-
-<iframe src="https://docs.google.com/gview?url=https://github.com/prl-mushr/mushr/raw/master/mushr_docs/hardware/mushr_nano_bill_of_materials.pdf &embedded=true" style="width:800px;height:550px;padding-bottom:50px" frameborder="0"></iframe>
-
-**3D Printed Parts**
-
-The upper portion of the MuSHR Racecar's frame is 3D printed. All of the parts that must be printed are provided as .stl files [here](https://github.com/prl-mushr/mushr_cad/tree/master/v3/stl). If you would like to modify the logo on the sides of the robot, follow [these instructions](/hardware/logo_modification) to generate new .stl files. Remember to remove support material from the parts. It also helps to keep this repository open while building the car to have an easy reference for each 3D printed part's name.
+See [this page](/hardware/ordering) which goes over the prerequisites to building a MuSHR racecar, including ordering components and 3D printing.
 
 ___
 ## VESC Preparation 

@@ -7,7 +7,7 @@ featured: true
 draft: false
 active: true
 summary: Pick and Order your own MuSHR Racecar!
-weight: 2
+weight: 1
 ---
 
 This section explains the MuSHR v4 tier system, allowing you to order and build a version of the MuSHR car that best meets your needs.
@@ -24,15 +24,15 @@ ___
 ___
 ## System Overview
 
-This section describes the high level system architecture of the MuSHR racecar and your available options to build the car's hardware.
+This section describes the high level system architecture of the MuSHR racecar and your available options to build the car's hardware. Check out the [build tutorial](/hardware/build_instructions) to get an idea of what building the car is like!
 
 **Processor**
 
-The MuSHR Racecar can be built with a choice of two main processors, the Nvidia Jetson Nano or the Nvidia Jetson Xavier NX. The latter is better for high-performance applications, while the former is better if you're working on a budget. You can view a comparison of the two (here.)[https://www.seeedstudio.com/blog/2020/06/04/nvidia-jetson-nano-and-jetson-xavier-nx-comparison-specifications-benchmarking-container-demos-and-custom-model-inference/]
+The MuSHR Racecar can be built with a choice of two main processors, the Nvidia Jetson Nano or the Nvidia Jetson Xavier NX. The latter is better for high-performance applications, while the former is better if you're working on a budget. You can view a comparison of the two [here.](https://www.seeedstudio.com/blog/2020/06/04/nvidia-jetson-nano-and-jetson-xavier-nx-comparison-specifications-benchmarking-container-demos-and-custom-model-inference/)
 
 **Sensing**
 
-MuSHR supports the Intel RealSense D435/D435i and the D455 cameras for depth perception. The car also has a scanning YDLIDAR X4, and other optional add-on sensors listed below. View a comparison of the different Intel RealSense cameras (here.)[https://www.intelrealsense.com/compare-depth-cameras/]
+MuSHR supports the Intel RealSense D435/D435i and the D455 cameras for depth perception. The car also has a scanning YDLIDAR X4, and other optional add-on sensors listed below. View a comparison of the different Intel RealSense cameras [here.](https://www.intelrealsense.com/compare-depth-cameras/)
 
 **Chassis**
 
@@ -53,7 +53,7 @@ The MuSHR Racecar can have a second camera mounted to it, the Intel RealSense T2
 
 **Radio FPV**
 
-If you need to tele-operate outdoors or over a longer distance outside standard Bluetooth/WiFi range, you can follow the steps in this tutorial to add a radio-based teleoperation system to your racecar.
+If you need to tele-operate outdoors or over a longer distance outside standard Bluetooth/WiFi range, you can follow the steps in [this tutorial](/tutorials/radio_fpv) to add a radio-based teleoperation system to your racecar.
 
 **Pushing Bumper**
 
@@ -73,11 +73,11 @@ As a result of the various options available for MuSHR, we have simplified the M
 
 The MuSHR Lite is ideal for users who are working on a budget, like hobbyists, and the MuSHR Pro is ideal for researchers and academic institutions, who need higher performance and are willing to splurge. The MuSHR tier meets in the middle, with full sensing capabilities but lower performance than the Pro option. If you feel like you don't fit into any of these three categories, don't worry! We have you covered!
 
-View the BoM for each tier (here.)[https://drive.google.com/drive/u/0/folders/16W87UDGpQzQ6qNMEg5fsjf7EAaYmL_GP]
+View the BoM for each tier [here.](https://drive.google.com/drive/u/0/folders/16W87UDGpQzQ6qNMEg5fsjf7EAaYmL_GP)
 ___
 ## Custom MuSHR tiers
 
-It is possible to choose between tiers, those listed above are just our recommended guidelines. If you are a more advanced user with exact specifications in mind, MuSHR v4's modularity is designed to help support that. Download a more complex BoM that allows you to pick and choose (here.)[https://docs.google.com/spreadsheets/d/1Nad3odSet0OVKBTEJDXue9xp8m6JX1xA/edit?usp=drive_web&ouid=117747822978217793476&rtpof=true]
+It is possible to choose between tiers, those listed above are just our recommended guidelines. If you are a more advanced user with exact specifications in mind, MuSHR v4's modularity is designed to help support that. Download a more complex BoM that allows you to pick and choose [here.](https://docs.google.com/spreadsheets/d/1Nad3odSet0OVKBTEJDXue9xp8m6JX1xA/edit?usp=drive_web&ouid=117747822978217793476&rtpof=true)
 
 For example, teaching a large class that needs you to put together a large number of cars cheaply and quickly? You can still build a MuSHR Lite with a premium chassis! Want to use the Xavier NX but you don't need a camera? That's possible too!
 
