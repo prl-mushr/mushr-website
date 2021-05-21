@@ -162,7 +162,7 @@ ___
 ## Brushed Motor Removal
 
 
-In this section, we will remove the brushed motor that comes with the chassis. Removing the brushed motor and replacing it with a BLDC motor (as detailed in the following section) requires a significant amount of time and effort. An alternative is to instead buy the Pro Version of the Redcat Blackout racecar chassis. This will lead to a slightly more expensive build, but that chassis already has a BLDC motor installed. If you are using this premium chassis, you can skip this and the following section and go ahead to (Servo Motor Installation.)[/hardware/build_instructions/#servo-motor-installation]
+In this section, we will remove the brushed motor that comes with the chassis. Removing the brushed motor and replacing it with a BLDC motor (as detailed in the following section) requires a significant amount of time and effort. An alternative is to instead buy the Pro Version of the Redcat Blackout racecar chassis. This will lead to a slightly more expensive build, but that chassis already has a BLDC motor installed. If you are using the Pro chassis, you can skip this and the following section and go ahead to (Servo Motor Installation.)[/hardware/build_instructions/#servo-motor-installation]
 
 <iframe width="800" height="450" style="margin-bottom:25px" src="https://www.youtube.com/embed/f6ZgVGyAUyk?list=PLU9BrzGX4PH2DHZzxOg2gEkLMXhpkS7fV" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
