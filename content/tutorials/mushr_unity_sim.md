@@ -67,15 +67,15 @@ In a new terminal, enter:
 $ roslaunch mushr_unity_sim unity_multi.launch
 {{</highlight>}}
 
-This should start the simulator (in headless mode) and the scripts necessary for connecting the simulator to ros and rviz. Wait for a few seconds for all the cars to be "plopped" into simulation. I say plopped because sometimes you may notice the cars moving a little initially without inputs. This happens because the simulator drops the cars from a small height during initialization. The dev though it would be fun to plop the cars to show they aren't being simulated just on the input you give to them. You should be able to click on the tkinter tabs (tk tabs) and use WASD to drive the cars around, something like this:
+This should start the simulator (in headless mode) and the scripts necessary for connecting the simulator to ros and rviz. Wait for a few seconds for all the cars to be "plopped" into the simulation. I say plopped because sometimes you may notice the cars moving a little initially without inputs. This happens because the simulator drops the cars from a small height during initialization. The dev thought it would be fun to plop the cars to show they aren't being simulated just based on the input you give to them. You should be able to click on the tkinter tabs (tk tabs) and use WASD to drive the cars around, something like this:
 
 <br>
 {{< figure src="/tutorials/mushr_unity_sim/showboat.gif" width="800" >}} <br>                           
 <br>
 
-Note that collisions between agents are simulated. The rendering in rviz is a bit choppy when you add more cars but the simulation is still real-time. If you face choppy rendering like above and want to see more realtime rendering like in the thumbnail of this tutorial, you'll have to reduce the number of rendered agents (just unselect the RobotModel on the left pane of rviz). The choppiness is an rviz issue and that the cars not rendered in rviz are still simulated. 
+Note that collisions between agents are simulated. The rendering in rviz is a bit choppy when you add more cars but the simulation is still real-time. If you face choppy rendering like above and want to see more realtime rendering like in the thumbnail of this tutorial, you'll have to reduce the number of rendered agents (just unselect the RobotModel on the left pane of rviz). The choppiness is an rviz issue and the cars that are not rendered in rviz are still simulated. 
 
-Note that when driving with WASD, the maximum speed is limited to 2 m/s. This is because the keyboard_teleop node translates pressing 'W' to '2 m/s' forward speed.
+Note that when driving with 'WASD' keys, the maximum speed is limited to 2 m/s. This is because the keyboard_teleop node translates pressing 'W' to '2 m/s' forward speed.
 
 
 ### Using this simulator for your own purposes:
@@ -93,7 +93,7 @@ This command starts the simulator executable kept inside mushr_sim_unity/unity f
 
 {{< figure src="/tutorials/mushr_unity_sim/render.png" width="800" >}}
 
-The scenery in the simulation isn't much to look at, so you're not missing out on anything that interesting. Ignore the red-sphere around the car, it's simply a marker that the developer didn't bother to remove lest he break the simulator. It does contain a randomly generated road, so if you want you can drive it around with WASD keys on it. If you want to do deep-learning or computer vison stuff, refer to the this other tutorial [here](https://mushr.io/tutorials/deep_learning/).
+The scenery in the simulation isn't much to look at, so you're not missing out on anything that interesting. Ignore the red-sphere around the car, it's simply a marker that the developer didn't bother to remove lest he break the simulator. It does contain a randomly generated road, so if you want you can drive it around with WASD keys on it. If you want to do deep-learning or computer vison stuff, refer to this other tutorial [here](https://mushr.io/tutorials/deep_learning/).
 
 
 #### Rviz config:
@@ -113,7 +113,7 @@ The poses of these cars are set by the pose_init.py file. The car's initial pose
 
 #### Including mushr_unity_sim's simulator in your launch file
 
-To launch the simulator from the launch file, add these lines near the top of you launch file:
+To launch the simulator from the launch file, add these lines near the top of your launch file:
 {{<highlight xml>}}
 <node pkg="mushr_unity_sim" type="run_sim.sh" name="simrun_script"/> <!-- this script launches the simulator -->
 {{</highlight>}}
