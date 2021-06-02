@@ -76,7 +76,7 @@ Now, let's clone the necessary repos. First go to your `catkin_ws/src` directory
 $ cd ~/catkin_ws/src
 {{< / highlight >}}
 
-Download [repos.yaml](/tutorials/quickstart/repos.yaml) into `~/catkin_ws/src`.
+Download [repos.yaml](https://github.com/prl-mushr/mushr/blob/master/repos.yaml) into `~/catkin_ws/src`.
 
 And clone the necessary repos using vcstool:
 
