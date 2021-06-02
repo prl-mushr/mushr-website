@@ -14,7 +14,7 @@ weight: 3        # 2 = intro tutorial 3 = anything else
 
 <!-- Header figure required! -->
 <br>
-{{< figure src="/tutorials/MuSHR_multiagent_navigation/thumbnail.png" width="800" >}} <br>                           
+{{< figure src="/tutorials/MuSHR_multiagent_navigation/thumbnail.png" width="600" >}} <br>                           
 <br>
 
 ### Introduction
@@ -88,7 +88,7 @@ This should be considered the default case henceforth. In this demo, the blue ca
 
 
 ## Using the wrapper for your own intents and purposes:
-The system takes a set of waypoints rather than a single goal point. The message to publish for this is:`/car_name/waypoints` of type: [geometry_msgs/PoseArray](http://docs.ros.org/en/melodic/api/geometry_msgs/html/msg/PoseArray.html). Note that "car_name" refers to the name of the car, such as car1, car2, and so on.
+The system takes a set of waypoints rather than a single goal point. The message to publish for this is:`/car_name/waypoints` of type: [geometry_msgs/PoseArray](http://docs.ros.org/en/melodic/api/geometry_msgs/html/msg/PoseArray.html). Note that "car_name" refers to the name of the car, such as car1, car2, and so on. The waypoint can also contain just one waypoint, so it is possible to test the system with single waypoints if you prefer that. The reason why taking an array is preferred is so that the waypoint management code doesn't have to be written by you (user). You simply pass the set of the waypoints in and the navigation sytem takes care of managing them on it's own.
 
 The z axis coordinate represents the time difference between 2 waypoints. Note that a z axis value of 0.001 equals a time difference of 1 unit. This is done so that the waypoints don't look like they're floating off the ground when visualized in rviz. The unit of time is equal to the time it takes for the car to cover the distance between two waypoints in a straight line at the rated speed. The reason for this is to allow the system's speed to be scaled up or down without changing the global plan's timing itself. 
 
@@ -108,9 +108,9 @@ To adjust the number of cars used, their colors and so on, you can modify the la
 
 By default, the nhttc_pose_init script is used for initializing the poses of the cars. It places the cars in a particular pattern (right now, the cars sit on the circumference of an ellipse). If there are 2 cars, they will be kept 180 degrees apart as in the default case. If there are 3 cars, they will be kept 120 degrees apart. This script is only used to make adding agents as simple as copy pasting some lines in the launch files.
 
-If you want to set the initial pose to be something else, all you have to do is publish to the initial pose to the topic:`/car_name/initial_pose` of type: [geometry_msgs/PoseWithCovarianceStamped](http://docs.ros.org/en/melodic/api/geometry_msgs/html/msg/PoseWithCovarianceStamped.html) where `car_name` corresponds to the name of the car.
+If you want to set the initial pose to be something else, all you have to do is publish to the initial pose to the topic:`/car_name/initial_pose` of type: [geometry_msgs/PoseWithCovarianceStamped](http://docs.ros.org/en/melodic/api/geometry_msgs/html/msg/PoseWithCovarianceStamped.html) where `car_name` corresponds to the name of the car. Note that this is the "2D pose estimate" in rviz and can also be set through rviz through the conventional approach.
 
-Furthermore, the route_publisher.py file used for the demo only publishes paths for two cars (`car1` and `car2`). This script is hardcoded to publish paths only for two agents. If you wish to add another car, you will have to create your own route-publisher to publish a route for the third car. You can use the route_publisher.py file as a reference.
+Furthermore, the route_publisher.py file used for the demo only publishes paths for two cars (`car1` and `car2`). This script is hardcoded to publish paths only for two agents. If you wish to add another car, you will have to create your own route-publisher to publish a route for the third car. You can use the route_publisher.py file as a reference or edit it to your liking.
 
 
 ## Tuning the parameters
@@ -158,6 +158,8 @@ At the same time, reducing the solution time may lead to the solution not conver
 {{< figure src="/tutorials/MuSHR_multiagent_navigation/demo_time.gif"    width="600" height="400" >}}
 
 As you can see, the blue car stops at the turn for a while before continuing. This happens because the blue car rounded the turn and arrived a little too early at the next waypoint. It therefore slowed down before continuing in order to maintain the timing.
+
+Additional parameters like "allow_reverse", "adaptive_lookahead" and "safety_radius" can be considered as "extra" or "experimental". Allow_reverse sets whether the cars are allowed to go in reverse or not. It is set to true by default. Setting it to false may or may not cause issues with navigation. Adaptive_lookahead skips waypoints if they're not reachable, this can help the system deal with global planners that provide unreasonable trajectories. The downside is that sometimes it may skip waypoints you do want to pass through. Last but not the least, the safety_radius is like an air-cushion around the car. A safety radius of 0 is not recommended, as localization errors in the real world may cause you to bump into other agents. Generally speaking, keep the safety radius as 0.1 + whatever the uncertainty of your localization system is.
 
 ## Troubleshooting
 * **the multi_teleop.launch or nhttc_demo.launch node crashes when rviz is started:** Wait for all the cars to initialize first before starting rviz. This usually takes about 5-10 seconds and a little longer if launching for the first time after boot. 
