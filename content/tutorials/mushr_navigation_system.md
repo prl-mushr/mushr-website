@@ -6,7 +6,7 @@ difficulty: "Advanced"
 duration: 30
 featured: false  # whether this is listed at / (must also be top 6 by weight). 
 active: true     # whether this is listed at /tutorials/
-draft: true      # whether Hugo considers this a draft
+draft: false     # whether Hugo considers this a draft
 weight: 3        # 2 = intro tutorial 3 = anything else
 ---
 
@@ -31,10 +31,10 @@ Make sure you’re using the sandbox map. The quickstart tutorial explains how t
 
 
 ## Environment setup
-Clone the [nhttc_ros](https://github.com/naughtyStark/nhttc_ros.git) repository into your catkin workspace: 
+Clone the [nhttc_ros](https://github.com/prl-mushr/nhttc_ros/tree/devel) repository into your catkin workspace: 
 {{<highlight bash>}}
 $ cd catkin_ws/src
-$ git clone --branch devel https://github.com/naughtyStark/nhttc_ros.git
+$ git clone --branch devel https://github.com/prl-mushr/nhttc_ros/tree/devel
 $ cd nhttc_ros
 $ git submodule init
 $ git submodule update --recursive
@@ -70,12 +70,12 @@ Wait till you see the following text on the terminal (you may see a few extra li
 
 In a new tab of the terminal (use Ctrl + Shift + T), open rviz:
 {{<highlight bash>}}
-$ rviz -d ~/catkin_ws/src/nhttc_ros/nhttc_ros/rviz/nhttc.rviz
+$ rviz -d ~/catkin_ws/src/nhttc_ros/rviz/nhttc.rviz
 {{</highlight>}}
 
 In another new tab, run the route publisher script:
 {{<highlight bash>}}
-$ rosrun nhttc_ros route_publisher.py
+$ rosrun nhttc_ros route_publisher
 {{</highlight>}}
 
 You should see something like this on rviz:
@@ -159,7 +159,7 @@ At the same time, reducing the solution time may lead to the solution not conver
 
 As you can see, the blue car stops at the turn for a while before continuing. This happens because the blue car rounded the turn and arrived a little too early at the next waypoint. It therefore slowed down before continuing in order to maintain the timing.
 
-Additional parameters like "allow_reverse", "adaptive_lookahead" and "safety_radius" can be considered as "extra" or "experimental". Allow_reverse sets whether the cars are allowed to go in reverse or not. It is set to true by default. Setting it to false may or may not cause issues with navigation. Adaptive_lookahead skips waypoints if they're not reachable, this can help the system deal with global planners that provide unreasonable trajectories. The downside is that sometimes it may skip waypoints you do want to pass through. Last but not the least, the safety_radius is like an air-cushion around the car. A safety radius of 0 is not recommended, as localization errors in the real world may cause you to bump into other agents. Generally speaking, keep the safety radius as 0.1 + whatever the uncertainty of your localization system is.
+Additional parameters like "allow_reverse", "adaptive_lookahead" and "safety_radius" can be considered as "extra" or "experimental". Allow_reverse sets whether the cars are allowed to go in reverse or not. It is set to true by default. Setting it to false may or may not cause issues with navigation. Adaptive_lookahead skips waypoints if they're not reachable, this can help the system deal with global planners that provide unreasonable trajectories. The downside is that sometimes it may skip waypoints you do want to pass through. Last but not the least, the safety_radius is like an air-cushion around the car. A safety radius of 0 is not recommended, as localization errors in the real world may cause you to bump into other agents. For the MuSHR car, keep the safety radius as 0.1 + whatever the uncertainty of your localization system is.
 
 ## Troubleshooting
 * **the multi_teleop.launch or nhttc_demo.launch node crashes when rviz is started:** Wait for all the cars to initialize first before starting rviz. This usually takes about 5-10 seconds and a little longer if launching for the first time after boot. 
