@@ -7,7 +7,7 @@ duration: 0
 featured: true  # whether this is listed at / (must also be top 6 by weight)
 active: true    # whether this is listed at /tutorials/
 draft: false      # whether Hugo considers this a draft
-weight: 100
+weight: 3
 ---
 
 ## By: [Madison Doerr](https://mcdoerr.github.io/) and [Markus Schiffer](www.linkedin.com/in/markusschiffer)
