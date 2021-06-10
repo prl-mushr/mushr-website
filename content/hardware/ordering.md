@@ -86,4 +86,4 @@ ___
 
 Print the parts to build the MuSHR Racecar [here](https://github.com/prl-mushr/mushr_cad/tree/master/v3/stl)
 
-Please note: The T265 tracking camera requires that the mounting plate for it be printed (`racecar_front_cover_center_t265_plate.stl`). If you are pairing it with the D455 camera, please print `racecar_front_cover_center_t265_plate_d455.stl` instead.
+Please note: The T265 tracking camera requires that the mounting plate for it be printed (`racecar_front_cover_center_t265_plate.stl`).
