@@ -34,7 +34,7 @@ Make sure you’re using the sandbox map. The quickstart tutorial explains how t
 Clone the [nhttc_ros](https://github.com/prl-mushr/nhttc_ros/tree/devel) repository into your catkin workspace: 
 {{<highlight bash>}}
 $ cd catkin_ws/src
-$ git clone --branch devel https://github.com/prl-mushr/nhttc_ros/tree/devel
+$ git clone --branch devel https://github.com/prl-mushr/nhttc_ros
 $ cd nhttc_ros
 $ git submodule init
 $ git submodule update --recursive
