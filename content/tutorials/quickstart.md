@@ -76,7 +76,7 @@ Now, let's clone the necessary repos. First go to your `catkin_ws/src` directory
 $ cd ~/catkin_ws/src
 {{< / highlight >}}
 
-Download [repos.yaml](/tutorials/quickstart/repos.yaml) into `~/catkin_ws/src`.
+Download [repos.yaml](https://github.com/prl-mushr/mushr/blob/master/repos.yaml) into `~/catkin_ws/src`.
 
 And clone the necessary repos using vcstool:
 
@@ -177,14 +177,22 @@ Clicking and dragging will change the perspective of `rviz`, while `Shift + Clic
 
 ### Changing the map
 
-The current map is fine for driving around, but to do more interesting things you may want more interesting maps. To change the map follow these steps:
+The current map is fine for driving around, but to do more interesting things you may want more interesting maps. To change the map follow these steps.
 
 {{< highlight bash >}}
 # To list what maps are available
-$ ls ~/catkin_ws/src/mushr_sim/maps/
+$ ls ~/catkin_ws/src/mushr_base/mushr_base/mushr_base/maps/
 # Open map_server.launch
-$ nano ~/catkin_ws/src/mushr_sim/launch/map_server.launch
-# Change the the map server name
+$ nano ~/catkin_ws/src/mushr/mushr_base/mushr_base/mushr_base/launch/includes/map_server.launch
+{{< / highlight >}}
+
+Edit `map_server.launch` to set the map to the name of the .yaml file. It should look like this, replacing map_name with the name
+of the map you want to use.
+{{< highlight python "linenos=table" >}}
+<launch>
+    <arg name="map" default="$(find mushr_base)/maps/map_name.yaml" />
+    <node pkg="map_server" name="map_server" type="map_server" args="$(arg map)" />
+</launch>
 {{< / highlight >}}
 
 You can make your own maps using SLAM based techniques like [gmapping](http://wiki.ros.org/gmapping) or [cartographer](https://google-cartographer-ros.readthedocs.io/en/latest/). But if you just want something quick and simple, you can make your own `.yaml` and `.png` files for the map. Use the current map files as a template. We use [Gimp](https://www.gimp.org/) to edit the map `.png` file but you can use any image editor you like.

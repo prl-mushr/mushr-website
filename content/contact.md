@@ -3,7 +3,7 @@ title: 'Contact'
 date: 2018-02-22T17:01:34+07:00
 layout: contact
 ---
-We want to hear from you! Feel free to post to our [forum](https://spectrum.chat/mushr) with questions or comments about:
+We want to hear from you! Feel free to post to our [forum](https://github.com/prl-mushr/mushr/discussions) with questions or comments about:
 
 * Using MuSHR for education. (See the course website for "[Mobile Robotics](https://courses.cs.washington.edu/courses/cse478/20wi/)" for an example.)
 * A project you've done with the car.

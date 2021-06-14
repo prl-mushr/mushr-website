@@ -58,27 +58,17 @@ $ roslaunch mushr_base teleop.launch
 ```
 Verify that the controller is working and you can move the car. If not, try reconnecting the controller and/or restarting teleop.
 
-In a separate terminal sshed into the robot, using the above process, start slam. Slam will take the data gathered from the laser 
-scanner started by teleop and transform that into a 2D map. 
+In a separate terminal sshed into the robot, using the above process, set `ROS_IP` to the IP of your robot, then start slam. Slam will take the data gathered from the laser scanner started by teleop and transform that into a 2D map. 
 ```bash
+$ export ROS_IP=YOUR-IP
 $ roslaunch mushr_base slam.launch
 ```
 
 ### Start rviz to visualize the map building
-In a terminal on your computer (not ssh-ed into the robot), set `ROS_IP` to your IP and `ROS_MASTER_URI` to the IP of the car.
-
-Set `ROS_IP`.
+In a terminal on your computer (not ssh-ed into the robot), set `ROS_IP` to your IP and `ROS_MASTER_URI` to the IP of the car, and then start rviz.
 ```bash
 $ export ROS_IP=YOUR-IP
-```
-
-Set the `ROS_MASTER_URI` to the IP of the car.
-```bash
 $ export ROS_MASTER_URI=http://ROBOT_IP:11311
-```
-
-Now, in the same terminal, start rviz.
-```bash
 $ rviz
 ```
 Most likely, you will not see the map your car is creating. In order to see it, make sure the `/car/map` topic is added to the left sidebar (different from the /map/ topic!). If it is not, you will need to add it manually. Next, set the Fixed Frame value in the Displays > Global Options menu in rviz to /car/map/ instead of /map/. Now, the car should be postioned in the map (see screenshot below). The map will dynamically update and refine as the laser scanner gathers new data.
@@ -94,22 +84,26 @@ When you're satisfied with the map in rviz, you can save it to your computer usi
 
 In a local terminal, ensure `ROS_IP` is set to your IP and `ROS_MASTER_URI` is set to the IP of the car. Then, in that terminal, run map_saver using the following command, replacing `map_name` with the desired name of the map.
 ```bash
+$ export ROS_IP=YOUR-IP
+$ export ROS_MASTER_URI=http://ROBOT_IP:11311
 $ rosrun map_server map_saver -f map_name map:=/car/map
 ```
 This should create a .pgm file with the map and a .yaml file with the map metadata. 
 
 ### Using the map
-To load your new map into the simulator, move both files to `~/catkin_ws/src/mushr_sim/maps/`, replacing map_name with the name of your map.
+#### On the sim
+To load your new map into the simulator, move both files to `~/catkin_ws/src/mushr/mushr_base/mushr_base/mushr_base/maps/`, replacing map_name with the name of your map.
 ```bash
-$ mv map_name.pgm ~/catkin_ws/src/mushr_sim/maps/
-$ mv map_name.yaml ~/catkin_ws/src/mushr_sim/maps/
+$ mv map_name.pgm ~/catkin_ws/src/mushr/mushr_base/mushr_base/mushr_base/maps/
+$ mv map_name.yaml ~/catkin_ws/src/mushr/mushr_base/mushr_base/mushr_base/maps/
 ```
-Then, edit `~/catkin_ws/src/mushr_sim/launch/map_server.launch` to set the map to the name of the .yaml file.
+Then, edit `~/catkin_ws/src/mushr/mushr_base/mushr_base/mushr_base/launch/includes/map_server.launch` to set the map to the name of the .yaml file.
 
 ```bash
-$ nano ~/catkin_ws/src/mushr_sim/launch/map_server.launch
+$ nano ~/catkin_ws/src/mushr/mushr_base/mushr_base/mushr_base/launch/includes/map_server.launch
 ```
-Set the map variable to the path to the .yaml file, like the code below. Replace map_name with the name of your map.
+
+It should look like the following, replacing map_name with the name of your map.
 
 {{< highlight python "linenos=table" >}}
 <launch>
@@ -117,8 +111,6 @@ Set the map variable to the path to the .yaml file, like the code below. Replace
     <node pkg="map_server" name="map_server" type="map_server" args="$(arg map)" />
 </launch>
 {{< / highlight >}}
-
-At this point, make sure that the current terminal instance you're using has the default values for `ROS_IP` (undefined) and `ROS_MASTER_URI` (http://localhost:11311/). You should not need to do anything if you have not set `ROS_IP` or `ROS_MASTER_URI` in the current terminal instance.
 
 Now, launch the sim to use your new map!
 ```bash
@@ -129,11 +121,43 @@ In a new terminal, run rviz.
 $ rviz
 ```
 Your new map and the car should appear in the sim! If you don't see the map, make sure you are subscribed to the `/map` topic in the left sidebar. The map might not be in the center of the grid, and you may have to zoom out to see it.
+#### On the car
+To get the map from your computer to the robot, we need to use `scp`, replacing `map_name` with the name of your map and `ROBOT_IP` with the IP of your robot. From your computer, run the following from where you saved your maps:
+```bash
+$ scp map_name.pgm robot@ROBOT_IP:~/catkin_ws/src/mushr/mushr_base/mushr_base/mushr_base/maps/
+$ scp map_name.yaml robot@ROBOT_IP:~/catkin_ws/src/mushr/mushr_base/mushr_base/mushr_base/maps/
+```
+Then, edit `~/catkin_ws/src/mushr/mushr_base/mushr_base/mushr_base/launch/includes/map_server.launch` on the robot to set the map to the name of the .yaml file.
+
+```bash
+$ nano ~/catkin_ws/src/mushr/mushr_base/mushr_base/mushr_base/launch/includes/map_server.launch
+```
+
+It should look like the following, replacing map_name with the name of your map.
+
+{{< highlight python "linenos=table" >}}
+<launch>
+    <arg name="map" default="$(find mushr_base)/maps/map_name.yaml" />
+    <node pkg="map_server" name="map_server" type="map_server" args="$(arg map)" />
+</launch>
+{{< / highlight >}}
+
+Now, start teleop on the robot:
+```bash
+$ roslaunch mushr_base teleop.launch
+```
+And on your computer, set the IPs and start rviz to see the map!
+```bash
+$ export ROS_IP=YOUR-IP
+$ export ROS_MASTER_URI=http://ROBOT_IP:11311
+$ rviz
+```
+The map should appear, and you can move your robot into the map using `Set 2D Pos Estimate`.
 
 ### Touching up the map
 The map may have some stray pixels or jagged lines. To touch this up, we recommend using [gimp](https://www.gimp.org/) to edit the .pgm file.
 
-When doing this, use solid black (hex: `#000000`) pixels for edges, solid white (hex: `#FFFFFF`) areas for areas valid for the car, and solid gray areas (hex: `#CDCDCD`) for invalid space for the car.
+When doing this, use solid black (hex: `#000000`) pixels for edges, solid white (hex: `#FEFEFE`) areas for areas valid for the car, and solid gray areas (hex: `#CDCDCD`) for invalid space for the car.
 
 {{< figure src="/tutorials/mapping/edited_map_large.png" width="400" >}}
 
