@@ -379,7 +379,7 @@ In this section, we will install the car's lower platform, which will serve as a
 
 **Steps**
 
-1. Put the 3000 mAH NiMH battery into the battery compartment on the left side of the racecar chassis. Orient the battery such that the wires run towards the front of the racecar chassis. This battery comes with the chassis. If you ordered the Pro chassis, you may have received a 7.4V LiPo battery instead. For safety reasons, we do not recommend using this battery.
+1. Put the 3000 mAH NiMH battery into the battery compartment on the left side of the racecar chassis. Orient the battery such that the wires run towards the front of the racecar chassis. This battery comes with the chassis. If you ordered the Pro chassis, you may have received a 7.4V LiPo battery instead. For safety reasons, we do not recommend using this battery. Instead, please use a NiMH battery.
 
 2. Use two M2.5 flat head screws and nuts to attach the two tabs extending out the back of the front foundation to the corresponding holes near the front of the back foundation.
 
@@ -504,7 +504,7 @@ The following instructions detail voltage adjustment for the **DZS Elec LM2596**
 
 12. Press the button labeled **OUT** on the buck converter. The LED labeled **OUT** should be lit.
 
-13. Use a flat head screw driver to adjust the potentiometer until the LED screen displays *5.0*, which indicates that the buck converter is outputting 5V. If you are using the Xavier NX, set the output voltage to *14.0*.
+13. Use a flat head screw driver to adjust the potentiometer until the LED screen displays the desired voltage. Adjust the potentiometer until the screen reads **5.0 if using the Jetson Nano**. Alternatively, adjust the potentiometer until the screen reads **14.0 if using the Jetson Xavier NX**.
 
 14. Unplug the battery from the buck converter.
 
