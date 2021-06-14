@@ -71,15 +71,16 @@ As a result of the various options available for MuSHR, we have simplified the M
 |Chassis|Base|Base|Pro|
 |Cost(in US$)|750|1000|1600|
 
-The MuSHR Lite is ideal for users who are working on a budget, like hobbyists, and the MuSHR Pro is ideal for researchers and academic institutions, who need higher performance and are willing to splurge. The MuSHR tier meets in the middle, with full sensing capabilities but lower performance than the Pro option. If you feel like you don't fit into any of these three categories, don't worry! We have you covered!
+<br></br>
+The MuSHR Lite is ideal for users who are working on a budget, like hobbyists, and the MuSHR Pro is ideal for researchers and academic institutions, who need higher performance and are willing to splurge. The MuSHR tier meets in the middle, with full sensing capabilities but lower performance than the Pro option. If you feel like you don't fit into any of these three categories, don't worry! We have you covered in the next section!
 
 View the BoM for each tier [here.](https://docs.google.com/spreadsheets/d/1VV5fGFJIEthfwishO181WcWzMAkPAFYT/edit#gid=598654221)
 ___
 ## Custom MuSHR tiers
 
-It is possible to choose between tiers, those listed above are just our recommended guidelines. If you are a more advanced user with exact specifications in mind, MuSHR v4's modularity is designed to help support that. Download a more complex BoM that allows you to pick and choose [here.](https://docs.google.com/spreadsheets/d/1Nad3odSet0OVKBTEJDXue9xp8m6JX1xA/edit?usp=drive_web&ouid=117747822978217793476&rtpof=true)
+It is possible to combine components between multiple tiers, those listed above are just our recommended guidelines. If you are a more advanced user with exact specifications in mind, MuSHR v4's modularity is designed to help support that. Download a more complex BoM that allows you to pick and choose [here.](https://docs.google.com/spreadsheets/d/1Nad3odSet0OVKBTEJDXue9xp8m6JX1xA/edit?usp=drive_web&ouid=117747822978217793476&rtpof=true)
 
-For example, teaching a large class that needs you to put together a large number of cars cheaply and quickly? You can still build a MuSHR Lite with a Pro chassis! Want to use the Xavier NX but you don't need a camera? That's possible too!
+For example, teaching a large class that needs to put together a large number of cars inexpensively and quickly? You can still build a MuSHR Lite with a Pro chassis! Want to use the Xavier NX but you don't need a camera? That's possible too!
 
 ___
 ## 3D Printing Files
