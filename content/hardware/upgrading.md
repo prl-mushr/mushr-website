@@ -28,6 +28,14 @@ This page provides instructions for replacing your MuSHR racecar's NVIDIA Jetson
 
 3. Unscrew the four screws that hold the Jetson Nano in place, and carefully remove it from the racecar chassis. Ensure the nuts placed inside the Back Cover Top do not fall out.
 
+## Updating the Power System
+
+1. Cut the previously connected battery connector from the wire attached to the buck converter. Ensure the converter is powered off.
+
+2. Take two battery connectors, and connect the black wire of one of the connectors to the red wire of the other connector, with the other red and black wire connected to the length of wire attached to the buck converter. This will allow you to connect two batteries in series in order to provide the higher required voltage for the Xavier NX. See steps 2-13 of the [VESC Preparation section of the build tutorial](/hardware/build_tutorial#vesc-preparation) for a refresher on how to connect the wires if required.
+
+3. Change the output voltage setting on the buck converter from 5V to 14V.
+
 ## Installing the Xavier NX
 
 1. Remove the plastic carrier board by removing the four black screws on the corners of the developer kit. 

@@ -85,6 +85,17 @@ For example, teaching a large class that needs to put together a large number of
 ___
 ## 3D Printing Files
 
-Print the parts to build the MuSHR Racecar [here](https://github.com/prl-mushr/mushr_cad/tree/master/v3/stl)
+Print the parts to build the MuSHR Racecar [here](https://github.com/prl-mushr/mushr_cad/tree/master/v3/stl) If you would like to modify the logo on the sides of the robot, follow [these instructions](/hardware/logo_modification) to generate new .stl files.
 
-Please note: The T265 tracking camera requires that the mounting plate for it be printed (`racecar_front_cover_center_t265_plate.stl`).
+One of each STL is required to be printed for the racecar except for the `racecar_cover_image.stl` which needs to be printed twice. We also recommend that `racecar_cover_text.stl` , `racecar_cover_number.stl` and `racecar_cover_image.stl` be printed in a different color to the main racecar body.
+
+`racecar_front_cover_center_t265_plate.stl` is only required if the T265 tracking camera is being used.
+
+___
+## Build your Car
+
+To summarise, here's what you should do to get started on building the racecar.
+
+1. Select a Bill-of-Materials that meets your needs.
+2. Print the 3D-printed parts for the upper portion of the racecar.
+3. Follow the [build instructions](/hardware/build_instructions) to build your MuSHR racecar!

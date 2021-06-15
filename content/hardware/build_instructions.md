@@ -496,7 +496,7 @@ In this section, we will configure the buck converter. The buck converter steps 
  
 **Buck Converter Voltage Adjustment**
 
-The following instructions detail voltage adjustment for the **DZS Elec LM2596** buck converter. If you are using a different buck converter, follow the manufacturer's instructions to set the output voltage to 5V. (or 14V if using the Xavier NX)
+The following instructions detail voltage adjustment for the **DZS Elec LM2596** buck converter. If you are using a different buck converter, follow the manufacturer's instructions to set the output voltage. If you are using the **Jetson Nano**, set it to **5V**. If you are using the **Jetson Xavier NX**, set it to **14V**. 
 
 10. Before continuing, **make sure that the barrel connector is NOT plugged into the Jetson Nano/Xavier NX.** 
 
