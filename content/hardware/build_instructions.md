@@ -485,14 +485,15 @@ In this section, we will configure the buck converter. The buck converter steps 
 
 6. Cut a length of wire of approximately 22 cm. Create this length of wire from the extra wire that was cut off of the barrel connector in step 1. 
 
-7. Using two solderless wire connectors and heat shrink, connect the 22cm length of wire to the battery connector. Use the exact same process that was detailed in the *VESC Preparation* section, particularly steps 2-13. If using the Xavier NX, utilise two battery connectors, and connect the black wire of one of the connectors to the red wire of the other connector, with the other red and black wire connected to the 22cm length of wire. This will allow you to connect two batteries in series in order to provide the higher required voltage for the Xavier NX.
+7. For the **Jetson Nano**: Using two solderless wire connectors and heat shrink, connect the 22cm length of wire to the battery connector. Use the exact same process that was detailed in the *VESC Preparation* section, particularly steps 2-13. If using the **Xavier NX**, utilise two battery connectors, and connect the black wire of one of the connectors to the red wire of the other connector, with the other red and black wire connected to the 22cm length of wire. This will allow you to connect two batteries in series in order to provide the higher required voltage for the Xavier NX. The completed connectors are shown in Fig. 7.4.
 
+    {{< figure src="/hardware/build_instructions/07_04_battery_connectors.png" caption="Fig. 7.4" width="800">}}
 
 8. Install the other end of the 22 cm length of wire into the **input** terminals of the buck converter. The process is exactly the same as steps 2-5 in the previous subsection, except that **the red wire should go into the terminal marked IN+, and the black wire should go into the terminal marked IN-**.
 
-9. The connections for the input and output of the buck converter are now complete, as shown in Fig 7.4.
+9. The connections for the input and output of the buck converter are now complete, as shown in Fig 7.5.
 
-    {{< figure src="/hardware/build_instructions/07_04_insert_input_wires.png" caption="Fig. 7.4" width="800">}}
+    {{< figure src="/hardware/build_instructions/07_05_insert_input_wires.png" caption="Fig. 7.5" width="800">}}
  
 **Buck Converter Voltage Adjustment**
 
@@ -508,13 +509,13 @@ The following instructions detail voltage adjustment for the **DZS Elec LM2596**
 
 14. Unplug the battery from the buck converter.
 
-15. Place hot glue over the potentiometer to prevent any inadvertant adjustment of the potentiometer in the future. (Fig. 7.5)
+15. Place hot glue over the potentiometer to prevent any inadvertant adjustment of the potentiometer in the future. (Fig. 7.6)
 
-    {{< figure src="/hardware/build_instructions/07_05_adjust_potentiometer.png" caption="Fig. 7.5" width="800">}}
+    {{< figure src="/hardware/build_instructions/07_06_adjust_potentiometer.png" caption="Fig. 7.6" width="800">}}
 
-16. Expose the adhesive backing of the heat sink that came with the buck converter and attach it to the IC shown in Fig. 7.6.
+16. Expose the adhesive backing of the heat sink that came with the buck converter and attach it to the IC shown in Fig. 7.7.
 
-    {{< figure src="/hardware/build_instructions/07_06_attach_heatsink.png" caption="Fig. 7.6" width="800">}}
+    {{< figure src="/hardware/build_instructions/07_07_attach_heatsink.png" caption="Fig. 7.7" width="800">}}
 
 ___
 ## Push Button Installation
