@@ -5,11 +5,11 @@ intro_image: imgs/single-car.jpg
 featured: false
 draft: false
 active: true
-summary: Replace your NVIDIA Jetson Nano with the new Xavier NX
+summary: Replace your NVIDIA Jetson Nano with the new Xavier NX, and your D435i with a D455.
 weight: 3
 ---
 
-This page provides instructions for replacing your MuSHR racecar's NVIDIA Jetson Nano with the upgraded, more powerful Xavier NX processor.
+While MuSHR v4 adds no new major structural changes, this page provides instructions to replace your MuSHR racecar's NVIDIA Jetson Nano with the more powerful Xavier NX processor, as well as upgrade your Intel RealSense camera.
 ## Prerequisites
 
 1. NVIDIA Xavier NX
@@ -19,6 +19,12 @@ This page provides instructions for replacing your MuSHR racecar's NVIDIA Jetson
 5. SD card flashed with [NVIDIA Jetson Xavier NX stock image](https://developer.nvidia.com/embedded/learn/get-started-jetson-xavier-nx-devkit#write)
 6. Internet connection for Xavier NX (either WiFi or ethernet)
 7. HDMI cable, mouse, keyboard
+
+If upgrading the camera:
+
+1. [New Front Cover](https://github.com/prl-mushr/mushr_cad/blob/master/v3/stl/racecar_front_cover_whole.stl)
+2. 2x M4 screws (14mm if using T265 and 8mm if only D455)
+3. USB right-angled vertical connector, like [this](https://www.amazon.com/Cellularize-Adapter-10Gbps-Extension-Nintendo/dp/B08CDGHQWF/)
 
 ## Removing the Jetson Nano
 
@@ -58,4 +64,12 @@ This page provides instructions for replacing your MuSHR racecar's NVIDIA Jetson
 
 Follow the steps in the [Software Setup](/hardware/build_instructions#software-setup) section of the build instructions to set-up the Xavier NX with the MuSHR stack.
 
+## Upgrading the RealSense Camera
 
+If you want to upgrade your D435i to a D455, you will need to re-print the [racecar front cover](https://github.com/prl-mushr/mushr_cad/blob/master/v3/stl/racecar_front_cover_whole.stl). 
+
+1. Remove your old front cover by unscrewing the 5 flat-head screws holding it in place.
+
+2. Mount the D455 to the new front cover with two M4 screws and connect it with a USB-C cable and right-angle connector.
+
+3. Mount the new front cover with 5 flat-head M2.5 screws, the same way the old front cover was mounted.
