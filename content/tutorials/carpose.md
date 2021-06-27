@@ -388,7 +388,7 @@ Alternatively, you can download [our trained model](https://drive.google.com/fil
 
 [//]: <> ({{ <video src="/tutorials/carpose/demo.avi" control="yes"> }})
 
-{{< youtube "WoPrXD2xDg4" >}}
+{{< youtube "Vrt8OyOOJA8" >}}
 
 
 -----------------------------------------------------------------------------------------------------------------
