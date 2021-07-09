@@ -76,7 +76,7 @@ Now, let's clone the necessary repos. First go to your `catkin_ws/src` directory
 $ cd ~/catkin_ws/src
 {{< / highlight >}}
 
-Download [repos.yaml](/tutorials/quickstart/repos.yaml) into `~/catkin_ws/src`.
+Download [repos.yaml](https://github.com/prl-mushr/mushr/blob/master/repos.yaml) into `~/catkin_ws/src`.
 
 And clone the necessary repos using vcstool:
 
@@ -181,7 +181,7 @@ The current map is fine for driving around, but to do more interesting things yo
 
 {{< highlight bash >}}
 # To list what maps are available
-$ ls ~/catkin_ws/src/mushr_base/mushr_base/mushr_base/maps/
+$ ls ~/catkin_ws/src/mushr/mushr_base/mushr_base/mushr_base/maps/
 # Open map_server.launch
 $ nano ~/catkin_ws/src/mushr/mushr_base/mushr_base/mushr_base/launch/includes/map_server.launch
 {{< / highlight >}}

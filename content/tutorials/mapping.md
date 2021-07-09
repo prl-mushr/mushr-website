@@ -7,7 +7,7 @@ duration: 0
 featured: true  # whether this is listed at / (must also be top 6 by weight)
 active: true    # whether this is listed at /tutorials/
 draft: false      # whether Hugo considers this a draft
-weight: 100
+weight: 3
 ---
 
 ## By: [Madison Doerr](https://mcdoerr.github.io/) and [Markus Schiffer](www.linkedin.com/in/markusschiffer)
@@ -71,7 +71,7 @@ $ export ROS_IP=YOUR-IP
 $ export ROS_MASTER_URI=http://ROBOT_IP:11311
 $ rviz
 ```
-A screen should appear of the robot and the map it is creating. If you don't see the map, make sure the `/car/map` topic is added to the left sidebar (different from the /map/ topic!). You may also need to set the Fixed Frame value in the Displays > Global Options menu in rviz to /car/map/ instead of /map/. The map will dynamically update and refine as the laser scanner gathers new data.
+Most likely, you will not see the map your car is creating. In order to see it, make sure the `/car/map` topic is added to the left sidebar (different from the /map/ topic!). If it is not, you will need to add it manually. Next, set the Fixed Frame value in the Displays > Global Options menu in rviz to /car/map/ instead of /map/. Now, the car should be postioned in the map (see screenshot below). The map will dynamically update and refine as the laser scanner gathers new data.
 
 {{< figure src="/tutorials/mapping/start_map_large.png" width="400" >}}
 </br>
