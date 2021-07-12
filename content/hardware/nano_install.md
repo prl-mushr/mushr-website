@@ -1,5 +1,5 @@
 ---
-title: "Jetson Nano Driver Installation"
+title: "Jetson Driver Installation"
 date: 2018-11-28T15:14:54+10:00
 intro_image: imgs/single-car.jpg
 featured: false
@@ -9,22 +9,22 @@ summary: Use a script to setup your SD card
 weight: 2
 ---
 
-This page provides instructions for installing libraries necessary for operating the MuSHR racecar. Before proceeding with these instructions, we first suggest trying our [Jetson Nano image](/hardware/build_instructions#sd-card-setup) that has everything described on this page already installed. However, if your Jetson Nano fails to boot when using our image, you can flash NVIDIA's stock Jetson Nano image to your SD card, and then follow these instructions to install the necessary libraries.
+This page provides instructions for installing libraries necessary for operating the MuSHR racecar. Before proceeding with these instructions, we first suggest trying our [Jetson Nano image](/hardware/build_instructions#sd-card-setup) that has everything described on this page already installed. However, if your Jetson Nano fails to boot when using our image, you can flash NVIDIA's stock Jetson image to your SD card, and then follow these instructions to install the necessary libraries.
 
 ## Prerequisites
 
 The following are required before continuing with installing the necessary libraries.
 
-1. SD card flashed with [NVIDIA stock image](https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit#write)
-2. Internet connection for Jetson Nano (either WiFi or ethernet)
+1. SD card flashed with [NVIDIA Jetson Nano stock image](https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit#write) or [NVIDIA Jetson Xavier NX stock image](https://developer.nvidia.com/embedded/learn/get-started-jetson-xavier-nx-devkit#write)
+2. Internet connection for Jetson Nano/Xavier NX (either WiFi or ethernet)
 3. HDMI cable, mouse, keyboard
 
 ## Running Install Script
 
-The following steps will setup the required libraries on the Jetson Nano.
+The following steps will setup the required libraries on the Jetson Nano/Xavier NX.
 
-1. Power on and boot the Jetson Nano. 
-2. Follow the on-screen prompts to complete setup of the Jetson Nano operating system. If you would like your setup to be consistent with our tutorials, we suggest using the following values: <br/>
+1. Power on and boot the Jetson Nano/Xavier NX. 
+2. Follow the on-screen prompts to complete setup of the Jetson Nano/Xavier NX operating system. If you would like your setup to be consistent with our tutorials, we suggest using the following values: <br/>
 **Username: robot**<br/>
 **Name: robot**<br/>
 **Computer Name: goose**<br/>

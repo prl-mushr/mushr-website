@@ -36,17 +36,7 @@ ___
 ___
 ## Prerequisites
 
-In this section, we will provide resources for obtaining the parts necessary to build the MuSHR Racecar.
-
-**Bill of Materials**
-
-The bill of materials  below describes the necesssary materials for building the MuSHR Racecar, including links to vendors. It can be downloaded [here](https://github.com/prl-mushr/mushr/raw/master/mushr_docs/hardware/mushr_nano_bill_of_materials.pdf).
-
-<iframe src="https://docs.google.com/gview?url=https://github.com/prl-mushr/mushr/raw/master/mushr_docs/hardware/mushr_nano_bill_of_materials.pdf &embedded=true" style="width:800px;height:550px;padding-bottom:50px" frameborder="0"></iframe>
-
-**3D Printed Parts**
-
-The upper portion of the MuSHR Racecar's frame is 3D printed. All of the parts that must be printed are provided as .stl files [here](https://github.com/prl-mushr/mushr_cad/tree/master/v3/stl). If you would like to modify the logo on the sides of the robot, follow [these instructions](/hardware/logo_modification) to generate new .stl files.
+See [this page](/hardware/ordering) which goes over the prerequisites to building a MuSHR racecar, including ordering components and 3D printing.
 
 ___
 ## VESC Preparation 
@@ -150,25 +140,29 @@ In this section, we will describe the steps necessary to remove the stock servo 
 1. Flip the car over and remove the five screws that are holding the motor in place. (Fig. 2.1)
 
     {{< figure src="/hardware/build_instructions/02_01_servo_holes.png" caption="Fig. 2.1" width="800">}}
-    
-2. Flip the chassis back over and take out the servo motor mount. It is still connected to the brushed motor, which will be removed in the next section. 
 
-3. A linkage connects the servo arm to the chassis. Use pliers to disconnect this linkage from the chassis. (Fig. 2.2)
+2. Flip the chassis back over and unscrew the four screws holding the metal crossbar in place. Remove the crossbar, it will be reattached later.
+    
+3. Take out the servo motor mount. It is still connected to the brushed motor, which will be removed in the next section. 
+
+4. A linkage connects the servo arm to the chassis. Use pliers to disconnect this linkage from the chassis. (Fig. 2.2)
 
     {{< figure src="/hardware/build_instructions/02_02_servo_arm_link.png" caption="Fig. 2.2" width="800">}}
 
-4. Unscrew the servo motor arm from the servo motor. Remove the linkage from the servo arm. (Fig. 2.3)
+5. Unscrew the servo motor arm from the servo motor. Remove the linkage from the servo arm. (Fig. 2.3)
 
     {{< figure src="/hardware/build_instructions/02_03_remove_servo_arm.png" caption="Fig. 2.3" width="800">}}
 
 
-5. Keep the metal linkage, as it will be used later when we install a more powerful servo motor.  
+6. Keep the metal linkage, as it will be used later when we install a more powerful servo motor.
+
+7. If using the Pro chassis, disconnect the servo motor from the brushless motor, and go ahead to (Servo Motor Installation.)[/hardware/build_instructions/#servo-motor-installation]
 
 ___
 ## Brushed Motor Removal
 
 
-In this section, we will remove the brushed motor that comes with the chassis. Removing the brushed motor and replacing it with a BLDC motor (as detailed in the following section) requires a significant amount of time and effort. An alternative is to instead buy the Pro Version of the Redcat Blackout racecar chassis. This will lead to a slightly more expensive build, but that chassis already has a BLDC motor installed.
+In this section, we will remove the brushed motor that comes with the chassis. Removing the brushed motor and replacing it with a BLDC motor (as detailed in the following section) requires a significant amount of time and effort. An alternative is to instead buy the Pro Version of the Redcat Blackout racecar chassis. This will lead to a slightly more expensive build, but that chassis already has a BLDC motor installed. If you are using the Pro chassis, you can skip this and the following section and go ahead to (Servo Motor Installation.)[/hardware/build_instructions/#servo-motor-installation]
 
 <iframe width="800" height="450" style="margin-bottom:25px" src="https://www.youtube.com/embed/f6ZgVGyAUyk?list=PLU9BrzGX4PH2DHZzxOg2gEkLMXhpkS7fV" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -189,7 +183,7 @@ In this section, we will remove the brushed motor that comes with the chassis. R
 
     {{< figure src="/hardware/build_instructions/03_02_remove_bar_screw.png" caption="Fig. 3.2" width="800">}}
 
-3. Remove the metal bar that is holding the upper suspension in place by wiggling the upper suspension back and forth. Apply downwards pressure onto the upper suspension while wiggling it back and forth. This method is a bit tricky, and requires a little bit of patience. Alternatively, the metal bar can be pushed out by inserting a small object into the front of the bar's cavity. Once a few millimeters of the metal bar has been wiggled/pushed out, use pliers to fully pull it out while continuing to wiggle the upper suspension as necessary. (Fig. 3.3)
+3. Remove the metal bar that is holding the upper suspension in place by wiggling the upper suspension back and forth. Apply downwards pressure onto the upper suspension while wiggling it back and forth. This method is a bit tricky, and requires a little bit of patience. Alternatively, the metal bar can be easily pushed out by inserting a small object (like a needle, pin, or a SIM ejector tool) into the front of the bar's cavity. Once a few millimeters of the metal bar has been wiggled/pushed out, use pliers to fully pull it out while continuing to wiggle the upper suspension as necessary. (Fig. 3.3) Angling the front of the car upwards will also help the bar to fall out.
 
     {{< figure src="/hardware/build_instructions/03_03_remove_bar.png" caption="Fig. 3.3" width="800">}}
 
@@ -211,7 +205,7 @@ In this section, we will remove the brushed motor that comes with the chassis. R
 
 9. Remove the motor gear cover.
 
-10. Remove the two screws that secure the motor to its mount. (Fig. 3.7, Fig. 3.8) Be sure to orient the screwdriver as perpendicularly as possible with the face of the screw to avoid stripping the screw. 
+10. Remove the two screws that secure the motor to its mount. (Fig. 3.7, Fig. 3.8) Be sure to orient the screwdriver as perpendicularly as possible with the face of the screw to avoid stripping the screw. If this step proves to be challenging, removing the left wheel and the metal bracket that holds the gear in place may help, as it will allow the motor to rotate freely.
 
     {{< figure src="/hardware/build_instructions/03_07_brushed_motor_mount_screws1.png" caption="Fig. 3.7" width="800">}}
 
@@ -251,7 +245,7 @@ In this section, we will install the BLDC motor.
 
     {{< figure src="/hardware/build_instructions/04_01_motor_mount_holes.png" caption="Fig. 4.1" width="800">}}
 
-3. Re-insert the drive shaft if it is no longer in position. (Fig. 4.2)
+3. Re-insert the drive shaft if it is no longer in position. (Fig. 4.2) If you removed the metal bracket that held the gear in place earlier, reinstall it now. The motor should be on the right side of the chassis.
 
     {{< figure src="/hardware/build_instructions/04_02_drive_shaft.png" caption="Fig. 4.2" width="800">}}
 
@@ -271,7 +265,7 @@ In this section, we will install the BLDC motor.
 
 10. Place the upper suspension back to its original position, and secure it in place by re-inserting the metal rod. Use pliers to re-insert the rod if necessary.
 
-11. Re-install the screw that originally held the metal rod in place. (Fig. 4.4)
+11. Re-install the screw that originally held the metal rod in place. (Fig. 4.4) Repeat steps 9 to 11 for the left wheel if required.
 
     {{< figure src="/hardware/build_instructions/04_04_reinsert_bar_screw.png" caption="Fig. 4.4" width="800">}}
 
@@ -331,15 +325,15 @@ In this section, we will install a servo motor into the racecar chassis. Compare
 
 5. Use the screw that came with the servo motor to secure the servo arm to the servo motor. 
 
-6. Position the servo motor cage on the chassis. Orient it so that the servo arm is facing towards the right side of the race car and the wires run towards the back of the car. The two stubs on the servo motor cage should protrude through the corresponding holes of the chassis. (Fig. 5.4)
+6. Note the metal ball screwed into the **old/stock** servo arm. Unscrew it with the pliers.  
+
+7. Apply threadlocker to the threads of the metal ball. Then screw the ball into the lower hole of the **new** servo arm. Tighten it by screwing it with the pliers. 
+
+8. Position the servo motor cage on the chassis. Orient it so that the servo arm is facing towards the right side of the race car and the wires run towards the back of the car. The two stubs on the servo motor cage should protrude through the corresponding holes of the chassis. (Fig. 5.4)
 
     {{< figure src="/hardware/build_instructions/05_04_mount_servo_cage.png" caption="Fig. 5.4" width="800">}}
 
-7. Flip the car over and attach the servo cage to the chassis with two M2.5 flat head screws. 
-
-8. Note the metal ball screwed into the **old/stock** servo arm. Unscrew it with the pliers.  
-
-9. Apply threadlocker to the threads of the metal ball. Then screw the ball into the lower hole of the **new** servo arm. Tighten it by screwing it with the pliers. 
+9. Flip the car over and attach the servo cage to the chassis with two M2.5 flat head screws.
 
 10. Re-attach the servo linkage that was removed from the old servo motor. First re-attach it to the chassis by pushing it down onto the chassis' metal ball. 
 
@@ -385,7 +379,7 @@ In this section, we will install the car's lower platform, which will serve as a
 
 **Steps**
 
-1. Put the 3000 mAH NiMH battery into the battery compartment on the left side of the racecar chassis. Orient the battery such that the wires run towards the front of the racecar chassis. 
+1. Put the 3000 mAH NiMH battery into the battery compartment on the left side of the racecar chassis. Orient the battery such that the wires run towards the front of the racecar chassis. This battery comes with the chassis. If you ordered the Pro chassis, you may have received a 7.4V LiPo battery instead. For safety reasons, we do not recommend using this battery. Instead, please use a NiMH battery.
 
 2. Use two M2.5 flat head screws and nuts to attach the two tabs extending out the back of the front foundation to the corresponding holes near the front of the back foundation.
 
@@ -491,35 +485,37 @@ In this section, we will configure the buck converter. The buck converter steps 
 
 6. Cut a length of wire of approximately 22 cm. Create this length of wire from the extra wire that was cut off of the barrel connector in step 1. 
 
-7. Using two solderless wire connectors and heat shrink, connect the 22cm length of wire to the battery connector. Use the exact same process that was detailed in the *VESC Preparation* section, particularly steps 2-13.
+7. For the **Jetson Nano**: Using two solderless wire connectors and heat shrink, connect the 22cm length of wire to the battery connector. Use the exact same process that was detailed in the *VESC Preparation* section, particularly steps 2-13. If using the **Xavier NX**, utilise two battery connectors, and connect the black wire of one of the connectors to the red wire of the other connector, with the other red and black wire connected to the 22cm length of wire. This will allow you to connect two batteries in series in order to provide the higher required voltage for the Xavier NX. The completed connectors are shown in Fig. 7.4.
+
+    {{< figure src="/hardware/build_instructions/07_04_battery_connectors.png" caption="Fig. 7.4" width="800">}}
 
 8. Install the other end of the 22 cm length of wire into the **input** terminals of the buck converter. The process is exactly the same as steps 2-5 in the previous subsection, except that **the red wire should go into the terminal marked IN+, and the black wire should go into the terminal marked IN-**.
 
-9. The connections for the input and output of the buck converter are now complete, as shown in Fig 7.4.
+9. The connections for the input and output of the buck converter are now complete, as shown in Fig 7.5.
 
-    {{< figure src="/hardware/build_instructions/07_04_insert_input_wires.png" caption="Fig. 7.4" width="800">}}
+    {{< figure src="/hardware/build_instructions/07_05_insert_input_wires.png" caption="Fig. 7.5" width="800">}}
  
 **Buck Converter Voltage Adjustment**
 
-The following instructions detail voltage adjustment for the **DZS Elec LM2596** buck converter. If you are using a different buck converter, follow the manufacturer's instructions to set the output voltage to 5V.
+The following instructions detail voltage adjustment for the **DZS Elec LM2596** buck converter. If you are using a different buck converter, follow the manufacturer's instructions to set the output voltage. If you are using the **Jetson Nano**, set it to **5V**. If you are using the **Jetson Xavier NX**, set it to **14V**. 
 
-10. Before continuing, **make sure that the barrel connector is NOT plugged into the Jetson Nano.** 
+10. Before continuing, **make sure that the barrel connector is NOT plugged into the Jetson Nano/Xavier NX.** 
 
-11. Place the 5000 mAH battery in the lower foundation's right battery compartment, and plug it into the buck converter. The buck converter's LED screen should light up and display numbers.
+11. Place the 5000 mAH battery in the lower foundation's right battery compartment, and plug it into the buck converter. The buck converter's LED screen should light up and display numbers. If using the Xavier NX, use two batteries in series.
 
-12. Press the button labeled **OUT** on the buck converter.
+12. Press the button labeled **OUT** on the buck converter. The LED labeled **OUT** should be lit.
 
-13. Use a flat head screw driver to adjust the potentiometer until the LED screen displays *5.0*, which indicates that the buck converter is outputting 5V.
+13. Use a flat head screw driver to adjust the potentiometer until the LED screen displays the desired voltage. Adjust the potentiometer until the screen reads **5.0 if using the Jetson Nano**. Alternatively, adjust the potentiometer until the screen reads **14.0 if using the Jetson Xavier NX**.
 
 14. Unplug the battery from the buck converter.
 
-15. Place hot glue over the potentiometer to prevent any inadvertant adjustment of the potentiometer in the future. (Fig. 7.5)
+15. Place hot glue over the potentiometer to prevent any inadvertant adjustment of the potentiometer in the future. (Fig. 7.6)
 
-    {{< figure src="/hardware/build_instructions/07_05_adjust_potentiometer.png" caption="Fig. 7.5" width="800">}}
+    {{< figure src="/hardware/build_instructions/07_06_adjust_potentiometer.png" caption="Fig. 7.6" width="800">}}
 
-16. Expose the adhesive backing of the heat sink that came with the buck converter and attach it to the IC shown in Fig. 7.6.
+16. Expose the adhesive backing of the heat sink that came with the buck converter and attach it to the IC shown in Fig. 7.7.
 
-    {{< figure src="/hardware/build_instructions/07_06_attach_heatsink.png" caption="Fig. 7.6" width="800">}}
+    {{< figure src="/hardware/build_instructions/07_07_attach_heatsink.png" caption="Fig. 7.7" width="800">}}
 
 ___
 ## Push Button Installation
@@ -612,11 +608,13 @@ In this section, we will mount the YDLIDAR to the top of the racecar's back cove
 
     {{< figure src="/hardware/build_instructions/09_02_laser_board_mount.png" caption="Fig. 9.2" width="800">}}
 
-4. Insert the legs of the YDLIDAR into the holes on top of the BCT. Secure them in place by inserting the four screws into the corresponding holes of the bottom of the BCT. Use the fours screws that came with the YDLIDAR.
+4. Plug the USB micro splitter into the PCB. Note the red plastic around one of the USB micro splits. This corresponds to power, which should be plugged into the USB connector labeled **PWR** on the PCB. Put the other USB micro split into the other USB connector of the PCB. Guide the USB Type A end through the rectangular hole of the BCT.
 
-5. Connect the YDLIDAR to the PCB with the provided set of wires. Also, plug the USB micro splitter into the PCB. Note the red plastic around one of the USB micro splits. This corresponds to power, which should be plugged into the USB connector labeled **PWR** on the PCB. Put the other USB micro split into the other USB connector of the PCB. Guide the USB Type A end through the rectangular hole of the BST.
+5. Insert the legs of the YDLIDAR into the holes on top of the BCT. Secure them in place by inserting the four screws into the corresponding holes of the bottom of the BCT. Use the fours screws that came with the YDLIDAR.
 
-6. The YDLIDAR is now successfully mounted, as shown in Fig. 9.3.
+6. Connect the YDLIDAR to the PCB with the provided set of wires.
+
+7. The YDLIDAR is now successfully mounted, as shown in Fig. 9.3.
 
     {{< figure src="/hardware/build_instructions/09_03_connect_laser.png" caption="Fig. 9.3" width="800">}}
 
@@ -624,7 +622,7 @@ ___
 ## Jetson Nano Wi-Fi Card Installation
 
 
-In this section, we will install a Wi-Fi card and antennas into the Jetson Nano.
+In this section, we will install a Wi-Fi card and antennas into the Jetson Nano. If you are using the Xavier NX, skip this step as it comes with Wi-Fi antennae pre-installed.
 
 <iframe width="800" height="450" style="margin-bottom:25px" src="https://www.youtube.com/embed/faPB9ZhFFGg?list=PLU9BrzGX4PH2DHZzxOg2gEkLMXhpkS7fV" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -719,7 +717,9 @@ In this section, we will assemble the back cover, mount the Jetson Nano, and att
 
 1. Before continuing, **the LIDAR should already be mounted to the 3D printed back cover top (BCT).** 
 
-2. Insert a M2.5 pan head screw into each of the Jetson Nano's mounting holes. Then place two spacers on each screw shaft, followed by a M2.5 hex nut. Screw the nut onto the shaft such that it loosely holds the upper spacer against the bottom surface of the Jetson Nano.
+2. **For the Jetson Nano**: Insert a M2.5 pan head screw into each of the Jetson Nano's mounting holes. Then place two spacers on each screw shaft, followed by a M2.5 hex nut. Screw the nut onto the shaft such that it loosely holds the upper spacer against the bottom surface of the Jetson Nano. 
+
+2. **For the Xavier NX**, first remove the plastic carrier board by removing the four black screws on the corners of the developer kit. Then, lightly bend the the plastic carrier board such that the Wi-Fi antennae pop out of their enclosure. Now, take 4 20mm M2.5 screws, and place three spacers on each of the screws. Place the screws through the mounting holes on the Xavier NX and put six spacers below the Xavier NX board. Attach a hex nut to each screw, so it lightly holds the spacers in place against the board. 
 
 3. Insert a M2.5 hex nut into each of the four hex inlets on the sides of the BCT. (Fig. 12.1)
 
@@ -733,27 +733,23 @@ In this section, we will assemble the back cover, mount the Jetson Nano, and att
 
     {{< figure src="/hardware/build_instructions/12_02_insert_jetson_mount_hex_nuts.png" caption="Fig. 12.2" width="800">}}
 
-7. Tilt the back cover so that the hex nuts from the previous step stay in place. Simultaneously align the Jetson Nano with these hex nuts, and secure its mounting screws to the BCT. (Fig. 12.3)
+7. Tilt the back cover so that the hex nuts from the previous step stay in place. Simultaneously align the Jetson Nano/Xavier NX with these hex nuts, and secure its mounting screws to the BCT. (Fig. 12.3)
 
     {{< figure src="/hardware/build_instructions/12_03_mount_jetson_nano.png" caption="Fig. 12.3" width="800">}}
 
-8. Now that the Jetson Nano has been mounted, put a pin jumper on the J48 header, as shown in Fig 12.4, so that the Jetson Nano draws power from the DC barrel jack.
+8. Next, we will connect the push button to the Jetson Nano's breakout pins. Note that in the following description, all pins refer to pins found on the Jetson Nano's J41 header, and that we will refer to specific jumper cables as defined in the push button installation section. Connect jumper cable B to Pin 31, which serves as an input GPIO pin. Connect jumper cable C to Pin 1, which connects the pull-up resistor to 3.3V. Finally, connect jumper cable D to Pin 39, which serves as a ground connection when the button is pressed. Use the same pins for the Xavier NX.
 
-    {{< figure src="/hardware/build_instructions/12_04_place_nano_jumper.png" caption="Fig. 12.4" width="800">}}
+9. Optionally, apply hot glue to ensure that jumper cables B,C, and D do not become disconnected from their respective pins on the J41 header. 
 
-9. Next, we will connect the push button to the Jetson Nano's breakout pins. Note that in the following description, all pins refer to pins found on the Jetson Nano's J41 header, and that we will refer to specific jumper cables as defined in the push button installation section. Connect jumper cable B to Pin 31, which serves as an input GPIO pin. Connect jumper cable C to Pin 1, which connects the pull-up resistor to 3.3V. Finally, connect jumper cable D to Pin 39, which serves as a ground connection when the button is pressed.
+10. Expose the adhesive on the back of each of the antennas, and attach them to the side walls of the back cover.
 
-10. Optionally, apply hot glue to ensure that jumper cables B,C, and D do not become disconnected from their respective pins on the J41 header. 
+11. Use electrical tape to re-enforce the adhesion of the antennae to the side walls.
 
-11. Expose the adhesive on the back of each of the antennas, and attach them to the side walls of the back cover.
-
-12. Use electrical tape to re-enforce the adhesion of the antennae to the side walls.
-
-13. If necessary, use zip ties to bundles the antennae wires, as well as perform general cable management of the back cover. (Fig. 12.5)
+12. If necessary, use zip ties to bundles the antennae wires, as well as perform general cable management of the back cover. (Fig. 12.5)
 
     {{< figure src="/hardware/build_instructions/12_05_antenna_wires.JPG" caption="Fig. 12.5" width="800">}}    
 
-12. Use four M2.5 flat head screws to mount the back cover to the foundation. (Fig. 12.6)
+13. Use four M2.5 flat head screws to mount the back cover to the foundation. (Fig. 12.6)
 
     {{< figure src="/hardware/build_instructions/12_06_mount_back_cover.png" caption="Fig. 12.6" width="800">}}    
 
@@ -783,17 +779,17 @@ In this section, we will mount the D435i Realsense camera to the front cover of 
 
 **Steps**
 
-1. Plug the 1ft USB 3.0 cable into the D435i camera. Note that we are not using the USB cable that comes with the camera because it is excessively long.
+1. Plug the 1ft USB 3.0 cable into the D435i camera. Note that we are not using the USB cable that comes with the camera because it is excessively long. If you are using the D455 camera and a Xavier NX, use a right-angled USB-C connector between the USB cable and the camera so that the cable does not block the second battery.
 
 2. **Single Camera** Guide the USB cable from the outside of the front cover to the inside through the gap near the mounting holes. (Fig. 13.1)
 
     {{< figure src="/hardware/build_instructions/13_01_guide_d435_usb.png" caption="Fig. 13.1" width="800">}}
 
-3. **Single Camera** Use two 6mm M3 screws to mount the D435i camera to the front cover.(Fig. 13.2)
+3. **Single Camera** Use two 6mm M3 screws to mount the D435i camera to the front cover.(Fig. 13.2) If using a D455 camera, use M4 screws instead.
 
     {{< figure src="/hardware/build_instructions/13_02_mount_d435.png" caption="Fig. 13.2" width="800">}}
 
-4. **Dual Camera** Use two 14mm M3 screws to attach the mounting plate and D435i camera to the front cover. (Fig. 13.3)
+4. **Dual Camera** Use two 14mm M3 screws to attach the mounting plate and D435i camera to the front cover. (Fig. 13.3) If using a D455 camera, use M4 screws instead.
 
     {{< figure src="/hardware/build_instructions/13_03_mount_d435_double.JPG" caption="Fig. 13.3" width="800">}}
 
