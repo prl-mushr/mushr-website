@@ -15,7 +15,7 @@ This page provides instructions for installing libraries necessary for operating
 
 The following are required before continuing with installing the necessary libraries.
 
-1. SD card flashed with [NVIDIA stock image](https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit#write)
+1. SD card flashed with the [NVIDIA Jetpack 4.2 stock image](https://developer.nvidia.com/jetpack-4_2). Press "Download SD Card Image" and then follow the steps [here](https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit#write) (starting from step 2) to flash your SD card.
 2. Internet connection for Jetson Nano (either WiFi or ethernet)
 3. HDMI cable, mouse, keyboard
 
