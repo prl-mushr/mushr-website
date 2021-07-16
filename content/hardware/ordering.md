@@ -1,5 +1,5 @@
 ---
-title: "Choosing and Ordering a MuSHR Car"
+title: "Choosing and Ordering a MuSHR v4 Car"
 date: 2018-11-28T15:14:54+10:00
 intro_image: imgs/single-car.jpg
 image: "/services/default.png"
