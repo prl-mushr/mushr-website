@@ -10,14 +10,14 @@ summary: Plan and control multiple MuSHR cars to different goals without collisi
 weight: 3
 ---
 
-<h2> By: <a href='https://www.linkedin.com/in/p-chanrun/'>Podshara Chanrungmaneekul</a>, <a href='https://www.linkedin.com/in/aditmjha/'> Adit Jha </h2>
+<h2> By: <a href='https://www.linkedin.com/in/p-chanrun/'>Podshara Chanrungmaneekul</a>, <a href='https://www.linkedin.com/in/aditmjha/'> Adit Jha</a> </h2>
 <img src="/tutorials/coordination_planner/4car4task.gif" width="1000" >
 
 ## Introduction
 
 ### Goal 
 
-This tutorial will teach you how to setup the Enhance Conflict-Based Search with Optimal Task Assignment (ECBS-TA) planning algorithm on a set of MuSHR cars. ECBS-TA produces a set of collision free trajectories, one for each car, from start to goal. By the end of the tutorial, a set of cars will be able to generate paths that avoid each other.
+This tutorial will teach you how to setup the [Enhanced Conflict-Based Search with Optimal Task Assignment](https://act.usc.edu/publications/Hoenig_AAMAS2018a.pdf) (ECBS-TA) planning algorithm on a set of MuSHR cars. ECBS-TA produces a set of collision free trajectories, one for each car, from start to goal. By the end of the tutorial, a set of cars will be able to generate paths that avoid each other.
 
 ### Requirements
 
@@ -57,8 +57,7 @@ $ rviz
 
 Below is the format for setting the initial position for a team of cars and a set of tasks to complete. For out-of-box examples, look at the **Example of Initializing the Planner** section which utilizes files already part of the repository.
 {{< highlight bash >}}
-//format for launching
-$ roslaunch mushr_coordination init_planner.launch cars_file:={car's team config file} task_file:={task benchmark file}
+$ roslaunch mushr_coordination init_planner.launch cars_file:={car's team config file} tasks_file:={task benchmark file}
 {{< / highlight >}}
 
 ### Configuration File Example for Car Information
@@ -88,35 +87,35 @@ In this environment, there are 4 cars and have been given 4 tasks to complete wi
 {{< highlight bash >}}
 $ roslaunch mushr_coordination mushr_coordination.launch cars_file:=4cars.yaml
 $ rviz
-$ roslaunch mushr_coordination init_planner.launch cars_file:=4cars.yaml task_file:=4cars4tasks5x3.yaml
+$ roslaunch mushr_coordination init_planner.launch cars_file:=4cars.yaml tasks_file:=4cars4tasks5x3.yaml
 {{< / highlight >}}
 
-Each car get assigned to their respective task, in which their accumulated distanse would be minimal.
+Each car get assigned to their respective task, in which their accumulated distance would be minimal.
 
-<img src="/tutorials/coordination_planner/4cars4task5x3.png" width="800" >
+<img src="/tutorials/coordination_planner/example1.jpg" width="800" >
 
 ### Example #2
 In this environment, there are 4 cars and have been given 6 tasks to complete within a 6 by 6 space. 
 {{< highlight bash >}}
 $ roslaunch mushr_coordination mushr_coordination.launch cars_file:=4cars.yaml
 $ rviz
-$ roslaunch mushr_coordination init_planner.launch cars_file:=4cars.yaml task_file:=4cars6tasks6x6.yaml
+$ roslaunch mushr_coordination init_planner.launch cars_file:=4cars.yaml tasks_file:=4cars6tasks6x6.yaml
 {{< / highlight >}}
 
 Number of tasks is more than number of cars, so the blue car and the green car have been given one task more than the others to complete. 
 
-<img src="/tutorials/coordination_planner/4cars6task6x6.png" width="800" >
+<img src="/tutorials/coordination_planner/example2.jpg" width="800" >
 
 ### Example #3
 In this environment, there are 4 cars and have been given 2 tasks to complete within a 5 by 3 space. 
 {{< highlight bash >}}
 $ roslaunch mushr_coordination mushr_coordination.launch cars_file:=4cars.yaml
 $ rviz
-$ roslaunch mushr_coordination init_planner.launch cars_file:=4cars.yaml task_file:=4cars2tasks5x3.yaml
+$ roslaunch mushr_coordination init_planner.launch cars_file:=4cars.yaml tasks_file:=4cars2tasks5x3.yaml
 {{< / highlight >}}
 
 There is not enough task to assign to every cars. In this case, the red car and green car are idle and stay in place.
 
-<img src="/tutorials/coordination_planner/4cars2task5x3.png" width="800" >
+<img src="/tutorials/coordination_planner/example3.jpg" width="800" >
 
 
