@@ -52,22 +52,22 @@ $ sudo apt install ros-melodic-gmapping
 ```
 
 ### Start teleop and gmapping
-Once you have sshed into the car, start teleop to start the laser scanner and control the car.
+Once you have sshed into the car, start teleop (on the car) to start the laser scanner and control the car.
 ```bash
 $ roslaunch mushr_base teleop.launch
 ```
 Verify that the controller is working and you can move the car. If not, try reconnecting the controller and/or restarting teleop.
 
-In a separate terminal sshed into the robot, using the above process, set `ROS_IP` to the IP of your robot, then start slam. Slam will take the data gathered from the laser scanner started by teleop and transform that into a 2D map. 
+In a separate terminal sshed into the robot, using the above process, set `ROS_IP` to the IP of your robot, then start slam (also on the robot). Slam will take the data gathered from the laser scanner started by teleop and transform that into a 2D map. 
 ```bash
-$ export ROS_IP=YOUR-IP
+$ export ROS_IP=CAR-IP
 $ roslaunch mushr_base slam.launch
 ```
 
 ### Start rviz to visualize the map building
-In a terminal on your computer (not ssh-ed into the robot), set `ROS_IP` to your IP and `ROS_MASTER_URI` to the IP of the car, and then start rviz.
+In a terminal on your computer (not ssh-ed into the robot), set `ROS_IP` to your computer's IP and `ROS_MASTER_URI` to the IP of the car, and then start rviz.
 ```bash
-$ export ROS_IP=YOUR-IP
+$ export ROS_IP=COMPUTER-IP
 $ export ROS_MASTER_URI=http://ROBOT_IP:11311
 $ rviz
 ```
@@ -77,14 +77,14 @@ Most likely, you will not see the map your car is creating. In order to see it, 
 </br>
 
 ### Survey the surroundings
-Now that we have started mapping, we need to survey the area! Use the controller to drive the car very slowly around the area you want to survey, pausing periodically to allow the laser scanner to gather data. You should be able to see the map in rviz updating as you drive.
+Now that we have started mapping, we need to survey the area! Use the controller to drive the car very slowly around the area you want to survey, pausing periodically to allow the laser scanner to gather data. You should be able to see the map in rviz updating as you drive. Since the map frame does not exist in rviz, your car will not appear to move in its environment.
 
 ### Save the map
 When you're satisfied with the map in rviz, you can save it to your computer using the following steps.
 
-In a local terminal, ensure `ROS_IP` is set to your IP and `ROS_MASTER_URI` is set to the IP of the car. Then, in that terminal, run map_saver using the following command, replacing `map_name` with the desired name of the map.
+In a local terminal, ensure `ROS_IP` is set to your computer's IP and `ROS_MASTER_URI` is set to the IP of the car. Then, in that terminal, run map_saver using the following command, replacing `map_name` with the desired name of the map.
 ```bash
-$ export ROS_IP=YOUR-IP
+$ export ROS_IP=COMPUTER-IP
 $ export ROS_MASTER_URI=http://ROBOT_IP:11311
 $ rosrun map_server map_saver -f map_name map:=/car/map
 ```
@@ -148,7 +148,7 @@ $ roslaunch mushr_base teleop.launch
 ```
 And on your computer, set the IPs and start rviz to see the map!
 ```bash
-$ export ROS_IP=YOUR-IP
+$ export ROS_IP=COMPUTER-IP
 $ export ROS_MASTER_URI=http://ROBOT_IP:11311
 $ rviz
 ```
