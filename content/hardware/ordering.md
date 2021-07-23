@@ -70,6 +70,8 @@ If you need to tele-operate outdoors or over a longer distance outside standard 
 
 You can mount a 3D-Printed bumper to the front of the car to perform object manipulation tasks with the car.
 
+{{< figure src="/hardware/ordering/pushing_bumper.jpg" caption="MuSHR racecar with front-mounted pushing bumper." width="800">}}
+
 ___
 ## Recommended Tier System
 
