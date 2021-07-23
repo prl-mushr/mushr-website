@@ -1,5 +1,5 @@
 ---
-title: "Coordination Planner"
+title: "Multi-Agent Coordination Planner for Task Execution"
 date: 2021-04-25T15:14:54+10:00
 featured: true
 draft: false
@@ -80,7 +80,7 @@ car4:
     color: "DB921D" #orange
 ```
 
-## Example of Initializing the Planner
+## Examples of Initializing the Planner
 
 ### Example #1
 In this environment, there are 4 cars and have been given 4 tasks to complete within a 5 by 3 space. 
