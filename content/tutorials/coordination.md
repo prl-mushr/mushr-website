@@ -1,5 +1,5 @@
 ---
-title: "Multi-Agent Coordination Planner for Task Execution"
+title: "Multi-Agent Coordination Planner for Multi-Goal Tasks"
 date: 2021-04-25T15:14:54+10:00
 featured: true
 draft: false
