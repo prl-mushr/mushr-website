@@ -1,12 +1,12 @@
 <div id="main-menu" class="main-menu">
   <ul>
     {{- $currentPage := . -}}
+    {{/* Needed to avoid highlighting both Quickstart and Tutorials from the Quickstart page */}}
     {{- $isQuickstart := (eq .LinkTitle "Quickstart") -}}
     {{- range .Site.Menus.main }}
     {{ $isQuickstartTutorialEntry := (and $isQuickstart (eq .KeyName "tutorials")) -}}
-    {{/* temporary hack around Is/HasMenuCurrent, since the config MenuEntry page is nil */}}
-    {{- $hasMenuCurrent := (and (hasPrefix $currentPage.RelPermalink .URL) (not $isQuickstartTutorialEntry)) -}}
-    <li class="menu-item-{{ .KeyName }}{{ if $hasMenuCurrent }} active{{ end }}">
+    {{- $active := or ($currentPage.IsMenuCurrent "main" .) ($currentPage.HasMenuCurrent "main" .) -}}
+    <li class="menu-item-{{ .KeyName }}{{ if and $active (not $isQuickstartTutorialEntry) }} active{{ end }}">
       <a href="{{.URL}}"><span>{{ .Name }}</span></a>
     </li>
     {{- end }}

@@ -34,13 +34,13 @@ unsafe = true
 [[menu.main]]
     identifier = "quickstart"
     name = "Quickstart"
-    url = "/tutorials/quickstart/"
+    pageRef = "tutorials/quickstart"
     weight = 1
 
 [[menu.main]]
     identifier = "about"
     name = "About"
-    url = "/about/"
+    pageRef = "about"
     weight = 2
 
 [[menu.main]]
@@ -52,19 +52,19 @@ unsafe = true
 [[menu.main]]
     identifier = "hardware"
     name = "Hardware"
-    url = "/hardware/"
+    pageRef = "hardware"
     weight = 4
 
 [[menu.main]]
     identifier = "tutorials"
     name = "Tutorials"
-    url = "/tutorials/"
+    pageRef = "tutorials"
     weight = 5
 
 [[menu.main]]
     identifier = "press"
     name = "Press"
-    url = "/press/"
+    pageRef = "press"
     weight = 6
 
 [[menu.main]]
@@ -82,21 +82,21 @@ unsafe = true
 [[menu.main]]
     identifier = "contact"
     name = "Contact"
-    url = "/contact/"
+    pageRef = "contact"
     weight = 9
 
 # Footer Menu
 [[menu.footer]]
     identifier = "home"
     name = "Home"
-    url = "/"
+    pageRef = "/"
 
 [[menu.footer]]
     identifier = "forum"
     name = "Community Forum"
-    url ="https://github.com/prl-mushr/mushr/discussions"
+    url = "https://github.com/prl-mushr/mushr/discussions"
 
 [[menu.footer]]
     identifier = "contact"
     name = "Contact"
-    url = "/contact/"
+    pageRef = "contact"
