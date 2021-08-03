@@ -50,12 +50,18 @@ Run the planner that will set up the environment publishers and subscribers.
 $ roslaunch mushr_coordination mushr_coordination.launch cars_file:={car's team config file}
 {{< / highlight >}}
 
-For simulation, run `rviz` then and subscribe to planner's topics. Download the [rviz config file](/tutorials/coordination_planner/nhttc.rviz) for an out-of-box rviz setup. This setup subscribes to all the important rostopics and organizes them in categories. 
+For simulation, first launch the mushr_sim. Download the [multi_teleop.launch](/tutorials/coordination_planner/multi_teleop.launch) to the mushr_sim repository. Run `rviz` then and subscribe to planner's topics. Download the [rviz config file](/tutorials/coordination_planner/nhttc.rviz) for an out-of-box rviz setup. This setup subscribes to all the important rostopics and organizes them in categories. 
+
+Launch the mushr_sim.
+{{< highlight bash >}}
+$ roslaunch mushr_sim multi_teleop.launch
+{{< / highlight >}}
+
 {{< highlight bash >}}
 $ rviz
 {{< / highlight >}}
 
-Below is the format for setting the initial position for a team of cars and a set of tasks to complete. For out-of-box examples, look at the **Example of Initializing the Planner** section which utilizes files already part of the repository.
+Below is the format for setting the initial position for a team of cars and a set of tasks to complete. For out-of-box examples, look at the **Examples of Initializing the Planner** section which utilizes files already part of the repository.
 {{< highlight bash >}}
 $ roslaunch mushr_coordination init_planner.launch cars_file:={car's team config file} tasks_file:={task benchmark file}
 {{< / highlight >}}
