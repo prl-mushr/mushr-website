@@ -5,7 +5,7 @@ refer to Hugo's documentation for any major changes.
 
 ## Requirements
 
-Install [Hugo](https://gohugo.io/getting-started/installing/) v0.81.0 to match
+Install [Hugo](https://gohugo.io/getting-started/installing/) v0.86.0 to match
 the deployment pipeline version!
 
 ## Running the site locally
