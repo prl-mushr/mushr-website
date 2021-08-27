@@ -319,7 +319,7 @@ In this section, we will install a servo motor into the racecar chassis. Compare
 
 3. Insert four M2.5 pan head screws to mount the servo motor to the servo cage. 
 
-4. Attach the metal servo arm onto the servo motor so that it points directly upwards. (Fig. 5.3)
+4. Attach the metal servo arm onto the servo motor so that it points directly upwards. Do not rotate the servo motor, or else the car will not be able to steer properly. (Fig. 5.3)
 
     {{< figure src="/hardware/build_instructions/05_03_mount_servo_arm.png" caption="Fig. 5.3" width="800">}}
 
@@ -971,7 +971,7 @@ In this section, we will go through the minimum process required to teleoperate 
 
 1. Ensure that both of the robot's batteries have been charged.
 
-2. Plug the VESC into the 3000 mAH NiMH battery in the chassis.
+2. Plug the VESC into the 3000 mAH NiMH battery in the chassis. Note: If it appears that the wheels are locked in place and turning all the way to one side, this means that the servo motor has been incorrectly installed. (either in the wrong position, or that the arm was rotated) If this occurs, remove and then reattach the servo arm while the VESC is plugged in.
 
 3. Plug the buck converter into the 5000 mAH NiMH battery in the foundation.
 
