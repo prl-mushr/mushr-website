@@ -669,19 +669,20 @@ ___
 ## SD Card Setup
 
 
-In this section, we will write a system image with pre-installed MuSHR software to an SD card, and then insert that SD card into the Jetson Nano.
+In this section, we will write a system image with pre-installed MuSHR software to an SD card, and then insert that SD card into the Jetson Nano. If you use an SD card that has less than 128 GB of storage (or encounter other problems with this system image) you can install NVIDIA's stock image and then use a script to install the necessary drivers by following the instructions [here](/hardware/nano_install).
+
 
 **Required Materials and Tools**
 
 * Jetson Nano 
-* SD Card - (64GB or larger) 
+* SD Card - (128GB or larger) 
 * Computer with
     * Internet Connection 
     * Ability to Read and Write SD Cards (*[SD Card USB Adapter](https://www.amazon.com/Reader-Laptop-Windows-Chrome-RS-MMC/dp/B07MK99R14)*)
 
 **Steps**
 
-1. Download and decompress the MuSHR system image from *[here](https://drive.google.com/file/d/17Xn63ZWA_e3DVxt_ajhzu-uKW0hUG4iX/view?usp=sharing)*.
+1. Download and decompress the MuSHR system image from *[here](https://drive.google.com/file/d/1Fq_73BKgo--DWMS1q5fpKuc4Vz4BEktk/view?usp=sharing)*.
 
 2. Flash the MuSHR image onto the SD card following the instructions *[here](https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit#write)*.
     - username: `robot`
