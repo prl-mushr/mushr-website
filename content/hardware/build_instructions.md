@@ -501,7 +501,7 @@ In this section, we will configure the buck converter. The buck converter steps 
  
 **Buck Converter Voltage Adjustment**
 
-The following instructions detail voltage adjustment for the **DZS Elec LM2596** buck converter. If you are using a different buck converter, follow the manufacturer's instructions to set the output voltage to 5V.
+The following instructions detail voltage adjustment for the **DZS Elec LM2596** buck converter. If you are using a different buck converter, follow the manufacturer's instructions to set the output voltage to 5.2V.
 
 10. Before continuing, **make sure that the barrel connector is NOT plugged into the Jetson Nano.** 
 
@@ -509,7 +509,7 @@ The following instructions detail voltage adjustment for the **DZS Elec LM2596**
 
 12. Press the button labeled **OUT** on the buck converter.
 
-13. Use a flat head screw driver to adjust the potentiometer until the LED screen displays *5.0*, which indicates that the buck converter is outputting 5V.
+13. Use a flat head screw driver to adjust the potentiometer until the LED screen displays *5.2*, which indicates that the buck converter is outputting 5.2V. Note that we set the voltage to 5.2V rather than 5V because we have observed that current drawn from the buck converter by the Jetson causes the voltage to drop slightly.
 
 14. Unplug the battery from the buck converter.
 
