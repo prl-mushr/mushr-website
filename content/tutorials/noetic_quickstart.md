@@ -1,12 +1,12 @@
 ---
 title: "Quickstart with Foxglove"
 date: 2022-04-13T13:18:04-07:00
-summary: "Get the MuShr Sim working on your computer!"
+summary: "Get the MuSHR Sim working on your computer!"
 difficulty: "Beginner"
 duration: 30
 featured: false  # whether this is listed at / (must also be top 6 by weight). 
 active: true     # whether this is listed at /tutorials/
-draft: true      # whether Hugo considers this a draft
+draft: false      # whether Hugo considers this a draft
 weight: 2     # 2 = intro tutorial 3 = anything else
 ---
 
@@ -30,7 +30,7 @@ First, install [docker](https://docs.docker.com/get-docker/) and [docker compose
 If on Linux, follow the [post install](https://docs.docker.com/engine/install/linux-postinstall/) steps to make sure you can run docker without root.
 
 ## Installing MuSHR Docker Container
-If you have pre-existing work in a `catkins_ws` workspace, move this work to another folder or stash it somewhere safe. 
+If you have pre-existing MuSHR work in a `catkins_ws` workspace and want to keep it, see the FAQ section at the end of this tutorial.
 
 Now, clone the MuSHR repo:
 {{< highlight bash >}} $ git clone https://github.com/prl-mushr/mushr.git {{< / highlight >}}
@@ -46,7 +46,7 @@ It will also ask if you are ok with adding "xhost +" to your .bashrc (Linux) or 
 Close the terminal and open a new one. Then run
 {{< highlight bash >}} $ mushr_noetic {{< / highlight >}} 
 
-This should start up the docker container. If the prefix switches to `root`, the installation was successful. 
+This should start up the docker container. If the prefix switches to `root`, the installation was successful. If not, please check the "Troubleshooting" section at the end of the tutorial.
 
 In the same terminal, build the stack 
 {{< highlight bash >}} $ source .bashrc && cd catkin_ws && catkin build {{< / highlight >}}
@@ -57,8 +57,6 @@ Since we can run the MuSHR stack now, we can use Foxglove Studio to visualize ou
 First, download [Foxglove Studio](https://foxglove.dev/download). Foxglove is 
 still in development and has many features that are added frequently, so make sure to download the most
 recent version, or update it if you already have it downloaded.
-
-[TODO: Merge PR into noetic branch for foxglove layout. For now the layout file specified below can be found at [this branch](https://github.com/prl-mushr/mushr/blob/foxglove-viz/mushr_utils/foxglove/foxglove_layout.json). Download it into the location below.]
 
 Open Foxglove Studio, and click the "Layouts" button on the left panel (second from top) and then click
 `Import Layout` button pictured below.
@@ -127,4 +125,16 @@ After manually setting this value, make to source the `.bashrc`.
 {{< highlight bash >}}
 $ source ~/.bashrc
 {{< / highlight >}}
+
+## FAQ
+### How can I keep another MuSHR-related `catkins_ws` workspace without overwriting it?
+These instructions were intended for a first-time setup of MuSHR. To get around that,
+set the following paths in your `.bashrc` or `.zshrc` manually to the paths of your existing `catkins_ws` workspace. 
+
+{{< highlight bash >}}
+ROS_PACKAGE_PATH, LD_LIBRARY_PATH, ROSLISP_PACKAGE_DIRECTORIES, PKG_CONFIG_PATH, CMAKE_PREFIX_PATH
+{{< / highlight >}}
+
+Then, when you want to run the docker container with the new MuSHR setup, comment these lines out and re-source your `.bashrc` (Linux) or `.zshrc` (MacOS).
+
 
