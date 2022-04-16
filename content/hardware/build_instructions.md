@@ -741,7 +741,7 @@ In this section, we will assemble the back cover, mount the Jetson Nano, and att
 
     {{< figure src="/hardware/build_instructions/12_04_place_nano_jumper.png" caption="Fig. 12.4" width="800">}}
 
-9. Next, we will connect the push button to the Jetson Nano's breakout pins. Note that in the following description, all pins refer to pins found on the Jetson Nano's J41 header, and that we will refer to specific jumper cables as defined in the push button installation section. Connect jumper cable B to Pin 33, which serves as an input GPIO pin. Connect jumper cable C to Pin 1, which connects the pull-up resistor to 3.3V. Finally, connect jumper cable D to Pin 39, which serves as a ground connection when the button is pressed.
+9. Next, we will connect the push button to the Jetson Nano's breakout pins. Note that in the following description, all pins refer to pins found on the Jetson Nano's J41 header, and that we will refer to specific jumper cables as defined in the push button installation section. Connect jumper cable B to Pin 31, which serves as an input GPIO pin. Connect jumper cable C to Pin 1, which connects the pull-up resistor to 3.3V. Finally, connect jumper cable D to Pin 39, which serves as a ground connection when the button is pressed.
 
 10. Optionally, apply hot glue to ensure that jumper cables B,C, and D do not become disconnected from their respective pins on the J41 header. 
 
