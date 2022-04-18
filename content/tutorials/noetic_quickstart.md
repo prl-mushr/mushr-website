@@ -27,7 +27,7 @@ Learn how to simulate the MuSHR Car with Foxglove visualizations.
 
 ## Installing Docker
 
-First, install [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/) for your machine. The Docker version should be 20+, and Docker Compose version should be 1.29+.
+First, install [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/) for your machine. The Docker version should be 20+, and Docker Compose version should be 1.29+. Ensure that Docker is running.
 
 If on Linux, follow the [post install](https://docs.docker.com/engine/install/linux-postinstall/) steps to make sure you can run Docker without root privileges.
 
@@ -42,22 +42,20 @@ $ git clone --branch noetic https://github.com/prl-mushr/mushr.git
 $ cd mushr/mushr_utils/install
 ```
 
-Run the installation script. It will prompt you with three questions. For running the MuSHR simulator, the answers should be no, no, no.
+Run the installation script. It will prompt you with three questions. For running the MuSHR simulator, the answers should be no, no, no. At the end, it will also ask if you are ok with adding `xhost +` to your .bashrc (Linux) or .zshrc (MacOS). This is for running GUI apps from within Docker and is not explicitly necessary, although recommended.
 
 ```bash
 $ ./mushr_install.bash
 ```
-
-It will also ask if you are ok with adding "xhost +" to your .bashrc (Linux) or .zshrc (MacOS). This is for running GUI apps from within Docker and is not explicitly necessary, although recommended.
 
 Close the terminal and open a new one. Then run
 ```bash
 $ mushr_noetic
 ```
 
-This should start up the Docker container. If the prefix switches to `root`, the installation was successful. If not, please check the "Troubleshooting" section at the end of the tutorial.
+This should start up the Docker container. (The first time running this command will take some time to download the Docker image.) If the prefix switches to `root`, the installation was successful. If not, please check the "Troubleshooting" section at the end of the tutorial.
 
-In the same terminal, build the MuSHR workspace.
+In the same terminal (within the Docker container), build the MuSHR software stack.
 
 ```bash
 $ source .bashrc && cd catkin_ws && catkin build
@@ -70,36 +68,45 @@ Since we can run the MuSHR stack now, we can use Foxglove Studio to visualize ou
 First, download [Foxglove Studio](https://foxglove.dev/download). Foxglove is
 still in development and has many features that are added frequently, so make sure to download the most
 recent version, or update it if you already have it downloaded.
+We recommend at least version TODO.
 
 Open Foxglove Studio, and click the "Layouts" button on the left panel (second from top) and then click
-`Import Layout` button pictured below.
+`Import layout` button pictured below.
 {{< figure src="/tutorials/noetic_quickstart/foxglove_layout.png" width="400" >}}
 
-Import the preset layout at:
+Import the preset layout from:
 {{< highlight bash >}} mushr/mushr_utils/foxglove/foxglove_layout.json {{< / highlight >}}
 
-Three panels should appear after selecting this layout, as pictured below. The left panel is for the datasource, the central panel is for the map, and the right panel is for teleop driving.
+Three panels should appear after selecting this layout, as pictured below. The left panel is for the data source, the central panel is for the map, and the right panel is for teleop driving.
 
 {{< figure src="/tutorials/noetic_quickstart/layout_example.png" width="700" >}}
 
-The layout can be edited with the `Add Panel` button on the left sidebar if desired.
+The layout can be edited with the `Add panel` button on the left sidebar if desired.
 
 ## Connecting to Data With Foxglove Studio
 Now that Foxglove is set up, we can connect the visualization to our Docker container ROS setup. Start the Docker container:
-{{< highlight bash >}} $ mushr_noetic {{< / highlight >}}
-Once the `root` prompt appears, source the `.bashrc`. Note that this does not occur automatically in the Docker container.
 
-{{< highlight bash >}} $ source .bashrc {{< / highlight >}}
+```bash
+$ mushr_noetic
+```
+
+Once the `root` prompt appears, source `~/.bashrc`. Note that this does not occur automatically in the Docker container.
+
+```bash
+$ source ~/.bashrc
+```
 
 In the same terminal, start up the simulator with the command:
 
-{{< highlight bash >}} $ roslaunch mushr_sim teleop.launch {{< / highlight >}}
+```bash
+$ roslaunch mushr_sim teleop.launch
+```
 
 After starting up, the simulator should print out a line similar to
 
 {{< highlight bash >}} Rosbridge WebSocket server started at ws://0.0.0.0:9090 {{< / highlight >}}
 
-In foxglove, click the top button in the sidebar, labeled `Data Source`. Then select the Plus button in the left panel. This should open up an interface to connect to data.
+In Foxglove, click the top button in the sidebar, labeled `Data source`. Then select the Plus button in the left panel. This should open up an interface to connect to data.
 
 {{< figure src="/tutorials/noetic_quickstart/data_panel.png" width="400" >}}
 
@@ -114,30 +121,42 @@ Fill out the WebSocket URL with the url and port that the simulator output befor
 TODO: Get robot model to appear & update image
 
 ### Changing the map
-The map can be changed by editing the following file:
-{{< highlight bash >}} src/mushr_sim/launch/teleop.launch {{< / highlight >}}
 
-In this file, edit the line
-{{< highlight bash >}} <arg name="map" default="$(find mushr_sim)/maps/sandbox.yaml"/>{{< / highlight >}}
+The map can be changed by editing the following file:
+```bash
+src/mushr_sim/launch/teleop.launch
+```
+
+In this file, edit the line:
+```xml
+<arg name="map" default="$(find mushr_sim)/maps/sandbox.yaml"/>
+```
 to specify a different map. MuSHR provides some basic maps, but if you want to map your own space, try the [SLAM Tutorial for MuSHR](/tutorials/mapping).
+(TODO: provide instructions for overriding map from the command-line.)
 
 ## Troubleshooting
-### Incompatible Network Binding
-Navigate to the install directory:
-{{< highlight bash >}}mushr/mushr_utils/install/{{< / highlight >}}
-Open the `docker-compose-cpu.yml` file in this folder and remove the line:
 
-{{< highlight bash >}}network: host{{< / highlight >}}
-### Wlan0 Device Not Found
-Edit the `.bashrc` file in the Docker container and manually set the `ROS_IP` to the IP of your computer.
-The IP of your computer can be found in several ways. One way is to run the following:
-{{< highlight bash >}}
+### Docker: Error while fetching server API version
+
+Ensure that Docker is running. In your terminal, `docker ps -a` should not cause an error.
+
+### Docker: network mode is incompatible with port bindings
+
+Navigate to the install directory `mushr/mushr_utils/install`. Edit the `docker-compose-cpu.yml` file in this folder to remove the line: `network_mode: "host"`.
+
+### wlan0: Device not found
+
+Edit the `.bashrc` file in the Docker container and manually set the `ROS_IP` to the IP.
+The IP of your Docker container can be found in several ways. One way is to run the following:
+
+```bash
 $ ifconfig
-{{< / highlight >}}
-After manually setting this value, make to source the `.bashrc`.
-{{< highlight bash >}}
+```
+
+After manually setting this value, make to source the `.bashrc` in the Docker container.
+```bash
 $ source ~/.bashrc
-{{< / highlight >}}
+```
 
 ## FAQ
 
