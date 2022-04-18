@@ -75,7 +75,9 @@ Open Foxglove Studio, and click the "Layouts" button on the left panel (second f
 {{< figure src="/tutorials/noetic_quickstart/foxglove_layout.png" width="400" >}}
 
 Import the preset layout from:
-{{< highlight bash >}} mushr/mushr_utils/foxglove/foxglove_layout.json {{< / highlight >}}
+```bash
+mushr/mushr_utils/foxglove/foxglove_layout.json
+```
 
 Three panels should appear after selecting this layout, as pictured below. The left panel is for the data source, the central panel is for the map, and the right panel is for teleop driving.
 
@@ -104,7 +106,9 @@ $ roslaunch mushr_sim teleop.launch
 
 After starting up, the simulator should print out a line similar to
 
-{{< highlight bash >}} Rosbridge WebSocket server started at ws://0.0.0.0:9090 {{< / highlight >}}
+```bash
+Rosbridge WebSocket server started at ws://0.0.0.0:9090
+```
 
 In Foxglove, click the top button in the sidebar, labeled `Data source`. Then select the Plus button in the left panel. This should open up an interface to connect to data.
 
@@ -146,8 +150,8 @@ Navigate to the install directory `mushr/mushr_utils/install`. Edit the `docker-
 
 ### wlan0: Device not found
 
-Edit the `.bashrc` file in the Docker container and manually set the `ROS_IP` to the IP.
-The IP of your Docker container can be found in several ways. One way is to run the following:
+Edit the `.bashrc` file in the Docker container and manually set the `ROS_IP` to the IP of your Docker container.
+One way to find this is to run the following command:
 
 ```bash
 $ ifconfig
@@ -165,9 +169,9 @@ $ source ~/.bashrc
 These instructions were intended for a first-time setup of MuSHR. To get around that,
 set the following paths in your `.bashrc` or `.zshrc` manually to the paths of your existing `catkin_ws` workspace.
 
-{{< highlight bash >}}
+```bash
 ROS_PACKAGE_PATH, LD_LIBRARY_PATH, ROSLISP_PACKAGE_DIRECTORIES, PKG_CONFIG_PATH, CMAKE_PREFIX_PATH
-{{< / highlight >}}
+```
 
 Then, when you want to run the Docker container with the new MuSHR setup, comment these lines out and re-source your `.bashrc` (Linux) or `.zshrc` (MacOS).
 
