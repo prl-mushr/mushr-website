@@ -4,7 +4,7 @@ date: 2022-04-13T13:18:04-07:00
 summary: "Get the MuSHR Sim working on your computer!"
 difficulty: "Beginner"
 duration: 30
-featured: false  # whether this is listed at / (must also be top 6 by weight). 
+featured: false  # whether this is listed at / (must also be top 6 by weight).
 active: true     # whether this is listed at /tutorials/
 draft: false      # whether Hugo considers this a draft
 weight: 2     # 2 = intro tutorial 3 = anything else
@@ -14,67 +14,80 @@ weight: 2     # 2 = intro tutorial 3 = anything else
 
 <!-- Header figure required! -->
 <br>
-{{< figure src="/tutorials/first_steps/firststep.jpg" width="800" >}}                         
+{{< figure src="/tutorials/first_steps/firststep.jpg" width="800" >}}
 </br>
 
 ### Introduction
+
 Learn how to simulate the MuSHR Car with Foxglove visualizations.
 
 ### Requirements
+
 * **A MacOS or Linux machine**
 
 ## Installing Docker
 
-First, install [docker](https://docs.docker.com/get-docker/) and [docker compose](https://docs.docker.com/compose/install/) for your machine. The Docker version should be 20+, and Docker-compose version should be 1.29+.
+First, install [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/) for your machine. The Docker version should be 20+, and Docker Compose version should be 1.29+.
 
-If on Linux, follow the [post install](https://docs.docker.com/engine/install/linux-postinstall/) steps to make sure you can run docker without root.
+If on Linux, follow the [post install](https://docs.docker.com/engine/install/linux-postinstall/) steps to make sure you can run Docker without root privileges.
 
 ## Installing MuSHR Docker Container
-If you have pre-existing MuSHR work in a `catkins_ws` workspace and want to keep it, see the FAQ section at the end of this tutorial.
 
-Now, clone the MuSHR repo:
-{{< highlight bash >}} $ git clone https://github.com/prl-mushr/mushr.git {{< / highlight >}}
+Note: If you already have a `catkin_ws` with changes that you'd like to keep, see the FAQ section at the end of this tutorial.
 
-Navigate into the repo and switch to the noetic branch (TODO noetic will be main soon) 
-{{< highlight bash >}} $ cd mushr && git checkout noetic && cd mushr_utils/install {{< / highlight >}}
+Clone the MuSHR repository and navigate to the installation scripts directory. (TODO: `noetic` will be main soon)
 
-Run the installation script. It will prompt you with three questions. For running on the simulator the answers should be no, no, no. 
-{{< highlight bash >}} $ ./mushr_install.bash {{< / highlight >}} 
+```bash
+$ git clone --branch noetic https://github.com/prl-mushr/mushr.git
+$ cd mushr/mushr_utils/install
+```
 
-It will also ask if you are ok with adding "xhost +" to your .bashrc (Linux) or .zshrc (MacOS). This is for running GUI apps from within docker and is not explicitly necessary, although recommended.
+Run the installation script. It will prompt you with three questions. For running the MuSHR simulator, the answers should be no, no, no.
+
+```bash
+$ ./mushr_install.bash
+```
+
+It will also ask if you are ok with adding "xhost +" to your .bashrc (Linux) or .zshrc (MacOS). This is for running GUI apps from within Docker and is not explicitly necessary, although recommended.
 
 Close the terminal and open a new one. Then run
-{{< highlight bash >}} $ mushr_noetic {{< / highlight >}} 
+```bash
+$ mushr_noetic
+```
 
-This should start up the docker container. If the prefix switches to `root`, the installation was successful. If not, please check the "Troubleshooting" section at the end of the tutorial.
+This should start up the Docker container. If the prefix switches to `root`, the installation was successful. If not, please check the "Troubleshooting" section at the end of the tutorial.
 
-In the same terminal, build the stack 
-{{< highlight bash >}} $ source .bashrc && cd catkin_ws && catkin build {{< / highlight >}}
+In the same terminal, build the MuSHR workspace.
+
+```bash
+$ source .bashrc && cd catkin_ws && catkin build
+```
 
 ## Downloading Foxglove Studio
-Since we can run the MuSHR stack now, we can use Foxglove Studio to visualize our robot and map. 
 
-First, download [Foxglove Studio](https://foxglove.dev/download). Foxglove is 
+Since we can run the MuSHR stack now, we can use Foxglove Studio to visualize our robot and map.
+
+First, download [Foxglove Studio](https://foxglove.dev/download). Foxglove is
 still in development and has many features that are added frequently, so make sure to download the most
 recent version, or update it if you already have it downloaded.
 
 Open Foxglove Studio, and click the "Layouts" button on the left panel (second from top) and then click
 `Import Layout` button pictured below.
-{{< figure src="/tutorials/noetic_quickstart/foxglove_layout.png" width="400" >}} 
+{{< figure src="/tutorials/noetic_quickstart/foxglove_layout.png" width="400" >}}
 
 Import the preset layout at:
-{{< highlight bash >}} mushr/mushr_utils/foxglove/foxglove_layout.json {{< / highlight >}}    
+{{< highlight bash >}} mushr/mushr_utils/foxglove/foxglove_layout.json {{< / highlight >}}
 
 Three panels should appear after selecting this layout, as pictured below. The left panel is for the datasource, the central panel is for the map, and the right panel is for teleop driving.
 
-{{< figure src="/tutorials/noetic_quickstart/layout_example.png" width="700" >}}                      
+{{< figure src="/tutorials/noetic_quickstart/layout_example.png" width="700" >}}
 
 The layout can be edited with the `Add Panel` button on the left sidebar if desired.
 
 ## Connecting to Data With Foxglove Studio
-Now that Foxglove is set up, we can connect the visualization to our docker container ROS setup. Start the docker container:
+Now that Foxglove is set up, we can connect the visualization to our Docker container ROS setup. Start the Docker container:
 {{< highlight bash >}} $ mushr_noetic {{< / highlight >}}
-Once the `root` prompt appears, source the `.bashrc`. Note that this does not occur automatically in the docker container.
+Once the `root` prompt appears, source the `.bashrc`. Note that this does not occur automatically in the Docker container.
 
 {{< highlight bash >}} $ source .bashrc {{< / highlight >}}
 
@@ -82,11 +95,11 @@ In the same terminal, start up the simulator with the command:
 
 {{< highlight bash >}} $ roslaunch mushr_sim teleop.launch {{< / highlight >}}
 
-After starting up, the simulator should print out a line similar to 
+After starting up, the simulator should print out a line similar to
 
 {{< highlight bash >}} Rosbridge WebSocket server started at ws://0.0.0.0:9090 {{< / highlight >}}
 
-In foxglove, click the top button in the sidebar, labeled `Data Source`. Then select the Plus button in the left panel. This should open up an interface to connect to data. 
+In foxglove, click the top button in the sidebar, labeled `Data Source`. Then select the Plus button in the left panel. This should open up an interface to connect to data.
 
 {{< figure src="/tutorials/noetic_quickstart/data_panel.png" width="400" >}}
 
@@ -116,7 +129,7 @@ Open the `docker-compose-cpu.yml` file in this folder and remove the line:
 
 {{< highlight bash >}}network: host{{< / highlight >}}
 ### Wlan0 Device Not Found
-Edit the `.bashrc` file in the docker container and manually set the `ROS_IP` to the IP of your computer.
+Edit the `.bashrc` file in the Docker container and manually set the `ROS_IP` to the IP of your computer.
 The IP of your computer can be found in several ways. One way is to run the following:
 {{< highlight bash >}}
 $ ifconfig
@@ -127,14 +140,16 @@ $ source ~/.bashrc
 {{< / highlight >}}
 
 ## FAQ
-### How can I keep another MuSHR-related `catkins_ws` workspace without overwriting it?
+
+### How can I keep another MuSHR-related `catkin_ws` workspace without overwriting it?
+
 These instructions were intended for a first-time setup of MuSHR. To get around that,
-set the following paths in your `.bashrc` or `.zshrc` manually to the paths of your existing `catkins_ws` workspace. 
+set the following paths in your `.bashrc` or `.zshrc` manually to the paths of your existing `catkin_ws` workspace.
 
 {{< highlight bash >}}
 ROS_PACKAGE_PATH, LD_LIBRARY_PATH, ROSLISP_PACKAGE_DIRECTORIES, PKG_CONFIG_PATH, CMAKE_PREFIX_PATH
 {{< / highlight >}}
 
-Then, when you want to run the docker container with the new MuSHR setup, comment these lines out and re-source your `.bashrc` (Linux) or `.zshrc` (MacOS).
+Then, when you want to run the Docker container with the new MuSHR setup, comment these lines out and re-source your `.bashrc` (Linux) or `.zshrc` (MacOS).
 
 
