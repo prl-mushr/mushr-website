@@ -45,7 +45,7 @@ Clone the MuSHR repository (TODO: `noetic` will be main soon)
 $ git clone --branch noetic https://github.com/prl-mushr/mushr.git
 ```
 
-Run the installation script. It will prompt you with three questions. For running the MuSHR simulator, the answers should be no, no, no. This will install a series of necessary packages, and create a script `mushr_noetic` in `/usr/local/bin` which initializes a docker container with all of the mushr configs installed. Note it attaches the `catkin_ws` volume so you can edit code outsideor inside the docker container. Other files made inside the docker container will not persist unless you commit (see FAQ).
+Run the installation script. It will prompt you with two questions. For running the MuSHR simulator, the answers should be no, no. This will install a series of necessary packages, and create a script `mushr_noetic` in `/usr/local/bin` which initializes a docker container with all of the mushr configs installed. Note it attaches the `catkin_ws` volume so you can edit code outsideor inside the docker container. Other files made inside the docker container will not persist unless you commit (see FAQ).
 
 ```bash
 $ ./mushr/mushr_utils/install/mushr_install.bash
