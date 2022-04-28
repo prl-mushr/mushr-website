@@ -33,19 +33,22 @@ If on Linux, follow the [post install](https://docs.docker.com/engine/install/li
 
 ## Installing MuSHR Docker Container
 
-Note: If you already have a `catkin_ws` with changes that you'd like to keep, see the FAQ section at the end of this tutorial.
+Make `catkin_ws` where all the code will be.
+```bash
+$ mkdir -p catkin_ws/src
+$ cd catkin_ws/src
+```
 
-Clone the MuSHR repository and navigate to the installation scripts directory. (TODO: `noetic` will be main soon)
+Clone the MuSHR repository (TODO: `noetic` will be main soon)
 
 ```bash
 $ git clone --branch noetic https://github.com/prl-mushr/mushr.git
-$ cd mushr/mushr_utils/install
 ```
 
-Run the installation script. It will prompt you with three questions. For running the MuSHR simulator, the answers should be no, no, no. At the end, it will also ask if you are ok with adding `xhost +` to your .bashrc (Linux) or .zshrc (MacOS). This is for running GUI apps from within Docker and is not explicitly necessary, although recommended.
+Run the installation script. It will prompt you with three questions. For running the MuSHR simulator, the answers should be no, no, no. This will install a series of necessary packages, and create a script `mushr_noetic` in `/usr/local/bin` which initializes a docker container with all of the mushr configs installed. Note it attaches the `catkin_ws` volume so you can edit code outsideor inside the docker container. Other files made inside the docker container will not persist unless you commit (see FAQ).
 
 ```bash
-$ ./mushr_install.bash
+$ ./mushr/mushr_utils/install/mushr_install.bash
 ```
 
 Close the terminal and open a new one. Then run
@@ -164,15 +167,15 @@ $ source ~/.bashrc
 
 ## FAQ
 
-### How can I keep another MuSHR-related `catkin_ws` workspace without overwriting it?
-
-These instructions were intended for a first-time setup of MuSHR. To get around that,
-set the following paths in your `.bashrc` or `.zshrc` manually to the paths of your existing `catkin_ws` workspace.
+### I installed some packages in my docker container, how can I "save" them for next time I run `mushr_noetic`
+You can save this using the `docker commit` command. First find your container ID
 
 ```bash
-ROS_PACKAGE_PATH, LD_LIBRARY_PATH, ROSLISP_PACKAGE_DIRECTORIES, PKG_CONFIG_PATH, CMAKE_PREFIX_PATH
+$ docker ps
 ```
+It should be the only one or the one with `mushr/mushr:XXX` under the image name (XXX different on different systems). Now commit the CONTAINER ID to the IMAGE name. For example:
 
-Then, when you want to run the Docker container with the new MuSHR setup, comment these lines out and re-source your `.bashrc` (Linux) or `.zshrc` (MacOS).
-
+```bash
+$ docker commit de878d464895 mushr/mushr:x86_64
+```
 
