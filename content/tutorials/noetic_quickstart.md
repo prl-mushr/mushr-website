@@ -165,6 +165,14 @@ After manually setting this value, make to source the `.bashrc` in the Docker co
 $ source ~/.bashrc
 ```
 
+### `ERROR: Get https://registry-1.docker.io/v2/: dial tcp: lookup registry-1.docker.io on [::1]:53: read udp [::1]:42546->[::1]:53: read: connection refused`
+
+This error seems to stem from a [nameserver issue](https://github.com/docker/cli/issues/2618). Add the following to `/etc/resolv.conf`
+```bash
+nameserver 8.8.8.8
+nameserver 8.8.4.4
+```
+
 ## FAQ
 
 ### I installed some packages in my docker container, how can I "save" them for next time I run `mushr_noetic`
