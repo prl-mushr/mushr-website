@@ -45,7 +45,7 @@ Clone the MuSHR repository (TODO: `noetic` will be main soon)
 $ git clone --branch noetic https://github.com/prl-mushr/mushr.git
 ```
 
-Run the installation script. It will prompt you with two questions. For running the MuSHR simulator, the answers should be no, no. This will install a series of necessary packages, and create a script `mushr_noetic` in `/usr/local/bin` which initializes a docker container with all of the mushr configs installed. Note it attaches the `catkin_ws` volume so you can edit code outsideor inside the docker container. Other files made inside the docker container will not persist unless you commit (see FAQ).
+Run the installation script. It will prompt you with two questions. For running the MuSHR simulator, the answers should be no, no. This will install a series of necessary packages, and create a script `mushr_noetic` in `/usr/local/bin` which initializes a docker container with all of the mushr configs installed. Note it attaches the `catkin_ws` volume so you can edit code outside or inside the docker container. Other files made inside the docker container will not persist unless you commit (see FAQ).
 
 ```bash
 $ ./mushr/mushr_utils/install/mushr_install.bash
@@ -95,7 +95,7 @@ Now that Foxglove is set up, we can connect the visualization to our Docker cont
 $ mushr_noetic
 ```
 
-Once the `root` prompt appears, source `~/.bashrc`. Note that this does not occur automatically in the Docker container.
+Once the `root` prompt appears, source `~/.bashrc`. Note that this does not occur automatically the first time in the Docker container.
 
 ```bash
 $ source ~/.bashrc
@@ -113,7 +113,7 @@ After starting up, the simulator should print out a line similar to
 Rosbridge WebSocket server started at ws://0.0.0.0:9090
 ```
 
-In Foxglove, click the top button in the sidebar, labeled `Data source`. Then select the Plus button in the left panel. This should open up an interface to connect to data.
+In Foxglove, click the top button in the sidebar, labeled `Data Source`. Then select the Plus button in the left panel. This should open up an interface to connect to data.
 
 {{< figure src="/tutorials/noetic_quickstart/data_panel.png" width="400" >}}
 
@@ -139,6 +139,7 @@ In this file, edit the line:
 <arg name="map" default="$(find mushr_sim)/maps/sandbox.yaml"/>
 ```
 to specify a different map. MuSHR provides some basic maps, but if you want to map your own space, try the [SLAM Tutorial for MuSHR](/tutorials/mapping).
+
 (TODO: provide instructions for overriding map from the command-line.)
 
 ## Troubleshooting
@@ -146,24 +147,6 @@ to specify a different map. MuSHR provides some basic maps, but if you want to m
 ### Docker: Error while fetching server API version
 
 Ensure that Docker is running. In your terminal, `docker ps -a` should not cause an error.
-
-### Docker: network mode is incompatible with port bindings
-
-Navigate to the install directory `mushr/mushr_utils/install`. Edit the `docker-compose-cpu.yml` file in this folder to remove the line: `network_mode: "host"`.
-
-### wlan0: Device not found
-
-Edit the `.bashrc` file in the Docker container and manually set the `ROS_IP` to the IP of your Docker container.
-One way to find this is to run the following command:
-
-```bash
-$ ifconfig
-```
-
-After manually setting this value, make to source the `.bashrc` in the Docker container.
-```bash
-$ source ~/.bashrc
-```
 
 ### `ERROR: Get https://registry-1.docker.io/v2/: dial tcp: lookup registry-1.docker.io on [::1]:53: read udp [::1]:42546->[::1]:53: read: connection refused`
 
