@@ -81,10 +81,12 @@ Import the preset layout from:
 ```bash
 mushr/mushr_utils/foxglove/foxglove_layout.json
 ```
+Now, download the custom panel extension for MuSHR for Foxglove. Navigate to the Extensions tab (bottom icon on the left panel) and install the `MushrTeleop` extension from the Marketplace.
+{{< figure src="/tutorials/noetic_quickstart/mushr_extension.png" width="400" >}}
 
-Three panels should appear after selecting this layout, as pictured below. The left panel is for the data source, the central panel is for the map, and the right panel is for teleop driving.
+Now, four panels should appear after selecting this layout, as pictured below. The left panel is for the data source, the central panel is for the map, the top right panel is for teleop driving, and the bottom right panel is for selecting types of robot poses to publish (for use in autonomous naviagation).
 
-{{< figure src="/tutorials/noetic_quickstart/layout_example.png" width="700" >}}
+{{< figure src="/tutorials/noetic_quickstart/custom_layout.png" width="700" >}}
 
 The layout can be edited with the `Add panel` button on the left sidebar if desired.
 
@@ -123,9 +125,7 @@ Click the `Open Connection` button. Select `Rosbridge (ROS 1 & ROS 2)` as shown 
 
 Fill out the WebSocket URL with the url and port that the simulator output before, as shown in the image. The URL may differ from pictured. Then, click `Open` in the bottom right corner. The left sidebar should show that a connection has been made. The map should update and the car pose arrow should appear in the map panel in the center. The car can be driven using the right teleop panel.
 
-{{< figure src="/tutorials/noetic_quickstart/example.png" width="900" >}}
-
-TODO: Get robot model to appear & update image
+{{< figure src="/tutorials/noetic_quickstart/working_example.png" width="900" >}}
 
 ### Changing the map
 
@@ -142,13 +142,24 @@ to specify a different map. MuSHR provides some basic maps, but if you want to m
 
 (TODO: provide instructions for overriding map from the command-line.)
 
+### Setting the car pose
+The car pose can be changed by selecting the `Set Pose` button in the bottom right, and then **long pressing (1-2 seconds)** on the `click to publish` button in the right toolbar to select the `Publish Pose` option. Then, click on the map where you would like to publish and click again to set the orientation from the original click.
+
+<div style="width:800px; height:450px"  class="video-container">
+    <iframe style="width: 100%; height: 100%; border: none" width="750" src="/tutorials/noetic_quickstart/mushr_reposition.mp4" allowfullscreen></iframe>
+</div>
+
 ## Troubleshooting
 
 ### Docker: Error while fetching server API version
 
 Ensure that Docker is running. In your terminal, `docker ps -a` should not cause an error.
 
-### `ERROR: Get https://registry-1.docker.io/v2/: dial tcp: lookup registry-1.docker.io on [::1]:53: read udp [::1]:42546->[::1]:53: read: connection refused`
+### TCP Registry Lookup Error
+Sometimes the following error is recieved:
+```bash
+ERROR: Get https://registry-1.docker.io/v2/: dial tcp: lookup registry-1.docker.io on [::1]:53: read udp [::1]:42546->[::1]:53: read: connection refused
+```
 
 This error seems to stem from a [nameserver issue](https://github.com/docker/cli/issues/2618). Add the following to `/etc/resolv.conf`
 ```bash
