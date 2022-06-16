@@ -5,7 +5,7 @@ summary: "Get the MuSHR Sim working on your computer!"
 difficulty: "Beginner"
 duration: 30
 featured: false  # whether this is listed at / (must also be top 6 by weight).
-active: true     # whether this is listed at /tutorials/
+active: false     # whether this is listed at /tutorials/
 draft: false      # whether Hugo considers this a draft
 weight: 2     # 2 = intro tutorial 3 = anything else
 ---
