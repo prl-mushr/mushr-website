@@ -45,7 +45,7 @@ Clone the MuSHR repository (TODO: `noetic` will be main soon)
 $ git clone --branch noetic https://github.com/prl-mushr/mushr.git
 ```
 
-Run the installation script. It will prompt you with two questions. For running the MuSHR simulator, the answers should be no, no. This will install a series of necessary packages, and create a script `mushr_noetic` in `/usr/local/bin` which initializes a docker container with all of the mushr configs installed. Note it attaches the `catkin_ws` volume so you can edit code outside or inside the docker container. Other files made inside the docker container will not persist unless you commit (see FAQ).
+Run the installation script. It will prompt you with two questions. For running the MuSHR simulator, the answers should be no, no. This will install a series of necessary packages, and create a script `mushr_noetic` in `/usr/local/bin` (uses root priviledges) which initializes a docker container with all of the mushr configs installed. Note it attaches the `catkin_ws` volume so you can edit code outside or inside the docker container. Other files made inside the docker container will not persist unless you commit (see FAQ).
 
 ```bash
 $ ./mushr/mushr_utils/install/mushr_install.bash
@@ -181,3 +181,36 @@ It should be the only one or the one with `mushr/mushr:XXX` under the image name
 $ docker commit de878d464895 mushr/mushr:x86_64
 ```
 
+### How can I pull the latest docker image?
+Use the `docker pull` command.
+
+For Linux/Robot
+```bash
+$ docker pull mushr/mushr:$(uname -i)
+```
+
+For Mac
+```bash
+$ docker pull mushr/mushr:Darwin
+```
+
+### How can I build the docker image from scratch?
+Warning this is mainly for developers and we recommend the images available online. Further, the code is not designed to work with Windows PowerShell.
+
+First, remove any docker images you currently have.
+
+```bash
+$ docker images
+```
+Should list available docker images. Find the ones with tag `mushr/mushr:XXX` replacing XXX with your system architecture (x86\_64, Darwin, aarch64). Find the image you want to delete and copy the image id.
+
+```bash
+$ docker rmi IMAGE_ID
+```
+Replacing `IMAGE_ID` with the id you copied. Double check that the image is properly deleted with `docker images` again.
+
+Next we need to build the new image. 
+```bash
+$ ./mushr/mushr_utils/install/mushr_install.bash
+```
+Answering "y" to the second question about building from scratch. This should start a build process and terminate with entering the container. You have now built a new image!
