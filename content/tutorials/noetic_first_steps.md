@@ -1,5 +1,5 @@
 ---
-title: "Noetic Software Setup"
+title: "Noetic Robot Software Setup"
 date: 2018-11-28T15:14:54+10:00
 featured: false
 draft: false
@@ -91,72 +91,31 @@ Next, in the **Devices** sidebar, click on the plus icon in the lower left corne
 
 {{< figure src="/hardware/build_instructions/15_07_pair_controller.png" width="800">}}
 
-## Setup Docker
-Follow the [post install](https://docs.docker.com/engine/install/linux-postinstall/) steps to make sure you can run docker without root, specifically:
+## Setup Docker & Install MuSHR stack
+Now we are going to install MuSHR. Fortunately, robot setup is similar to the simulation setup. Follow the following from the [noetic quickstart tutorial](/tutorials/noetic_quickstart).
+- **Installing Docker**
+- **Installing MuSHR Docker Container**  
 
-{{< highlight bash >}}
-$ sudo usermod -aG docker $USER 
-$ newgrp docker
-{{< / highlight >}}
+Unlike simulation, visualization usually is run on a separate computer (though you can install Foxglove on the robot). From the [noetic quickstart tutorial](/tutorials/noetic_quickstart) complete the following steps on your separate visualization computer.
 
-Verify it works. It should download an image, print a message, and exit.
-{{< highlight bash >}}
-$ docker run hello-world
-{{< / highlight >}}
+- **Downloading Foxglove Studio**
 
-## Install MuSHR stack
-Now we are going to install MuSHR.
-
-Clone the [mushr](https://github.com/prl-mushr/mushr/tree/noetic) repo
-{{< highlight bash >}}
-$ git clone https://github.com/prl-mushr/mushr.git 
-{{< / highlight >}}
-
-Navigate into the repo and switch to the noetic branch (TODO noetic will be main soon)
-{{< highlight bash >}}
-$ cd mushr && git checkout noetic && cd mushr_utils/install
-{{< / highlight >}}
-
-Run the installation script. It will prompt you with three questions. For running on the real robot the answers should be yes, yes, no.
-{{< highlight bash >}}
-$ ./mushr_install.bash 
-{{< / highlight >}}
-It will also ask if you are ok with adding "xhost +" to the `.bashrc`. This is for running GUI apps from within docker and is not explicitly necessary.
-
-Restart the computer
-{{< highlight bash >}}
-$ sudo reboot 
-{{< / highlight >}}
-
-Once restarted pull the dockekr image and start the docker container 
-{{< highlight bash >}}
-$ mushr_noetic
-{{< / highlight >}}
-You should see a new user "root" in your bash prefix if everything was successful.
-
-In the same terminal, build the stack
-{{< highlight bash >}}
-$ cd catkin_ws && catkin build 
-{{< / highlight >}}
-
-TODO FOXGLOVE
-
-If everything builds that means everything should be installed properly! Building and pullin the image only needs to happen once.
-
-
-## Working with the stack and Launchng Teleoperation (manual driving)
+## Working with the stack and Launching Teleoperation (manual driving)
 Because we are working with docker, there are a few things to note about how to work with the stack.
 
 First, all ROS commands must be run inside a docker container. Docker containers are created via the `mushr_noetic` command. If you need to create multiple terminal sessions we recommend entering one docker container then using tmux (pre-installed). That way you only need to remember to run `mushr_noetic` once.
-
-TODO djoin command
 
 Second, the code itself resides in `~/catkin_ws` and is attached to the docker container. This allows you to use your favorite editor and tweak code outside the container. Code edited outside the container will automatically be updated inside the container so there is no need to restart a container.
 
 
 ### Teleoperation (manual drivnig)
-Turn on the car and vesc by plugging their batteries in. Enter the docker container (`mushr_noetic`) and run teleop.
+Turn on the car and vesc by plugging their batteries in. Enter the docker container.
 
+{{< highlight bash >}}
+$ mushr_noetic
+{{< / highlight >}}
+
+Then run teleop
 {{< highlight bash >}}
 $ roslaunch mushr_base teleop.launch
 {{< / highlight >}}
