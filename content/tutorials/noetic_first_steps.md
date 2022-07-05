@@ -28,7 +28,7 @@ The following are required before continuing with installing the necessary libra
 - Monitor, HDMI cable, mouse, keyboard
 
 ## Booting Up
-1. Power on and boot the Jetson. Make sure your sd card is plugged into your Jetson Nano and flush, this should be done from the hardware tutorial. If you have an AC to 5V power adapter you can plug that into the barrel connector on the USB port side of the Jetson Nano. If not, place a battery in the right side of the car and plug the connector into the matching connector going into the top half of the car. Plug in the right angled barrel connector into the Jetson Nano. The green light on the right side should turn on. The correct configuration is shown below.
+Power on and boot the Jetson. Make sure your sd card is plugged into your Jetson Nano and flush, this should be done from the hardware tutorial. If you have an AC to 5V power adapter you can plug that into the barrel connector on the USB port side of the Jetson Nano. If not, place a battery in the right side of the car and plug the connector into the matching connector going into the top half of the car. Plug in the right angled barrel connector into the Jetson Nano. The green light on the right side should turn on. The correct configuration is shown below. For initial setup you will need to plug a monitor, keyboard, and mouse into the car. The keyboard/mouse can go in any of the USB ports, intial setup does not require the sensors to be connected.
 
 {{< figure src="/tutorials/first_steps/plugged_in.jpg" caption="Everything plugged in correctly. Notice the barrel connector in the top right, the battery in the right slot, and the green light in the top left. " width="600">}}
 2. Follow the on-screen prompts to complete setup of the Jetson Nano operating system. If you would like your setup to be consistent with our tutorials, we suggest using the following values: <br/>
@@ -37,10 +37,9 @@ The following are required before continuing with installing the necessary libra
 **Computer Name: goose**<br/>
 
 ## Setup Wi-Fi
-If you want to install additional software on the car, or be able to use the internet on your laptop while connected to the car then you will want to set the car up with a static IP instead of it's own network. To do this, you will need to plug a monitor, keyboard, and mouse into the car. The keyboard/mouse can go in any of the USB ports, Wi-Fi setup does not require the sensors to be connected.
+If you want to install additional software on the car, or be able to use the internet on your laptop while connected to the car then you will want to set the car up with a static IP. A static IP is a IP address (think postal address but for talking between computers) that does not change each time you connect to wifi. Most computers do not have a static IP, but for regularly connecting to the robot we do not want the robot's IP to change. 
 
-Once hooked up, you should see the login screen or the desktop. Login using your new password. Then use the mouse to click on the Wi-Fi icon in the top right and click "Edit Connections" to open the network manager.
-
+Once logged in, use the mouse to click on the Wi-Fi icon in the top right and click "Edit Connections" to open the network manager.
 Connect to the network that the robot should have a static IP on.
 
 Highlight the connection that corresponds to the network the robot should be connected to and click **Edit\...** or the gear icon.
@@ -49,7 +48,7 @@ Click on the **General** tab and check that **Automatically connect to this netw
 
 {{< figure src="/tutorials/first_steps/general.png" caption="General tab with auto connect set" width="600">}}
 
-Click on the **Wi-Fi** tab. Make sure that the **SSID:** field is set to be the name of the network that the robot will have a static IP on. For example, it could be *University of Washington*. Make sure that the **Mode:** dropdown is set to **Client**. In the **BSSID:** dropdown, choose the last option. In the **Device:** dropdown, choose the last option.
+Click on the **Wi-Fi** tab. Make sure that the **SSID:** field is set to be the name of the network that the robot will have a static IP on. In the example image, it is *University of Washington*. Make sure that the **Mode:** dropdown is set to **Client**. In the **Device:** dropdown, choose the last option.
 
 {{< figure src="/tutorials/first_steps/wifi.png" caption="Wi-Fi tab with BSSID and SSID set" width="600">}}
 
@@ -94,7 +93,9 @@ Next, in the **Devices** sidebar, click on the plus icon in the lower left corne
 ## Setup Docker & Install MuSHR stack
 Now we are going to install MuSHR. Fortunately, robot setup is similar to the simulation setup. Follow the following from the [noetic quickstart tutorial](/tutorials/noetic_quickstart).
 - **Installing Docker**
+  - IMPORTANT NOTE: Only install **docker-compose** as the nvidia-docker/docker is pre-installed for the specific hardware
 - **Installing MuSHR Docker Container**  
+  - NOTE: when ask "Are you installing on robot and need all the sensor drivers? (y/n)" respond "y" so that the sensor drivers are installed.
 
 Unlike simulation, visualization usually is run on a separate computer (though you can install Foxglove on the robot). From the [noetic quickstart tutorial](/tutorials/noetic_quickstart) complete the following steps on your separate visualization computer.
 
@@ -108,7 +109,7 @@ First, all ROS commands must be run inside a docker container. Docker containers
 Second, the code itself resides in `~/catkin_ws` and is attached to the docker container. This allows you to use your favorite editor and tweak code outside the container. Code edited outside the container will automatically be updated inside the container so there is no need to restart a container.
 
 
-### Teleoperation (manual drivnig)
+### Teleoperation (manual driving)
 Turn on the car and vesc by plugging their batteries in. Enter the docker container.
 
 {{< highlight bash >}}
@@ -123,6 +124,27 @@ $ roslaunch mushr_base teleop.launch
 You should see the lidar spinning and be able to steer with the controller. While holding down the left bumper, use the left joystick to throttle, and the right joystick to turn. See diagram below.
 
 {{< figure src="/tutorials/first_steps/teleop_controls.png" caption="" width="350">}}
+
+## Visualization 
+After starting up, the robot terminal should print out a line similar to
+
+```bash
+Rosbridge WebSocket server started at ws://0.0.0.0:9090
+```
+
+In Foxglove, click the top button in the sidebar, labeled `Data Source`. Then select the Plus button in the left panel. This should open up an interface to connect to data.
+
+{{< figure src="/tutorials/noetic_quickstart/data_panel.png" width="400" >}}
+
+Click the `Open Connection` button. Select `Rosbridge (ROS 1 & ROS 2)` as shown below.
+
+{{< figure src="/tutorials/noetic_quickstart/rosbridge.png" width="700" >}}
+
+Fill out the WebSocket URL with the robot's IP and port that the simulator output before. For example if you set your robot's IP to 172.77.16.27 then it should be `ws://172.77.16.27:9090`. The IP will differ from the one pictured. Then, click `Open` in the bottom right corner. The left sidebar should show that a connection has been made. 
+
+On the right of the middle panel it will say `map`. Click on that and switch it to `car/base_link`. A red laser scan should appear.
+
+TODO real image, Consider a separate real panel
 
 ## Next Steps
 To learn about programming the car continue to the [Intro to ROS Tutorial](/tutorials/intro-to-ros)
