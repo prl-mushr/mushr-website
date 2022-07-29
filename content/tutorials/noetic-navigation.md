@@ -95,23 +95,24 @@ We will now launch the navigation stack on the robot. To learn more about effect
 ### Starting the docker image:
 **Note:** If you're operating on the robot, you'll need to SSH into it. If you're operating in sim, you can just open a new terminal and skip the tmux related commands.
 
-Once you've ssh'd into your robot, activate `tmux`:
-{{< highlight bash >}}
-$ tmux
-{{< / highlight >}}
-
-Then, to create two vertical panes, type `ctrl+b` (`ctrl` and `b`) then `%` (or alternatively `"` to split horizontally). You can use `ctrl+b` then your left and right arrow keys to switch between windows. We will need five panes for this tutorial on the real car, and four on the simulator.
-
-**Note:** If the map you are using is very large map (>100x100 meters)--size inclusive of the unknown region--then the controller will be stuck sampling points. Save yourself the headache and shrink/crop your map before you begin. ([Gimp](https://www.gimp.org/) is a good tool for this job.
-
 As we are running the entire system from docker, the first thing to do is to start the docker image. To do this, execute:
 
 {{<highlight bash>}}
 $ mushr_noetic
 {{</highlight>}}
 
-Then, go to the next tmux pane by typing `ctrl+b` then `[arrow key]` (or new tab if you're doing this in sim). 
+Once you've ssh'd into your robot and started the docker image, activate `tmux`:
+{{< highlight bash >}}
+$ tmux
+{{< / highlight >}}
 
+Then, to create two vertical panes, type `ctrl+b` (`ctrl` and `b`) then `%` (or alternatively `"` to split horizontally). You can use `ctrl+b` then your left and right arrow keys to switch between windows. We will need four panes for this tutorial on the real car, and three on the simulator.
+
+**Note:** If the map you are using is very large map (>100x100 meters)--size inclusive of the unknown region--then the controller will be stuck sampling points. Save yourself the headache and shrink/crop your map before you begin. ([Gimp](https://www.gimp.org/) is a good tool for this job.
+
+You can navigate tmux panes by typing `ctrl+b` then `[arrow key]` (or simply make new terminal tabs and avoid tmux altogether if you're doing this in sim). 
+
+If you're using seperate tabs instead of tmux, make sure they are all connected to the running docker image. You can do this with the following steps:
 First, we need the docker's `CONTAINER ID`. Execute the following command:
 {{<highlight bash>}}
 $ docker ps
@@ -129,10 +130,11 @@ docker exec -it CONTAINER_ID bash
 {{</highlight>}}
 where you'll replace `CONTAINER_ID` with your container ID.
 
+## Starting the system
 
-Any autonomy related task will require data from sensors and some way of sending the control commands to the hardware. In addition, manual control may also be required for safety reasons, or for the purposes of generating a map of an area via manual operation of the car. All these basic features are handled by a single launch file called the `teleop.launch`
+Any autonomy related task will require data from sensors and some way of sending the control commands to the hardware. In addition, manual control may also be required for safety reasons, or for the purposes of generating a map of an area via manual operation of the car. All these basic features are handled by a single launch file called `teleop.launch`
 
-### Starting the system on the real car:
+### On the MuSHR car:
 {{< highlight bash >}}
 $ roslaunch mushr_base teleop.launch
 {{< / highlight >}}
@@ -167,7 +169,7 @@ MPC
 Control Node Initialized
 {{</highlight>}}
 
-Launch the global planner node (use the planner appropriate for your system):
+Finally, launch the global planner node (use the planner appropriate for your system):
 
 {{<highlight bash>}}
 $ roslaunch mushr_gp real.launch
@@ -185,13 +187,7 @@ Wait for it to initialize:
 [ INFO] [1658309033.261994212]: Updated costmap
 {{</highlight>}}
 
-Finally, launch the nav message converter:
-{{<highlight bash>}}
-roslaunch mushr_base nav_msg_converter.launch
-{{</highlight>}}
-
-
-### Starting the system in simulation:
+### In simulation:
 When running in simulation, the steps are more or less the same as those for the real car, with the difference being that
 1) We use the mushr_sim package to start the `teleop.launch`
 2) Absence of the particle filter (not necessary in simulation)
@@ -213,7 +209,7 @@ MPC
 Control Node Initialized
 {{</highlight>}}
 
-Launch the global planner node (use the planner appropriate for your system):
+Finally, launch the global planner node (use the planner appropriate for your system):
 
 {{<highlight bash>}}
 $ roslaunch mushr_gp sim.launch
@@ -229,11 +225,6 @@ Wait for it to initialize:
 [ INFO] [1658309032.644907822]: Resizing the map
 [ INFO] [1658309033.229219658]: Environment initialized
 [ INFO] [1658309033.261994212]: Updated costmap
-{{</highlight>}}
-
-Finally, launch the nav message converter:
-{{<highlight bash>}}
-roslaunch mushr_base nav_msg_converter.launch
 {{</highlight>}}
 
 ## Running the navigation stack
