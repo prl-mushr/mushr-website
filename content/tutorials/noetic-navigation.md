@@ -23,13 +23,13 @@ This tutorial will teach you how to set up and operate MuSHR's baseline autonomo
 
 ### Prerequisites
 
-- If in sim, complete the [quickstart tutorial](https://mushr.io/tutorials/quickstart/)
-- If on real car, complete the [first steps tutorial](https://mushr.io/tutorials/first_steps/)
+- If in sim, complete the [quickstart tutorial](https://mushr.io/tutorials/noetic_quickstart/)
+- If on real car, complete the [noetic robot software setup tutorial](https://mushr.io/tutorials/noetic_first_steps/)
 
 #### Note on dependecies: 
 This tutorial is designed for the python3 ROS noetic image. It assumes that this accounts for any dependencies needed.
 
-If you are operating in simulation and use the particle filter for localization, we do not recommend testing with the `sandbox.yaml` default map as the localization system struggles in an open environment (all positions look the same!). See the [quickstart tutorial](https://mushr.io/tutorials/quickstart/) for how to change maps.
+If you are operating in simulation and use the particle filter for localization, we do not recommend testing with the `sandbox.yaml` default map as the localization system struggles in an open environment (all positions look the same!). See the [quickstart tutorial](https://mushr.io/tutorials/noetic_quickstart/) for how to change maps.
 
 ## Navigation Stack Overview
 
@@ -65,28 +65,35 @@ $ ssh robot@RACECAR_IP
 
 If you prefer, these steps can also be done with a mouse, keyboard, and monitor plugged into the MuSHR car, using the Ubuntu UI.
 
-Download the packages for the RHC, Particle Filter and Global Planner:
+Download the packages for the RHC, Particle Filter and Global Planner (note that the Noetic stack is not yet the default):
 
-**Note**: You also need to download all dependencies for the [`mush_rhc`](https://github.com/prl-mushr/mushr_rhc).
+**Note**: You also need to download all dependencies for the [`mushr_rhc`](https://github.com/prl-mushr/mushr_rhc) .
 {{< highlight bash >}}
 # Go to your catkin workspace
 $ cd ~/catkin_ws/src
 # Clone the RHC node
 $ git clone git@github.com:prl-mushr/mushr_rhc.git
+# Checkout the noetic branch
+$ git checkout noetic_rhc_replace
 # Clone the Particle Filter node
 $ git clone git@github.com:prl-mushr/mushr_pf.git
+# Checkout the noetic branch
+$ git checkout noetic
 # Install [SBPL](http://sbpl.net) for the global planner
 $ sudo apt-get install ros-noetic-sbpl
 # Install the Global Planner (this is for Jetson Xavier NX or sim use)
 $ git clone git@github.com:prl-mushr/mushr_gp.git
 # If you're using the jetson nano, use the mushr_gprm planner:
 $ git clone git@github.com:prl-mushr/mushr_gprm.git
+# which has our custom networkx implementation
+$ pip uninstall networkx
+$ pip install git+https://github.com/brianhou/networkx.git
 # Make
 $ cd ~/catkin_ws && catkin_make
 {{</ highlight >}}
 
 ### IMPORTANT
-The reason why there are two planners (mushr_gp and mushr_gprm) is because mushr_gp is too resource intensive to be run on the jetson nano 4GB variant. However, if the desktop/laptop computer remains connected and in range of the MuSHR car, you can run mushr_gp on the computer instead as they share the same ROS master. If you need the planner to run on the jetson nano, we recommend using the mushr_gprm package. For the Jetson Xavier NX or when running on the sim exclusively, mushr_gp will work. Both repositories contain ROS packages that reproduce the desired functionality. You need only concern yourself with each package's launch files to use them effectively. You can find the launch files in each package's `launch` directory.
+The reason why there are two planners (mushr_gp and mushr_gprm) is because mushr_gp is too resource intensive to run on the jetson nano 4GB variant. However, if the desktop/laptop computer remains connected and in range of the MuSHR car, you can run mushr_gp on the computer instead since there will be a single ROS master. If you need the planner to run on the jetson nano, we recommend using the mushr_gprm package. For the Jetson Xavier NX or when running on the sim exclusively, mushr_gp will work. Both repositories contain ROS packages that reproduce the desired functionality. You need only concern yourself with each package's launch files to use them effectively. You can find the launch files in each package's `launch` directory.
 
 ## Starting the navigation stack
 
