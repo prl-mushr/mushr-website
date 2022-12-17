@@ -143,15 +143,15 @@ to specify a different map. MuSHR provides some basic maps, but if you want to m
 
 ## Troubleshooting
 
-### Docker: Error while fetching server API version
+#### Docker: Error while fetching server API version
 
 Ensure that Docker is running. In your terminal, `docker ps -a` should not cause an error.
 
-### Docker: network mode is incompatible with port bindings
+#### Docker: network mode is incompatible with port bindings
 
 Navigate to the install directory `mushr/mushr_utils/install`. Edit the `docker-compose-cpu.yml` file in this folder to remove the line: `network_mode: "host"`.
 
-### wlan0: Device not found
+#### wlan0: Device not found
 
 Edit the `.bashrc` file in the Docker container and manually set the `ROS_IP` to the IP of your Docker container.
 One way to find this is to run the following command:
@@ -165,7 +165,7 @@ After manually setting this value, make to source the `.bashrc` in the Docker co
 $ source ~/.bashrc
 ```
 
-### `ERROR: Get https://registry-1.docker.io/v2/: dial tcp: lookup registry-1.docker.io on [::1]:53: read udp [::1]:42546->[::1]:53: read: connection refused`
+#### ERROR: Get https://registry-1.docker.io/v2/: dial tcp: lookup registry-1.docker.io on [::1]:53: read udp [::1]:42546->[::1]:53: read: connection refused
 
 This error seems to stem from a [nameserver issue](https://github.com/docker/cli/issues/2618). Add the following to `/etc/resolv.conf`
 ```bash
@@ -175,7 +175,7 @@ nameserver 8.8.4.4
 
 ## FAQ
 
-### I installed some packages in my docker container, how can I "save" them for next time I run `mushr_noetic`
+#### I installed some packages in my docker container, how can I "save" them for next time I run `mushr_noetic`
 You can save this using the `docker commit` command. First find your container ID
 
 ```bash

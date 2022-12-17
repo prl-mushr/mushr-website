@@ -23,7 +23,7 @@ To get you driving your car around in teleop.
 
 The following are required before continuing with installing the necessary libraries.
 
-- SD card flashed with the latest [NVIDIA Jetpack image](https://developer.nvidia.com/embedded/jetpack). Under "Installing JetPack" click the drop-down menu for your hardware and follow the "Getting started ..." tutorial
+- SD card flashed with the [NVIDIA Jetpack image](https://drive.google.com/file/d/1OGee1Xvg16FvoRg8cdCh1M5xQ_zvexZ-/view?usp=sharing). We recommend using [Balena Etcher](https://www.balena.io/etcher/) to flash your SD card with the linked Jetpack image.
 - A way to connect the computer to internet (either WiFi or ethernet)
 - Monitor, HDMI cable, mouse, keyboard
 
@@ -44,7 +44,7 @@ Connect to the network that the robot should have a static IP on.
 
 Highlight the connection that corresponds to the network the robot should be connected to and click **Edit\...** or the gear icon.
 
-Click on the **General** tab and check that **Automatically connect to this network when it is available** and **All users may connect to thisnetwork** are enabled.
+Click on the **General** tab and check that **Automatically connect to this network when it is available** and **All users may connect to this network** are enabled.
 
 {{< figure src="/tutorials/first_steps/general.png" caption="General tab with auto connect set" width="600">}}
 
@@ -73,7 +73,7 @@ After the Jetson reboots, verify that the robot has obtained the expected static
 {{< highlight bash >}}
 $ ifconfig
 {{< / highlight >}}
-Check wlan0 is the IP you set.
+Check wlan0 is the IP you set. Note that it may be set to an equivalent IP address depending on your network. A good way to troubleshoot is to try the next step of the tutorial (SSH). If you can SSH, then everything worked correctly.
 
 ## SSH from another Computer
 
@@ -83,17 +83,38 @@ Once the Nano has fully booted, it will connect to the existing network at the s
 $ ssh robot@172.16.77.Z
 {{< / highlight >}}
 
+## Troubleshooting WiFi
+
+### ifconfig Output Not What Expected
+IP addresses 172, 192, and 10 are all private IPV4 addresses. If your ifconig output displays one of these instead of the exact one you typed, please try the SSH step. If you can SSH into the car, no need to worry about this step! Otherwise, try deleting the wifi connection and making a new with the correct settings. 
+
+### Can't SSH
+One issue that might arise on your robot is that even though it is connected to a wifi network, you cannot ssh into the car or view websites from the browser built into the car. This can occur if the date/time of your car is very different from the real time. Try manually setting the date/time and once you verify that the internet is working, you can switch back to automatic date/time mode.
+
 ## Connect the bluetooth controller
-Note the column of icons on the left-side of the Ubuntu GUI. Click on the uppermost one, and type **Bluetooth**. Use the search result to open the **Bluetooth** dialog. Turn on the PS4 controller by pressing on the **Playstation** button. **Note that the controller must first be charged using a USB-mini cable.** The LED on the front of the controller should flash. Put the controller into pairing mode by simultaneously holding down the **Playstation** button and the **Share** button. The LED on the front of the controller should continuously emit quick flashes. 
+Note the column of icons on the left-side of the Ubuntu GUI. Click on the uppermost one, and type **Bluetooth**. Use the search result to open the **Bluetooth** dialog. Turn on the PS4 controller by pressing on the **Playstation** button. **Note that the controller must first be charged using a USB-mini cable.** The LED on the front of the controller should flash. Put the controller into pairing mode by simultaneously pressing and holding down the **Playstation** button and the **Share** button. The LED on the front of the controller should continuously emit quick, strobe-like flashes. 
 
 Next, in the **Devices** sidebar, click on the plus icon in the lower left corner. In the dialog that pops up, choose **Input devices(mice,keyboards,etc.)** in the **Device type** drop down. There should now be a single entry labelled **Wireless Controller**. Click it, and then click **Next** in the lower right corner. After the dialog reports **Successfully set up new device 'Wireless Controller'**, close the **Bluetooth** dialog.
+
+Note that this can sometimes take a few tries to get it working on the Jetson Nano, so no worries if it didn't work immediately on the first attempt
 
 {{< figure src="/hardware/build_instructions/15_07_pair_controller.png" width="800">}}
 
 ## Setup Docker & Install MuSHR stack
-Now we are going to install MuSHR. Fortunately, robot setup is similar to the simulation setup. Follow the following from the [noetic quickstart tutorial](/tutorials/noetic_quickstart).
-- **Installing Docker**
-  - IMPORTANT NOTE: Only install **docker-compose** as the nvidia-docker/docker is pre-installed for the specific hardware
+Now we are going to install MuSHR. Unlike installing Docker on a desktop/laptop computer, some extra steps need to be taken to install on a Jetson Nano/Orin platform.
+
+First off, the nvidia-docker/docker is pre-installed for the specific hardware using the NVIDIA image we provided earlier, but Docker Compose is not. THe following steps are what is needed in order to get Docker Compose onto the robot:
+Fortunately, robot setup is similar to the simulation setup. Follow the following from the [noetic quickstart tutorial](/tutorials/noetic_quickstart).
+
+{{< highlight bash >}}
+$ sudo apt-get install curl
+$ sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+$ sudo chmod +x /usr/local/bin/docker-compose
+$ pip install docker-compose
+{{< / highlight >}}
+
+Now, the steps for installing the MuSHR Docker Container on the car are the same as installing the container on a Desktop device. Please follow the section titled **Installing MuSHR Docker Container** from the [noetic quickstart tutorial](/tutorials/noetic_quickstart).
+ 
 - **Installing MuSHR Docker Container**  
   - NOTE: when ask "Are you installing on robot and need all the sensor drivers? (y/n)" respond "y" so that the sensor drivers are installed.
 
@@ -110,7 +131,7 @@ Second, the code itself resides in `~/catkin_ws` and is attached to the docker c
 
 
 ### Teleoperation (manual driving)
-Turn on the car and vesc by plugging their batteries in. Enter the docker container.
+Turn on the car and vesc by plugging their batteries in. Turn on the controller and make sure it's connected to the car (solid light). Enter the docker container.
 
 {{< highlight bash >}}
 $ mushr_noetic
@@ -144,7 +165,10 @@ Fill out the WebSocket URL with the robot's IP and port that the simulator outpu
 
 On the right of the middle panel it will say `map`. Click on that and switch it to `car/base_link`. A red laser scan should appear.
 
-TODO real image, Consider a separate real panel
+<!-- TODO real image, Consider a separate real panel -->
+
+## Tuning
+If your car does not drive in a straight line or you run into other similar issues, please check out the following [tuning](https://mushr.io/tutorials/tuning/) tutorial.
 
 ## Next Steps
 To learn about programming the car continue to the [Intro to ROS Tutorial](/tutorials/intro-to-ros)
