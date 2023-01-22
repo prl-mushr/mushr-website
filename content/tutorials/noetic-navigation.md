@@ -240,6 +240,8 @@ To operate the navigation stack, we will use foxglove to send pose targets to th
 
 **Note**: When publishing a pose, the pose will correspond to the pose at the tip of the arrow and not the base of the arrow. Set the pose accordingly.
 
+**Note**: Sometimes Foxglove might not show certain ROS topics (for example, the path published by the global planner) because these topics are hidden initially. To unhide them, press the gear icon in the 3D window, and then in the topics dropdown, press the closed eye button (or open eye button if you want to rehide them).
+
 {{< figure src="/tutorials/autonomous-navigation/set_pose_estimate.png" width="800" >}}<br/>
 
 In **simulation**, you may want to set the starting pose of the car at a certain point. To do this, click the `Set Pose` button on the bottom right of the foxglove window and use "Publish point" to publish a point or "Publish Pose" to publish a pose for the car.:
