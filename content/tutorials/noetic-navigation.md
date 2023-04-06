@@ -72,19 +72,23 @@ Download the packages for the RHC, Particle Filter and Global Planner (note that
 # Go to your catkin workspace
 $ cd ~/catkin_ws/src
 # Clone the RHC node
-$ git clone git@github.com:prl-mushr/mushr_rhc.git
+$ git clone https://github.com:prl-mushr/mushr_rhc.git
 # Checkout the noetic branch
-$ git checkout noetic_rhc_replace
-# Clone the Particle Filter node
-$ git clone git@github.com:prl-mushr/mushr_pf.git
-# Checkout the noetic branch
+$ cd mushr_noetic
 $ git checkout noetic
+$ cd ..
+# Clone the Particle Filter node
+$ git clone https://github.com:prl-mushr/mushr_pf.git
+# Checkout the noetic branch
+$ cd mushr_pf
+$ git checkout noetic
+$ cd ..
 # Install [SBPL](http://sbpl.net) for the global planner
 $ sudo apt-get install ros-noetic-sbpl
 # Install the Global Planner (this is for Jetson Xavier NX or sim use)
-$ git clone git@github.com:prl-mushr/mushr_gp.git
+$ git clone https://github.com:prl-mushr/mushr_gp.git
 # If you're using the jetson nano, use the mushr_gprm planner:
-$ git clone git@github.com:prl-mushr/mushr_gprm.git
+$ git clone https://github.com/prl-mushr/mushr_gprm.git
 # which has our custom networkx implementation
 $ pip uninstall networkx
 $ pip install git+https://github.com/brianhou/networkx.git

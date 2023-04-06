@@ -103,20 +103,22 @@ Note that this can sometimes take a few tries to get it working on the Jetson Na
 ## Setup Docker & Install MuSHR stack
 Now we are going to install MuSHR. Unlike installing Docker on a desktop/laptop computer, some extra steps need to be taken to install on a Jetson Nano/Orin platform.
 
-First off, the nvidia-docker/docker is pre-installed for the specific hardware using the NVIDIA image we provided earlier, but Docker Compose is not. THe following steps are what is needed in order to get Docker Compose onto the robot:
-Fortunately, robot setup is similar to the simulation setup. Follow the following from the [noetic quickstart tutorial](/tutorials/noetic_quickstart).
+First off, the nvidia-docker/docker is pre-installed for the specific hardware using the NVIDIA image we provided earlier, but Docker Compose is not. The following steps are what is needed in order to get Docker Compose onto the robot:
 
 {{< highlight bash >}}
+$ sudo apt-get update
 $ sudo apt-get install curl
-$ sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+$ sudo apt-get install python-pip
+$ sudo curl -L "https://github.com/docker/compose/releases/download/v2.17.2/docker-compose-linux-armv7" -o /usr/local/bin/docker-compose
 $ sudo chmod +x /usr/local/bin/docker-compose
 $ pip install docker-compose
 {{< / highlight >}}
 
-Now, the steps for installing the MuSHR Docker Container on the car are the same as installing the container on a Desktop device. Please follow the section titled **Installing MuSHR Docker Container** from the [noetic quickstart tutorial](/tutorials/noetic_quickstart).
+Fortunately, the steps for installing the MuSHR Docker Container on the car are similar to installing the container on a Desktop device. Please follow the section titled **Installing MuSHR Docker Container** from the [noetic quickstart tutorial](/tutorials/noetic_quickstart).
  
 - **Installing MuSHR Docker Container**  
   - NOTE: when ask "Are you installing on robot and need all the sensor drivers? (y/n)" respond "y" so that the sensor drivers are installed.
+  - NOTE: Remember to follow the [Linux post install](https://docs.docker.com/engine/install/linux-postinstall/) steps to make sure you can run Docker without root privileges.
 
 Unlike simulation, visualization usually is run on a separate computer (though you can install Foxglove on the robot). From the [noetic quickstart tutorial](/tutorials/noetic_quickstart) complete the following steps on your separate visualization computer.
 
