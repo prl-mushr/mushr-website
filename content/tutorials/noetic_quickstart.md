@@ -4,8 +4,8 @@ date: 2022-04-13T13:18:04-07:00
 summary: "Get the MuSHR Sim working on your computer!"
 difficulty: "Beginner"
 duration: 30
-featured: false  # whether this is listed at / (must also be top 6 by weight).
-active: false     # whether this is listed at /tutorials/
+featured: true  # whether this is listed at / (must also be top 6 by weight).
+active: true     # whether this is listed at /tutorials/
 draft: false      # whether Hugo considers this a draft
 weight: 2     # 2 = intro tutorial 3 = anything else
 ---
@@ -45,7 +45,7 @@ Clone the MuSHR repository <!--(TODO: `noetic` will be main soon) -->
 $ git clone --branch noetic https://github.com/prl-mushr/mushr.git
 ```
 
-Run the installation script. It will prompt you with two questions. For running the MuSHR simulator, the answers should be no, no. This will install a series of necessary packages, and create a script `mushr_noetic` in `/usr/local/bin` which initializes a docker container with all of the mushr configs installed. Note it attaches the `catkin_ws` volume so you can edit code outsideor inside the docker container. Other files made inside the docker container will not persist unless you commit (see FAQ).
+Run the installation script. It will prompt you with two questions. For running the MuSHR simulator, the answers should be no, no. This will install a series of necessary packages, and create a script `mushr_noetic` in `/usr/local/bin` which initializes a docker container with all of the mushr configs installed. Note it attaches the `catkin_ws` volume so you can edit code outside or inside the docker container. Other files made inside the docker container will not persist unless you commit (see FAQ).
 
 ```bash
 $ ./mushr/mushr_utils/install/mushr_install.bash
@@ -61,7 +61,9 @@ This should start up the Docker container. (The first time running this command 
 In the same terminal (within the Docker container), build the MuSHR software stack.
 
 ```bash
-$ source .bashrc && cd catkin_ws && catkin build
+$ cd catkin_ws && catkin build
+$ cd ~
+$ source .bashrc
 ```
 
 ## Downloading Foxglove Studio
@@ -82,7 +84,9 @@ Import the preset layout from:
 mushr/mushr_utils/foxglove/foxglove_layout.json
 ```
 
-Three panels should appear after selecting this layout, as pictured below. The left panel is for the data source, the central panel is for the map, and the right panel is for teleop driving.
+Next, click the "Extensions" button on the left panel (bottom) and then find the extension called "mushr". The author is uwprl. Press install.
+
+After both of the above steps, three panels should appear after selecting this layout, as pictured below. The left panel is for the data source, the central panel is for the map, and the right panel is for teleop driving.
 
 {{< figure src="/tutorials/noetic_quickstart/layout_example.png" width="700" >}}
 
@@ -126,6 +130,18 @@ Fill out the WebSocket URL with the url and port that the simulator output befor
 {{< figure src="/tutorials/noetic_quickstart/example.png" width="900" >}}
 
 <!-- TODO: Get robot model to appear & update image -->
+
+### Moving the robot
+
+You may want to change the starting point of the robot. You'll notice the panel in the bottom right which has a button called "Set Pose." Make sure this is selected. Then, in the middle pannel, you'll see a point button. You'll want to change it from "Publish point" to "Publish pose," as shown in the screenshot below. You can do this by pressing and holding the button. Then, you'll be able to select the button, and set the pose by pressing on the map, once for location, and a second to specify the direction.
+
+{{< figure src="/tutorials/noetic_quickstart/set_pose_example.png" width="400" >}}
+
+#### Uses of "Set Goal" and "Set Pose Estimate"
+
+When attempting autonomous navigation ([see this tutorial](https://mushr.io/tutorials/noetic-navigation/)), "Set Goal" will allow you to specify a location the car should navigate to.
+
+When running on a real robot, and the particle filter is having trouble localizing, you'll want to use "Set Pose Estimate". In simulation, the pose, or location of the car, is deterministic, but when running on the real robot using a particle filter, we only have access to the best estimate of the robot's pose.
 
 ### Changing the map
 

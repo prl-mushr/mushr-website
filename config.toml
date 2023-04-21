@@ -34,7 +34,7 @@ unsafe = true
 [[menu.main]]
     identifier = "quickstart"
     name = "Quickstart"
-    pageRef = "tutorials/quickstart"
+    pageRef = "tutorials/noetic_quickstart"
     weight = 1
 
 [[menu.main]]

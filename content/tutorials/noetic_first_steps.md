@@ -23,7 +23,7 @@ To get you driving your car around in teleop.
 
 The following are required before continuing with installing the necessary libraries.
 
-- SD card flashed with the [NVIDIA Jetpack image](https://drive.google.com/file/d/1OGee1Xvg16FvoRg8cdCh1M5xQ_zvexZ-/view?usp=sharing). We recommend using [Balena Etcher](https://www.balena.io/etcher/) to flash your SD card with the linked Jetpack image.
+- SD card flashed with the [NVIDIA Jetpack image](https://developer.nvidia.com/embedded/l4t/r32_release_v7.1/jp_4.6.1_b110_sd_card/jeston_nano/jetson-nano-jp461-sd-card-image.zip). We recommend using [Balena Etcher](https://www.balena.io/etcher/) to flash your SD card with the linked Jetpack image.
 - A way to connect the computer to internet (either WiFi or ethernet)
 - Monitor, HDMI cable, mouse, keyboard
 

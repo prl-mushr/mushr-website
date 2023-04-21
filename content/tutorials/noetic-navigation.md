@@ -65,37 +65,6 @@ $ ssh robot@RACECAR_IP
 
 If you prefer, these steps can also be done with a mouse, keyboard, and monitor plugged into the MuSHR car, using the Ubuntu UI.
 
-Download the packages for the RHC, Particle Filter and Global Planner (note that the Noetic stack is not yet the default):
-
-**Note**: You also need to download all dependencies for the [`mushr_rhc`](https://github.com/prl-mushr/mushr_rhc) .
-{{< highlight bash >}}
-# Go to your catkin workspace
-$ cd ~/catkin_ws/src
-# Clone the RHC node
-$ git clone https://github.com:prl-mushr/mushr_rhc.git
-# Checkout the noetic branch
-$ cd mushr_noetic
-$ git checkout noetic
-$ cd ..
-# Clone the Particle Filter node
-$ git clone https://github.com:prl-mushr/mushr_pf.git
-# Checkout the noetic branch
-$ cd mushr_pf
-$ git checkout noetic
-$ cd ..
-# Install [SBPL](http://sbpl.net) for the global planner
-$ sudo apt-get install ros-noetic-sbpl
-# Install the Global Planner (this is for Jetson Xavier NX or sim use)
-$ git clone https://github.com:prl-mushr/mushr_gp.git
-# If you're using the jetson nano, use the mushr_gprm planner:
-$ git clone https://github.com/prl-mushr/mushr_gprm.git
-# which has our custom networkx implementation
-$ pip uninstall networkx
-$ pip install git+https://github.com/brianhou/networkx.git
-# Make
-$ cd ~/catkin_ws && catkin_make
-{{</ highlight >}}
-
 ### IMPORTANT
 The reason why there are two planners (mushr_gp and mushr_gprm) is because mushr_gp is too resource intensive to run on the jetson nano 4GB variant. However, if the desktop/laptop computer remains connected and in range of the MuSHR car, you can run mushr_gp on the computer instead since there will be a single ROS master. If you need the planner to run on the jetson nano, we recommend using the mushr_gprm package. For the Jetson Xavier NX or when running on the sim exclusively, mushr_gp will work. Both repositories contain ROS packages that reproduce the desired functionality. You need only concern yourself with each package's launch files to use them effectively. You can find the launch files in each package's `launch` directory.
 
@@ -197,6 +166,14 @@ Wait for it to initialize:
 [ INFO] [1658309033.229219658]: Environment initialized
 [ INFO] [1658309033.261994212]: Updated costmap
 {{</highlight>}}
+Or when using mushr_gprm:
+{{<highlight bash>}}
+[INFO] [1682118850.989244]: Complete planner initialization.
+[INFO] [1682118864.474129]: Constructing roadmap...
+Vertices: XXX
+Edges: XXXXX
+[INFO] [1682118871.115012]: Roadmap constructed in 6.60s
+{{</highlight>}}
 
 ### In simulation:
 When running in simulation, the steps are more or less the same as those for the real car, with the difference being that
@@ -237,6 +214,14 @@ Wait for it to initialize:
 [ INFO] [1658309033.229219658]: Environment initialized
 [ INFO] [1658309033.261994212]: Updated costmap
 {{</highlight>}}
+Or when using mushr_gprm:
+{{<highlight bash>}}
+[INFO] [1682118850.989244]: Complete planner initialization.
+[INFO] [1682118864.474129]: Constructing roadmap...
+Vertices: XXX
+Edges: XXXXX
+[INFO] [1682118871.115012]: Roadmap constructed in 6.60s
+{{</highlight>}}
 
 ## Running the navigation stack
 
@@ -244,7 +229,7 @@ To operate the navigation stack, we will use foxglove to send pose targets to th
 
 **Note**: When publishing a pose, the pose will correspond to the pose at the tip of the arrow and not the base of the arrow. Set the pose accordingly.
 
-**Note**: Sometimes Foxglove might not show certain ROS topics (for example, the path published by the global planner) because these topics are hidden initially. To unhide them, press the gear icon in the 3D window, and then in the topics dropdown, press the closed eye button (or open eye button if you want to rehide them).
+**Note**: Sometimes Foxglove might not show certain ROS topics (for example, the path published by the global planner) because these topics are hidden initially. To unhide them, press the gear icon at the top right of the 3D window (the one in the middle that shows the map/robot), and then in the topics dropdown, press the closed eye button (or open eye button if you want to rehide them).
 
 {{< figure src="/tutorials/autonomous-navigation/set_pose_estimate.png" width="800" >}}<br/>
 
