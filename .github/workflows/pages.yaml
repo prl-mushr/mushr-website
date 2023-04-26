@@ -9,22 +9,29 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
     steps:
       - name: Checkout source
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
+        with:
+          submodules: true  # Fetch Hugo themes (true OR recursive)
+          fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
 
-      - name: Set up Hugo
+      - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
         with:
           hugo-version: '0.110.0'
           extended: true
 
       - name: Build static site
-        run: hugo
+        run: hugo --minify
 
       - name: Deploy to GitHub Pages
-        if: github.ref == 'refs/heads/master'
         uses: peaceiris/actions-gh-pages@v3
+        if: ${{ github.ref == 'refs/heads/master' }}
         with:
           deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
           external_repository: prl-mushr/prl-mushr.github.io
