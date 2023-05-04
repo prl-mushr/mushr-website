@@ -51,12 +51,14 @@ Run the installation script. It will prompt you with two questions. For running 
 $ ./mushr/mushr_utils/install/mushr_install.bash
 ```
 
-Close the terminal and open a new one. Then run
+Close the terminal and open a new one. Then run If and only if building from scratch on MacOS, run
 ```bash
-$ mushr_noetic
+$ mushr_noetic  # any OS, and MacOS unless building the docker image from scratch the fist time
+$ # OR
+$ mushr_noetic build  # if and only if building from scratch on MacOS, the first time
 ```
 
-This should start up the Docker container. (The first time running this command will take some time to download the Docker image.) If the prefix switches to `root`, the installation was successful. If not, please check the "Troubleshooting" section at the end of the tutorial.
+This should start up the Docker container. (The first time running this command will take some time to download the Docker image.) If the prefix switches to `root`, the installation was successful. If not, please check the "Troubleshooting" section at the end of the tutorial. Note that even if running on MacOS, you will only need to run `mushr_noetic`, without the `build` argument in the future.
 
 In the same terminal (within the Docker container), build the MuSHR software stack.
 
