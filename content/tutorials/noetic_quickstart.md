@@ -51,7 +51,7 @@ Run the installation script. It will prompt you with two questions. For running 
 $ ./mushr/mushr_utils/install/mushr_install.bash
 ```
 
-Close the terminal and open a new one. Then run If and only if building from scratch on MacOS, run
+Close the terminal and open a new one. Then run
 ```bash
 $ mushr_noetic  # any OS, and MacOS unless building the docker image from scratch the fist time
 $ # OR
