@@ -47,16 +47,20 @@ $ git clone --branch noetic https://github.com/prl-mushr/mushr.git
 
 Run the installation script. It will prompt you with two questions. For running the MuSHR simulator, the answers should be no, no. This will install a series of necessary packages, and create a script `mushr_noetic` in `/usr/local/bin` which initializes a docker container with all of the mushr configs installed. Note it attaches the `catkin_ws` volume so you can edit code outside or inside the docker container. Other files made inside the docker container will not persist unless you commit (see FAQ).
 
+Please note that if you do opt to build from scratch (not recommended, asked by the second question), build times can take 1-2 hours (maybe less) depending on your system. Therefore we strongly recommend not building from scratch unless you absolutely need to.
+
 ```bash
 $ ./mushr/mushr_utils/install/mushr_install.bash
 ```
 
 Close the terminal and open a new one. Then run
 ```bash
-$ mushr_noetic
+$ mushr_noetic  # any OS, and MacOS unless building the docker image from scratch the fist time
+$ # OR
+$ mushr_noetic build  # if and only if building from scratch on MacOS, the first time
 ```
 
-This should start up the Docker container. (The first time running this command will take some time to download the Docker image.) If the prefix switches to `root`, the installation was successful. If not, please check the "Troubleshooting" section at the end of the tutorial.
+This should start up the Docker container. (The first time running this command will take some time to download the Docker image.) If the prefix switches to `root`, the installation was successful. If not, please check the "Troubleshooting" section at the end of the tutorial. Note that even if running on MacOS, you will only need to run `mushr_noetic`, without the `build` argument in the future.
 
 In the same terminal (within the Docker container), build the MuSHR software stack.
 
