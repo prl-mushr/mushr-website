@@ -921,7 +921,7 @@ In this section, we will configure the VESC firmware, pair the bluetooth control
 
     {{< figure src="/hardware/build_instructions/15_05_bldc_tool_connect.png" caption="Fig. 15.5" width="800">}}
 
-12. In the lower left corner of the GUI, click the **Read configuration** button. Many of the fields should now be populated with non-zero values. Next, click the **Load XML** button. Choose the file at the path **catkin_ws/src/mushr/mushr_base/vesc/vesc_configs/mushr_vesc_sensorless_config.xml**. Then click **Write configuration** (which is to the right of the **Read configuration** button). Next, **make sure that the robot's wheels are suspended in air, because we are about to make the wheels move**. Press (and hold) any of the arrow keys. This should cause the wheels to move. Close the **BLDC Tool** GUI. (Fig. 15.6)
+12. In the lower left corner of the GUI, click the **Read configuration** button. Many of the fields should now be populated with non-zero values. Next, click the **Load XML** button. Choose the file at the path **colcon_ws/src/vesc/vesc_configs/mushr_vesc_sensorless_config.xml**. Then click **Write configuration** (which is to the right of the **Read configuration** button). Next, **make sure that the robot's wheels are suspended in air, because we are about to make the wheels move**. Press (and hold) any of the arrow keys. This should cause the wheels to move. Close the **BLDC Tool** GUI. (Fig. 15.6)
 
     {{< figure src="/hardware/build_instructions/15_06_bldc_tool_load_xml.png" caption="Fig. 15.6" width="800">}}
     
@@ -929,11 +929,11 @@ In this section, we will configure the VESC firmware, pair the bluetooth control
 
     {{< figure src="/hardware/build_instructions/15_07_pair_controller.png" caption="Fig. 15.7" width="800">}}
     
-14. Open the file **/home/robot/catkin_ws/src/mushr/mushr_base/mushr_base/config/joy_teleop.yaml** for editing. Note the hierarchal structure of this file. Under the field **teleop->human_control->axis_mappings**, there are two sections, each consisting of an **axis**, **target**, **scale**, and **offset** field. We will edit the section whose **target** field has a value of **drive.steering_angle**. The value of the **axis** field should be changed from **3** to **2**. Note that this may have already been done for you as a result of future updates. Save and close the file. (Fig. 15.8)
+14. Open the file **/home/robot/colcon_ws/src/mushr/mushr_base/mushr_base/config/joy_teleop.yaml** for editing. Note the hierarchal structure of this file. Under the field **teleop->human_control->axis_mappings**, there are two sections, each consisting of an **axis**, **target**, **scale**, and **offset** field. We will edit the section whose **target** field has a value of **drive.steering_angle**. The value of the **axis** field should be changed from **3** to **2**. Note that this may have already been done for you as a result of future updates. Save and close the file. (Fig. 15.8)
 
     {{< figure src="/hardware/build_instructions/15_08_edit_joy_config.png" caption="Fig. 15.8" width="800">}}  
     
-15. Open the file **/home/robot/catkin_ws/src/mushr/mushr_base/vesc/vesc_main/config/racecar-uw-nano/vesc.yaml** for editing. Change the **speed_to_erpm_gain** field to have a value of **-3500**, and the **steering_angle_to_servo_gain** field to have a value of **0.95**. These parameters affect the computation of the robot's odometry. While these values serve as a starting point, they will need to be tuned for your own car. More information about these parameters and how to tune them can be found in this [tutorial](/tutorials/tuning). Save and close the file. (Fig. 15.9)
+15. Open the file **/home/robot/colcon_ws/src/vesc/vesc_main/config/racecar-uw-nano/vesc.yaml** for editing. Change the **speed_to_erpm_gain** field to have a value of **-3500**, and the **steering_angle_to_servo_gain** field to have a value of **0.95**. These parameters affect the computation of the robot's odometry. While these values serve as a starting point, they will need to be tuned for your own car. More information about these parameters and how to tune them can be found in this [tutorial](/tutorials/tuning). Save and close the file. (Fig. 15.9)
 
     {{< figure src="/hardware/build_instructions/15_09_vesc_params.png" caption="Fig. 15.9" width="800">}}  
     
@@ -953,7 +953,7 @@ In this section, we will configure the VESC firmware, pair the bluetooth control
 18. Note that this step will cause the LIDAR to spin. Enter the following command into the terminal:
 
     {{< highlight bash >}}
-    roslaunch ydlidar lidar.launch
+    ros2 launch ydlidar lidar.launch.py
     {{< / highlight >}} <br/>
     
     If you get the error **YDLIDAR Cannot bind to the specified serial port /dev/ydlidar**, this means that the **USB micro end** of the LIDAR cable was plugged in backwards. Use **CTRL-C** to shutdown the node. Then swap the two USB micro ends of the LIDAR cable so that they are plugged into the opposite receptacles, and then try the above command again. When they are plugged in correctly, the LIDAR will begin spinning. Use **CTRL-C** to shutdown the node.
@@ -992,7 +992,7 @@ The password is **prl_robot**.
 
 6. Execute the following command to launch the robot's motor and sensor drivers:
 {{< highlight bash >}}
-$ roslaunch mushr_base teleop.launch
+$ ros2 launch mushr_base teleop.launch.py
 {{< / highlight >}} <br/>
 
 7. Once all of the robot's nodes have been brought up, you can drive the car with the wireless controller. The **LB** button acts a deadman's switch that you must hold down in order to make the car move. The left joystick controls the robot's throttle, and the right joystick controls its steering.

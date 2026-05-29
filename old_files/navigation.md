@@ -22,8 +22,8 @@ This tutorial will teach you to set up and operating MuSHR's baseline autonomous
 
 ### Requirements
 
-- If in sim, complete the [quickstart tutorial](https://mushr.io/tutorials/quickstart/)
-- If on real car, complete the [first steps tutorial](https://mushr.io/tutorials/first_steps/)
+- If in sim, complete the [quickstart tutorial](/tutorials/quickstart/)
+- If on real car, complete the [first steps tutorial](/tutorials/first_steps/)
 - Python dependencies for [`mushr_rhc`](https://github.com/prl-mushr/mushr_rhc)
 
 #### Note on dependecies: 
@@ -31,7 +31,7 @@ This tutorial will only work with a working installation of pytorch on python2 (
 
 If you intend to run this tutorial on the real car, construct a map of the environment in which you'll be building the car. Our team recommends using [gmapping](https://wiki.ros.org/slam_gmapping) or [cartographer](https://google-cartographer-ros.readthedocs.io/en/latest/) We will also assume you have built your car with the LiDaR. We recommend access to a secondary linux computer for viewing the visualizations of the localization module, as well as for initializing the particle filter.
 
-If you are in sim we don't recommend testing with the `sandbox.yaml` default map because the localization struggles in an open environment (all positions look the same!). See the [quickstart tutorial](https://mushr.io/tutorials/quickstart/) for how to change maps.
+If you are in sim we don't recommend testing with the `sandbox.yaml` default map because the localization struggles in an open environment (all positions look the same!). See the [quickstart tutorial](/tutorials/quickstart/) for how to change maps.
 
 ## Navigation Stack Overview
 

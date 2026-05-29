@@ -24,7 +24,7 @@ To allow you to drive the car over radio.
 
 ### Requirements
   - Complete the [hardware](/hardware/build_instructions) setup with your car
-  - Complete the [quickstart](/tutorials/quickstart) tutorial. (Required for rviz)
+  - Complete the [quickstart](/tutorials/humble_quickstart) tutorial. (Required for the MuSHR stack)
   - Complete the [first_steps](/tutorials/first_steps/) tutorial.
   - 2 [CrazyRadio USB transceivers](https://www.bitcraze.io/products/crazyradio-pa/).
   - [FPV Camera Hardware](https://www.getfpv.com/fpv/cameras.html) (camera, transmitter, receiver)
@@ -53,7 +53,7 @@ $ ssh <user>@<car ip>
 {{< / highlight >}}
 
 {{< highlight bash >}}
-$ roslaunch racecar teleop.launch 
+$ ros2 launch mushr_base teleop.launch.py 
 {{< / highlight >}}
 
 The controller should now be able to drive the car. This system should have a much higher range when compared to the traditional Bluetooth teleoperation system, and will continue to work outside WiFi or Bluetooth range, provided that line-of-sight is maintained. This may be particularly advantageous in dynamic outdoors environments.

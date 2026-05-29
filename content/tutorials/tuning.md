@@ -49,7 +49,7 @@ Plug the batteries into the car, connect to the car's network and `ssh` into the
 The file will be located at:
 
 <div style="text-align: center;" />
-<code>~/catkin_ws/src/mushr_base/vesc/vesc_main/config/racecar-uw-nano/vesc.yaml</code>.
+<code>~/colcon_ws/src/vesc/vesc_main/config/racecar-uw-nano/vesc.yaml</code>.
 <br />
 <br />
 </div>
@@ -89,11 +89,11 @@ While the car doesn't drive straight, do the following procedure:
 
 1. Start teleop:
 ```
-roslaunch mushr_base teleop.launch
+ros2 launch mushr_base teleop.launch.py
 ```
 -  Drive car in a straight line a few times. It's never going to be perfectly straight, so as long as it goes straight most of the time, it'll be fine. You can always come back to retune if it's not sufficiently precise.
 -  Adjust `steering_angle_offset` in `vesc.yaml`. Increase the offset if the car veers too much left, decrease if it veers too much right.
--  Stop teleop (`Ctrl-C` in the window you started `teleop.launch` in) and go back to Step 1.
+-  Stop teleop (`Ctrl-C` in the window you started `teleop.launch.py` in) and go back to Step 1.
 
 **Note: Usually this value is between 0.4 and 0.6**
 
@@ -122,20 +122,20 @@ You will be changing the variable: `speed_to_erpm_gain`.
 {{<figure src="/tutorials/tuning/erpm_gain/start.jpg" width="300px">}}
 
 #### Tuning loop:
-Now, while the car does not drive the reported distance (by `rostopic echo` command):
+Now, while the car does not drive the reported distance (by `ros2 topic echo` command):
 
 1. Place car at the base of the tape measure with the back wheelbase (indicated with a white line) lined up with 0.
 {{<figure src="/tutorials/tuning/erpm_gain/base_with_line.jpg" width="300px">}}
 -  Start teleop.
 -  Open another terminal on the car and run the command:
 ```
-rostopic echo /car/vesc/odom/pose/pose/position/x
+ros2 topic echo /car/vesc/odom --field pose.pose.position.x
 ```
-This will echo all the odometry information -- how far the car has driven (in meters) in the `x` direction since teleop started. The value should be `0.0` at the start, as the car hasn't moved yet.
+This will echo the odometry information -- how far the car has driven (in meters) in the `x` direction since teleop started. The value should be `0.0` at the start, as the car hasn't moved yet.
 -  Drive the car forward about 7-8 ft. The car will drive slightly further as it decelerates and stops. Make sure you only drive forward, not altering the servo position, otherwise you'll have both `x` and `y` directional changes (which makes it only slightly harder to check distance traveled).
 -  Record the distance traveled. If your tape measure is in inches, convert to meters.
 {{<figure src="/tutorials/tuning/erpm_gain/end_with_line.jpg" width="400px">}}
--  Compare to output of the `rostopic echo` command's `x` value. If the reported distance traveled is larger than the actual, decrease the gain. If the reported distance is smaller, increase the gain. At the begining increasing or decreasing by 500 should allow you to quickly hone in on the value.
+-  Compare to output of the `ros2 topic echo` command's `x` value. If the reported distance traveled is larger than the actual, decrease the gain. If the reported distance is smaller, increase the gain. At the begining increasing or decreasing by 500 should allow you to quickly hone in on the value.
 -  Stop teleop. Go back to step 1 if the values are not sufficiently close (within 2-3 cm).
 
 

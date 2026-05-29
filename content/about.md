@@ -27,7 +27,7 @@ MuSHR can be assembled at any makerspace and is only mile 0 for your ambitions. 
 
 ## Ready to jump in?
 
-Get started in the [quickstart guide](/tutorials/noetic_quickstart) or take a look at the [assembly instructions](/hardware/build_instructions).
+Get started in the [quickstart guide](/tutorials/humble_quickstart) or take a look at the [assembly instructions](/hardware/build_instructions).
 
 ## Questions?
 

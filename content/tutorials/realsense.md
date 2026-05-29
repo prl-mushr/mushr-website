@@ -24,7 +24,7 @@ To get you viewing your car's live camera feed.
 
 ### Requirements
   - Complete the [hardware](/hardware/build_instructions) setup with your car
-  - Complete the [quickstart](/tutorials/quickstart) tutorial. (Required for rviz)
+  - Complete the [quickstart](/tutorials/humble_quickstart) tutorial. (Required for the MuSHR stack)
   - Complete the [first_steps](/tutorials/first_steps/) tutorial.
   - A desktop/laptop computer that can ssh into the car.
   - An SSH-capable text editor, like Vim or Visual Studio Code (requires the SSH plugin)
@@ -37,31 +37,25 @@ $ ssh <user>@<car ip>
 Power on the Jetson, and SSH into the car, like in the [first_steps](/tutorials/first_steps/) tutorial. Do this in three separate terminal windows. If you're familiar with tools like tmux or GNU Screen, feel free to use those, but they are outside the scope of the tutorial.
 
 ## ROS Setup
-Now that you're connected to the car, let's launch ROS.
+Now that you're connected to the car, source the workspace.
 
 {{< highlight bash >}}
-$ roscore 
+$ source ~/colcon_ws/install/setup.bash
 {{< / highlight >}}
 
 Normally, we would launch tele-op here in order to be able to drive the car around, but let's try launching just the camera.
 
 ## Launching the Intel RealSense Camera
-First, navigate to the directory containing the `realsense2` package for ROS.
+Ensure your RealSense camera is connected to the Jetson's USB port. You can verify this with the `lsusb` command. Then launch the camera driver:
 
 {{< highlight bash >}}
-$ cd ~/catkin_ws/src/realsense2/realsense2_camera/launch/
+$ ros2 launch realsense2_camera rs_launch.py
 {{< / highlight >}}
 
-Here, you can now launch the camera by running the launchfile. Ensure your RealSense camera is connected to the Jetson's USB port. You can verify this with the `lsusb` command.
+If the camera fails to start, try reconnecting it to the Jetson and running the command again.
 
 {{< highlight bash >}}
-$ roslaunch rs_camera.launch
-{{< / highlight >}}
-
-If you get an error along the lines of `failed to find nodelet to unload` try reconnecting the camera to the Jetson and running the command again.
-
-{{< highlight bash >}}
-$ rostopic list
+$ ros2 topic list
 {{< / highlight >}}
 
 Run the above command, and you should be able to see the topics for the camera, like this:
@@ -71,27 +65,19 @@ Run the above command, and you should be able to see the topics for the camera, 
 /camera/color/image_raw
 {{< / highlight >}}
 
-## Launching RViz on your computer
-Set the `ROS_IP` to your IP. Your IP can be found in a variety of ways: [Linux](https://ubuntu.com/server/docs/network-configuration), [Mac](https://www.wikihow.com/Find-Your-IP-Address-on-a-Mac), [Windows](https://support.microsoft.com/en-us/help/4026518/windows-10-find-your-ip-address).
-
+## Launching RViz2 on your computer
 Note: the following commands in this section should be run in a terminal window connected to your local device, NOT the SSH window to the car.
 
-Set `ROS_IP` with:
+Set `ROS_DOMAIN_ID` on both car and laptop to a shared, unique value. The car and your laptop find each other over DDS if they share the same `ROS_DOMAIN_ID`.
 
 {{< highlight bash >}}
-$ export ROS_IP=YOUR-IP
+$ export ROS_DOMAIN_ID=0
 {{< / highlight >}}
 
-Set the `ROS_MASTER_URI` to the IP of the car. (You used this to SSH into it earlier.)
+Now, launch RViz2.
 
 {{< highlight bash >}}
-$ export ROS_MASTER_URI=http://CAR_IP_GOES_HERE:11311
-{{< / highlight >}}
-
-Now, launch RViz.
-
-{{< highlight bash >}}
-$ rviz
+$ rviz2
 {{< / highlight >}}
 
 If you get errors make sure the following are correct:
@@ -99,9 +85,9 @@ If you get errors make sure the following are correct:
 - Teleop is running
 - Your laptop is connnected properly
 {{< highlight bash >}}
-$ rostopic list
+$ ros2 topic list
 {{< / highlight >}}
-This should output a bunch of camera-related topics. If not, check your `ROS_MASTER_URI` and `ROS_IP` to ensure they are correct.
+This should output a bunch of camera-related topics. If not, check that `ROS_DOMAIN_ID` and `RMW_IMPLEMENTATION` matches on both machines and that they are on the same network.
 
 {{< highlight bash >}}
 /camera/color/camera_info
@@ -109,16 +95,22 @@ This should output a bunch of camera-related topics. If not, check your `ROS_MAS
 {{< / highlight >}}
 
 
-## Viewing Camera Output in RViz
+## Viewing Camera Output in RViz2
 
 {{< figure src="/tutorials/realsense/rvizadd.png" caption="">}}
 
-In your RViz window, you can add topics to view various camera feeds from the RealSense. It is able to publish RGB, Depth, and Infrared camera data. Clicking add will allow you to view those feeds, like so:
+In your RViz2 window, you can add topics to view various camera feeds from the RealSense. It is able to publish RGB, Depth, and Infrared camera data. Clicking add will allow you to view those feeds, like so:
 {{< figure src="/tutorials/realsense/rvizcamtopics.png" caption="Adding the Color Input from the RealSense. Other inputs are also visible.">}}
-After selecting the topic, you should be able to see the camera feed in RViz.
+After selecting the topic, you should be able to see the camera feed in RViz2.
 
 ## Changing Camera Settings
 
 {{< figure src="/tutorials/realsense/camparams.png" caption="">}}
 
-It is also possible to change camera settings and parameters, like resolution, framerate, image compression, etc. You can do this by editing the launchfile we used previously to launch the camera in the `~/catkin_ws/src/realsense2/realsense2_camera/launch/` directory. Make sure that it is not running when you do this. Open it with your text editor of choice and edit the parameters in the .launch file.
+It is also possible to change camera settings and parameters, like resolution, framerate, image compression, etc. You can do this by editing the launch arguments in `rs_launch.py`, or pass them on the command line, for example:
+
+{{< highlight bash >}}
+$ ros2 launch realsense2_camera rs_launch.py depth_module.profile:=640x480x30 rgb_camera.profile:=640x480x30
+{{< / highlight >}}
+
+Run `ros2 launch realsense2_camera rs_launch.py --show-args` to see every available parameter.

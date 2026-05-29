@@ -21,7 +21,7 @@ To get you driving your car around in teleop.
 
 ### Requirements
   - Complete the [hardware](/hardware/build_instructions) setup with your car
-  - Complete the [quickstart](/tutorials/quickstart) tutorial. (Required for rviz)
+  - Complete the [quickstart](/tutorials/humble_quickstart) tutorial. (Required for the MuSHR stack)
   - A desktop/laptop computer that can ssh into the car. 
   - Ethernet Cable
   - Monitor (Wi-Fi Setup Only)
@@ -69,39 +69,31 @@ $ sudo reboot
 {{< / highlight >}}
 
 ## Update Repos
-Because mushr is always updating, you may have outdated code on your image. To fix this just enter `~/catkin_ws/src/mushr` and pull via vcstool. For this to work, you need to give your car access to the internet. The easiest way to do this is by plugging an ethernet cable from an ethernet port on your home router to the car. If you don't have an ethernet cable, you can plug in a monitor, mouse, and keyboard into the Jetson Nano and connect the car to a wifi network.
+Because mushr is always updating, you may have outdated code on your image. To fix this just enter `~/colcon_ws/src/mushr` and pull via vcstool. For this to work, you need to give your car access to the internet. The easiest way to do this is by plugging an ethernet cable from an ethernet port on your home router to the car. If you don't have an ethernet cable, you can plug in a monitor, mouse, and keyboard into the Jetson Nano and connect the car to a wifi network.
 
 {{< highlight bash >}}
-$ cd ~/catkin_ws/src/mushr && vcs pull -n
+$ cd ~/colcon_ws/src/mushr && vcs pull -n
 {{< / highlight >}}
 
 Note: If you edited mushr source code, this will be overwritten. You can instead pull repos individually
 
 ## Configure Visualization
-Visualization is important for seeing what your car is thinking such as which trajectory it will follow or its current position in the map. On your laptop with rviz make sure to set your `default.rviz` to ours found in `mushr/mushr_utils/rviz/default.rviz`.
+Visualization is important for seeing what your car is thinking such as which trajectory it will follow or its current position in the map. On your laptop with rviz2 make sure to set your `default.rviz` to ours found in `mushr/mushr_utils/rviz/default.rviz`.
 
 {{< highlight bash >}}
-$ cp ~/catkin_ws/src/mushr/mushr_utils/rviz/default.rviz ~/.rviz/
+$ cp ~/colcon_ws/src/mushr/mushr_utils/rviz/default.rviz ~/.rviz2/
 {{< / highlight >}}
 
-Set the `ROS_IP` to your IP. Your IP can be found in a variety of ways: [Linux](https://www.howtogeek.com/howto/17012/how-to-find-your-ip-address-in-ubuntu/), [Mac](http://osxdaily.com/2010/08/08/lan-ip-address-mac/), [Windows](https://kb.netgear.com/20878/Finding-your-IP-address-without-using-the-command-prompt).
-
-Set `ROS_IP` with:
+Set the `ROS_DOMAIN_ID` to a unique value. The car and your laptop find each other automatically over DDS as long as they are on the same network and share the same `ROS_DOMAIN_ID`. Set the same id on both (any integer 0&ndash;101):
 
 {{< highlight bash >}}
-$ export ROS_IP=YOUR-IP
+$ export ROS_DOMAIN_ID=0
 {{< / highlight >}}
 
-Set the `ROS_MASTER_URI` to the IP of the car.
+You are configured! Wait till teleop is running to launch `rviz2` on your laptop.
 
 {{< highlight bash >}}
-$ export ROS_MASTER_URI=http://10.42.0.1:11311
-{{< / highlight >}}
-
-You are configured! Wait till teleop is running to launch `rviz` on your laptop.
-
-{{< highlight bash >}}
-$ rviz
+$ rviz2
 {{< / highlight >}}
 
 If you get errors make sure the following are correct:  
@@ -109,9 +101,9 @@ If you get errors make sure the following are correct:
 - Teleop is running  
 - Your laptop is connnected properly  
 {{< highlight bash >}}
-$ rostopic list
+$ ros2 topic list
 {{< / highlight >}}
-This should output a bunch of topics. If not, check your `ROS_MASTER_URI` and `ROS_IP` to ensure they are correct.
+This should output a bunch of topics. If not, check that `ROS_DOMAIN_ID` and `RMW_IMPLEMENTATION` matches on both machines and that they are on the same network.
 
 ## Launch Teleop the Easy Way
 To do this you need a push button on the front of the car. This method turns on teleop whenever you hold the button on teleop. By default it is disabled. The following will enable it. First, turn on the car by plugging a battery into the top connector. Then connect to the `ROBOT_AP` WIFI network. Then ssh into the car.
@@ -135,13 +127,7 @@ $ sudo shutdown now
 Turn on the car and vesc by plugging their batteries in. Hold down the front button as the car is starting. After a minute or so the lidar should start spinning indicating teleop is running.
 
 ## Launch Teleop the Hard Way 
-This is better for debugging your code. Turn on the car and vesc by plugging their batteries in. This will involve multiple windows. You can either make a bunch of windows on your laptop and ssh from each of them or use [tmux](https://www.hamvocke.com/blog/a-quick-and-easy-guide-to-tmux/) from one window. Tmux is installed on the car image. First, ssh into the car. Then start `roscore`.
-
-{{< highlight bash >}}
-$ roscore
-{{< / highlight >}}
-
-In a new window, ssh into the car.
+This is better for debugging your code. Turn on the car and vesc by plugging their batteries in. This will involve multiple windows. You can either make a bunch of windows on your laptop and ssh from each of them or use [tmux](https://www.hamvocke.com/blog/a-quick-and-easy-guide-to-tmux/) from one window. Tmux is installed on the car image. First, ssh into the car.
 
 {{< highlight bash >}}
 $ ssh robot@10.42.0.1 -X
@@ -150,7 +136,7 @@ $ ssh robot@10.42.0.1 -X
 And launch teleop.
 
 {{< highlight bash >}}
-$ roslaunch mushr_base teleop.launch
+$ ros2 launch mushr_base teleop.launch.py
 {{< / highlight >}}
 
 You should see the lidar spinning and be able to steer with the controller. While holding down the left bumper, use the left joystick to throttle, and the right joystick to turn. See diagram below.
@@ -205,16 +191,16 @@ Click on the **IPv4 Settings** tab. Set the following fields:
 
 Click the **Save** button and close the connection editor.
 
-Edit `/home/robot/.bashrc` editing the line that sets the `ROS_IP` (near end of file). Alter this line so that the `ROS_IP` is set to the static ip, for example `172.16.77.Z`. 
+Edit `/home/robot/.bashrc` to set a fixed `ROS_DOMAIN_ID` (near end of file) so the car always uses the same domain as your laptop.
 
 {{< highlight bash >}}
 $ gedit ~/.bashrc
 {{< / highlight >}}
 
-Alternatively if you know the network interface, you can use the command (should be `wlan0` interface on the Jetson):
+Add a line like the following (use the same id on your laptop):
 
 {{< highlight bash >}}
-export ROS_IP=$(ifconfig wlan0 | awk /inet\ /'{print $2}')
+export ROS_DOMAIN_ID=42
 {{< / highlight >}}
 
 Reboot the Nano.

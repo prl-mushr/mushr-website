@@ -42,28 +42,28 @@ This section will cover an overview of the physical racecar Below is a diagram o
 
 ## Software Components
  Now that we have a better understanding of the hardware components let's checkout the software components and see how it all ties together.
-On the car go to your catkin workspace  
+On the car go to your colcon workspace  
 {{< highlight bash >}}
- cd ~/catkin_ws/
+ cd ~/colcon_ws/
 {{< / highlight >}}
 
  and list the directories
 
 {{< highlight bash >}}
 $ ls
-build  devel  src
+build  install  src
 {{< / highlight >}}
 
-So what we have is 3 directories. `build` is where code is compiled to. `devel` has setup files for your environment. The most important thing about `devel` is that it contains `setup.**` which sets up environment variables and paths amongst other things. 
+So what we have is 3 directories. `build` is where code is compiled to. `install` has setup files for your environment. The most important thing about `install` is that it contains `setup.**` which sets up environment variables and paths amongst other things. 
  {{< highlight bash >}}
-robot@digger:~/catkin_ws/devel$ ls
-bin  env.sh  include  lib  setup.bash  setup.sh  _setup_util.py  setup.zsh  share
+robot@digger:~/colcon_ws/install$ ls
+setup.bash  setup.sh  setup.zsh  local_setup.bash  local_setup.sh  local_setup.zsh  _local_setup_util.py  <package folders>
  {{< / highlight >}}
 
- So `setup.**` ("`**`" because you can run .bashrc, .sh, or .zsh and get the same effect) sets up ROS environment variables and paths. So if you ever see an error that says that it can't find a package, or that roscore isn't a command, it is because you have not sourced your `setup.**` like so
- `source ~/catkin_ws/devel/setup.bash`
+ So `setup.**` ("`**`" because you can run .bashrc, .sh, or .zsh and get the same effect) sets up ROS environment variables and paths. So if you ever see an error that says that it can't find a package, or that `ros2` isn't a command, it is because you have not sourced your `setup.**` like so
+ `source ~/colcon_ws/install/setup.bash`
 We usually prevent this by putting the above in your `~/.bashrc` a file that is run everytime you log in. 
-So now if you change directories to `~/catkin_ws/src/` you will see all the ros packages. When you want to make new ROS software you make a package and you put it here. Why? Because when you run `catkin_make` it looks in this directory for the packages it needs to build. `catkin_make` needs to be run in the `~/catkin_ws/` directory and should be run after every update in code. Although, since python is an interpreted language, we do not have to run `catkin_make` everytime we edit code, but in C++ we would.
+So now if you change directories to `~/colcon_ws/src/` you will see all the ros packages. When you want to make new ROS software you make a package and you put it here. Why? Because when you run `colcon build` it looks in this directory for the packages it needs to build. `colcon build` needs to be run from the `~/colcon_ws/` directory and should be run after every update in code. Building with `colcon build --symlink-install` symlinks Python sources into `install`, so for an interpreted language like Python you do not have to rebuild after every edit, but for C++ you would.
 
 Alright, now that we have a high level view of our workspace let's checkout the system components. Each package (located in `src`) creates ROS nodes. This tutorial will not dive into the details of how ROS works but this [post](https://robohub.org/ros-101-intro-to-the-robot-operating-system/) gives a good overview with diagrams. Below is a simplified diagram of the system at a high level:
 
@@ -79,7 +79,7 @@ Currently, MuSHR does not have a explicit safety controller publishing to the `*
 
 Once the highest priority command is output it goes to the VESC. The VESC smoothes the command by clipping the min/max of the steering/throttle so we don't try to turn the wheels 180 degrees for example. It then provides that to the vesc driver which directly controls the motors.
 
-These components are in the following locations all within `~/catkin_ws/src/mushr/` if you want to check them out for more details:
+These components are in the following locations all within `~/colcon_ws/src/mushr/` if you want to check them out for more details:
   
  - MUX:  `mushr_base/ackermann_cmd_mux`  
  - VESC: `mushr_base/vesc`  
@@ -88,10 +88,10 @@ These components are in the following locations all within `~/catkin_ws/src/mush
 	- `vesc_ackermann` contains vesc odom info (not depicted in diagram)  
 	- `vesc_driver` is the last piece of the diagram connecting the physical vesc with the computer. It also contains the throttle interpolator.  
 	- `vesc_msgs` describes the VescState message  
-- Teleop: `mushr_base/mushr_base/src/joy_teleop.py`  
+- Teleop: `mushr_base/mushr_base/mushr_base/joy_teleop.py`  
 - Lidar: `mushr_hardware/ydlidar`  
 - Button: `mushr_hardware/push_button_utils`  
 - Camera: `mushr_hardware/realsense`  
-- Map: `mushr_base/mushr_base/launch/includes/map_server.launch`  
+- Map: `mushr_sim/launch/map_server.launch.py`  
 
 Now you should have a grasp of the basic hardware and software components of MuSHR platform! Please [contact us](/contact) with any questions or feedback about your experience using the MuSHR system and tutorials.

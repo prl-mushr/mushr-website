@@ -34,7 +34,7 @@ unsafe = true
 [[menu.main]]
     identifier = "quickstart"
     name = "Quickstart"
-    pageRef = "tutorials/noetic_quickstart"
+    pageRef = "tutorials/humble_quickstart"
     weight = 1
 
 [[menu.main]]
