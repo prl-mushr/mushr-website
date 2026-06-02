@@ -2,3 +2,9 @@
 .hugo_build.lock
 public
 resources
+content/tutorials/mapping.md
+content/tutorials/mujoco_figure8.md
+content/tutorials/mujoco.md
+content/tutorials/mushr_navigation_system.md
+content/tutorials/carpose.md
+content/tutorials/coordination.md
