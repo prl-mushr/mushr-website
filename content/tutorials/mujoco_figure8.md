@@ -3,7 +3,7 @@ title: "Navigating in the MuJoCo Simulator"
 date: 2020-07-15T15:14:54+10:00
 featured: false
 draft: false
-active: true
+active: false
 duration: 30
 difficulty: Beginner
 summary: Execute a plan/trajectory in the MuJoCo simulator.

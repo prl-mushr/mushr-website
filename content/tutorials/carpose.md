@@ -1,10 +1,10 @@
 ---
 title: "Car Pose Detection and Yolo Learning"
 date: 2020-09-10T15:14:54+10:00
-featured: true
+featured: false
 draft: false
 duration: 60
-active: true
+active: false
 difficulty: Intermediate
 summary: Train a model to detect MuSHR cars.
 weight: 3

@@ -1,10 +1,10 @@
 ---
 title: "Multi-Agent Coordination Planner for Multi-Goal Tasks"
 date: 2021-04-25T15:14:54+10:00
-featured: true
+featured: false
 draft: false
 duration: 30
-active: true
+active: false
 difficulty: Intermediate
 summary: Plan and control multiple MuSHR cars to different goals without collisions  
 weight: 3

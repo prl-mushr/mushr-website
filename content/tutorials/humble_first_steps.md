@@ -1,7 +1,7 @@
 ---
 title: "Humble Robot Software Setup"
 date: 2018-11-28T15:14:54+10:00
-featured: false
+featured: true
 draft: false
 active: true
 duration: 30 - 60

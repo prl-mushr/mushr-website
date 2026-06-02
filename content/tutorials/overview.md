@@ -51,10 +51,10 @@ On the car go to your colcon workspace
 
 {{< highlight bash >}}
 $ ls
-build  install  src
+build  install  log  src
 {{< / highlight >}}
 
-So what we have is 3 directories. `build` is where code is compiled to. `install` has setup files for your environment. The most important thing about `install` is that it contains `setup.**` which sets up environment variables and paths amongst other things. 
+So what we have is 4 directories. `build` is where code is compiled to. `install` has setup files for your environment. The most important thing about `install` is that it contains `setup.**` which sets up environment variables and paths amongst other things.  `log` contains log files from previous runs of `colcon build`.
  {{< highlight bash >}}
 robot@digger:~/colcon_ws/install$ ls
 setup.bash  setup.sh  setup.zsh  local_setup.bash  local_setup.sh  local_setup.zsh  _local_setup_util.py  <package folders>

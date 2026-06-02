@@ -1,10 +1,10 @@
 ---
 title: "MuJoCo Simulation"
 date: 2020-07-13T15:14:54+10:00
-featured: true
+featured: false
 draft: false
 duration: 30
-active: true
+active: false
 difficulty: Beginner
 summary: Run a MuSHR simulation with the MuJoCo physics engine.
 weight: 3
