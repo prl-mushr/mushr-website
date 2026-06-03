@@ -429,12 +429,12 @@ $ source install/setup.bash
 
 Once this is done, all that's left to do is launch the file and the simulator. In one terminal run the simulator:
 ```bash
-$ ros2 launch mushr_sim teleop.launch.py foxglove_teleop:=1
+$ ros2 launch mushr_sim teleop.launch.py
 ```
 
 In another, start `rviz2` (a ROS tool that allows you to visualize simulated environments):
 ```bash
-$ ros2 run rviz2 rviz2 -d $HOME/colcon_ws/src/mushr/mushr_utils/rviz/default.rviz
+$ rviz2 -d $HOME/colcon_ws/src/mushr/mushr_utils/rviz/default.rviz
 ```
 This will launch rviz2 with a configuration that has all the right topics visualized.
 
