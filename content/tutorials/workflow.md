@@ -35,66 +35,34 @@ _See something that's missing or have a suggestion for improving this guide? [Co
 There are two common workflows, in sim and in the real world. Sim is easier because you do not need to connect and communicate with the car over the WiFi. We recommend getting comfortable working in sim before trying to test on the car.
 
 ### Simulation Workflow
-To work in sim you need to have either have the docker image working or an Ubuntu machine with ROS melodic that has `mushr_sim`, `mushr`, `mushr_base`, `vesc` and `rviz` installed. The Docker container is straight-forward to set up, but if you don't like working in a container we recommend the latter. Each has a slightly different workflow covered below.
+To work in sim you need to have either have the docker image working or an Ubuntu machine with ROS 2 Humble that has `mushr_sim`, `mushr`, `mushr_base`, `vesc` and `rviz2` installed. The Docker container is straight-forward to set up, but if you don't like working in a container we recommend the latter. Each has a slightly different workflow covered below.
 
 ##### Docker Container
-If you have set up the docker container through the [quickstart](/tutorials/quickstart/) tutorial then to get the sim running simply enter `mushr_sim/docker` and run:
+If you set up the docker container through the [quickstart](/tutorials/humble_quickstart/) tutorial, enter it with:
 {{< highlight bash >}}
-$ docker compose up -d
+$ mushr_humble
 {{< / highlight >}}
 
-The default `.rviz` file has the basic topics, but you can save a more custom one if you like. If you exit rviz/sim the container will stop. You can always restart it with 
+The launcher creates a persistent container the first time and attaches to it on every subsequent run, so any number of terminals can share one ROS 2 environment. Inside, build and source your workspace:
 
 {{< highlight bash >}}
-$ docker start CONTAINER-ID
+$ cd ~/colcon_ws && colcon build --symlink-install && source install/setup.bash
 {{< / highlight >}}
 
-And you can get your CONTAINER-ID [^1] by running:
-
-{{< highlight bash >}}
-$ docker ps
-{{< / highlight >}}
-
-We recommend storing your code on a git repository so it is easier to move it from container to container. To enter the container to edit or run your code execute:
-
-{{< highlight bash >}}
-$ docker exec -it CONTAINER-ID bash
-{{< / highlight >}}
-
-This will get you a non-root user shell to edit and run code. If you wish to install additional software, enter the container as root:
-
-{{< highlight bash >}}
-$ docker exec -it -u 0 CONTAINER-ID bash
-{{< / highlight >}}
-
-The reason we have two different users is that `developer` is tied to the host computer user so that gui apps like rviz, and the sim gray box can come through.
-
-You can save your container to an image with
-
-{{< highlight bash >}}
-$ docker commit CONTAINER-ID IMAGE-NAME 
-{{< / highlight >}}
-
-You may want the container to not run the sim and rviz when you start it. To change it to just turn on change line 16 `docker-compose.yml` to 
-
-{{< highlight bash >}}
-entrypoint: bash 
-{{< / highlight >}}
+We recommend storing your code on a git repository so it is easier to move it from container to container. Because the container persists between runs, packages you install with apt are kept. If you want a clean slate, run `mushr_humble rm` and the next `mushr_humble` will create a fresh container.
 
 Docker has a bunch of resources for going further with containers and images. Checkout their [docs](https://docs.docker.com/) for further resources!
 
 
 ##### Regular Install 
 
-Use these instructions to operate the simulator on an Ubuntu system where ROS melodic and `mushr_sim`, `mushr`, `mushr_base`, `vesc` and `rviz` are installed.
-{{< highlight bash >}}
-$ roscore
-{{< / highlight >}}
+Use these instructions to operate the simulator on an Ubuntu system where ROS 2 Humble and `mushr_sim`, `mushr`, `mushr_base`, `vesc` and `rviz2` are installed.
 
-The above command starts the [ROS master](http://wiki.ros.org/Master) that the other programs will latch to. If you don't run this then rviz can act up. Why? Because rviz needs a rosmaster to talk to and if the rosmaster is teleop, or some other node then when you restart, rviz will lose its connection with ROS master. Now start rviz:
+Source your workspace, then start rviz2:
 
 {{< highlight bash >}}
-$ rviz
+$ source ~/colcon_ws/install/setup.bash
+$ rviz2
 {{< / highlight >}}
 
 Ideally you want to open your previously saved `.rviz` file (file &rarr; save as) that has your most commonly used topics all set up. But if not then wait until everything is running, subscribe, then save a file. Also, because you are working with a 2D map, make sure the camera is set to TopDownOrtho.
@@ -102,13 +70,13 @@ Ideally you want to open your previously saved `.rviz` file (file &rarr; save as
 Launch the sim and the map server:
 
 {{< highlight bash >}}
-$ roslaunch mushr_sim teleop.launch 
+$ ros2 launch mushr_sim teleop.launch.py
 {{< / highlight >}}
 
 Launch your code:
 
 {{< highlight bash >}}
-$ roslaunch your_package your_launchfile.launch
+$ ros2 launch your_package your_launchfile.launch.py
 {{< / highlight >}}
 
 Subscribe to all the necessary topics (and save a .rviz file!). All topics can be found by clicking **Add &rarr; By topic**. To get the robot model: **Add &rarr; By display type &rarr; RobotModel**. Use the gray box and the W, A, S, D keys to drive
@@ -136,53 +104,41 @@ $ ssh robot@10.42.0.171
 
 If you have the robot setup connect to a local network (see [Robot Setup Tutorial](/tutorials/robot_setup)), then connect to the local network yourself and ssh but replace the IP with the robot's static IP that you set. 
 
-If you are having trouble connecting see [Troubleshooting](#troubleshooting). We need to set up the ROS_IP and the ROS_MASTER_URI environment variables on both devices. ROS_IP tells your ROS node what IP to communicate under. Localhost will not work because it will prevent remote components from communicating with it. So use `ifconfig` in the terminal to find your IP (car and desktop) and set that number to your ROS_IP. Each device should use its own IP.
+If you are having trouble connecting see [Troubleshooting](#troubleshooting). For the car and your computer to see each other, they must be on the same network, share the same `ROS_DOMAIN_ID`, and share the same `RMW_IMPLEMENTATION` (defaults to FastDDS, CycloneDDS is recommended). Set the same id on both devices (any integer 0&ndash;101, default 0):
 
 {{< highlight bash >}}
-$ export ROS_IP=ROBOT/DESKTOP-IP
+$ export ROS_DOMAIN_ID=0
 {{< / highlight >}}
 
-If your IP is static (the car ought to have a static IP) then you can put this command at the bottom of your `~/.bashrc` and it will run everytime you log in. You can check if an environment variable is set using `echo`
+You can put this command at the bottom of your `~/.bashrc` (on both the car and your computer) so it runs every time you log in. You can check that it is set using `echo`:
 
 {{< highlight bash >}}
-$ echo $ROS_IP
+$ echo $ROS_DOMAIN_ID
 {{< / highlight >}}
 
-Now that you have set your `ROS_IP` for both the car and computer, we need to set the `ROS_MASTER_URI` environment variable. The `ROS_MASTER_URI` tells your ROS nodes where to look for `rosmaster`. The default is `localhost:11311`. Since your program is running on the car we will set the `ROS_MASTER_URI` to the car. Luckly because the car is already set to itself, we only have to set the desktop or laptop (whichever is your remote workstation). On the base computer run:
-
-{{< highlight bash >}}
-$ export ROS_MASTER_URI=http://ROBOT-IP:11311
-{{< / highlight >}}
-
-"11311" is the port ROS connects to, and ROBOT-IP is the robot's IP address you ssh with to connect to the car. If this isn't set your base computer will start a separate `rosmaster` and if it is set incorrectly it will throw a error that it cannot find rosmaster. Now we are ready to run stuff!
-
-Ssh into the car, and run:
-
-{{< highlight bash >}}
-$ roscore
-{{< / highlight >}}
+Now we are ready to run stuff!
 
 On the base:
 {{< highlight bash >}}
-$ rviz
+$ rviz2
 {{< / highlight >}}
 
-rviz should be setup to listen to the same topics as the simulator 
+rviz2 should be setup to listen to the same topics as the simulator 
 
 On the car:
 
 {{< highlight bash >}}
-$ roslaunch mushr_base teleop.launch
+$ ros2 launch mushr_base teleop.launch.py
 {{< / highlight >}}
 
-The `teleop.launch` launch file activates the car's hardware, sensors and remote control. Make sure you can drive the car and steer. On the base, visualize topics in rviz.
+The `teleop.launch.py` launch file activates the car's hardware, sensors and remote control. Make sure you can drive the car and steer. On the base, visualize topics in rviz2.
 
 On the car:
 {{< highlight bash >}}
-$ roslaunch your_package your_launch.launch
+$ ros2 launch your_package your_launch.launch.py
 {{< / highlight >}}
 
-It is good practice to make a ros package for your code that is separate from the mushr_base package. That way if you need to update mushr code, your code remains unaffected. This can be done by making a [separate catkin package](http://wiki.ros.org/ROS/Tutorials/CreatingPackage).
+It is good practice to make a ros package for your code that is separate from the mushr_base package. That way if you need to update mushr code, your code remains unaffected. This can be done by making a [separate ROS 2 package](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Creating-Your-First-ROS2-Package.html).
  
 ## Troubleshooting
 Troubleshooting is what 80% of a roboticist's time is spent on. If we know it is inevitable, we need to design systems and use tools to narrow down a diagnosis for the problem as fast as possible. Diagnosis can usually be the hardest part because it could be hardware or software or both. In addition, a robotic system is highly interconnected so a weird behavior in one component may only manifest itself in another component down the road. This section will cover the main debugging tools you should use on the car and some common problems and fixes.
@@ -194,40 +150,41 @@ You should try answering the following questions in order to work towards a diag
 Very important question, as your fix will change drastically. There are usually clues into this problem. Let's look at an example:
 
 {{< highlight bash >}}
-[FATAL] [1455208235.408745600]: Failed to connect to the VESC, SerialException Failed to open the serial port to the VESC. IO Exception (2): No such file or directory, file /tmp/binarydeb/ros-kinetic-serial-1.2.1/src/impl/unix.cc, line 151. failed..
+[FATAL] [1455208235.408745600]: Failed to connect to the VESC, SerialException Failed to open the serial port to the VESC. IO Exception (2): No such file or directory, in serial port impl, line 151. failed..
 {{< / highlight >}}
 
 Now this issue is hardware. There is a key clue here, the word "IO Exception." We know the VESC is not connected because we can't start a [serial connection](https://en.wikipedia.org/wiki/Serial_communication) with the VESC. Here is another example:
 
 {{< highlight bash >}}
-ERROR: unable to contact ROS master at [http://172.16.77.06:11311]
-The traceback for the exception was written to the log file
+$ ros2 topic list
+/parameter_events
+/rosout
 {{< / highlight >}}
 
-Now this is also a connection issue, but this time it is software. We know because the ROS node is trying to connect to `rosmaster` at the set IP. So in software we are setting this IP from the environment variable `ROS_MASTER_URI` and the computer is trying to connect to this IP over WiFi. Either we set the IP wrong, or the WiFi isn't working. But we know the WiFi is functional because we can ssh into the car, so it must be an incorrect IP!
+Now this is also a connection issue, but this time it is software. We expected to see the car's topics (like `/car/scan`), but only the default topics appear. ROS 2 nodes find each other over DDS, so either the two machines are on different networks, or their `ROS_DOMAIN_ID` values don't match. We know the WiFi is functional because we can ssh into the car, so it is most likely a `ROS_DOMAIN_ID` mismatch!
 
 #### What component is causing the issue?
 So now that you have determined that the issue is in hardware vs. software, we need to narrow down the problem. Sometimes, in the above examples, it explicitly tells you, but we aren't always that lucky. Take the following example:
 
 {{< highlight bash >}}
-[teleop.launch] is neither a launch file in package [labx] nor is [labx] a launch file name
-The traceback for the exception was written to the log file
+$ ros2 launch labx teleop.launch.py
+file 'teleop.launch.py' was not found in the share directory of package 'labx'
 {{< / highlight >}}
 
-So this points to labx being the component (package in this case) that is not working. Turns out that is slightly a red herring. So this error means ROS cannot find the launchfile or the package. So it could be one of two things or both. `teleop.launch` is not in labx in which case labx was the culprit. And/or you haven't sourced your workspace since making this package so ROS does not have it in its package list. We can narrow this down by doing the following:
+So this points to labx being the component (package in this case) that is not working. Turns out that is slightly a red herring. So this error means ROS cannot find the launchfile or the package. So it could be one of two things or both. `teleop.launch.py` is not installed in labx in which case labx was the culprit. And/or you haven't sourced your workspace since making this package so ROS does not have it in its package list. We can narrow this down by doing the following:
 
 {{< highlight bash >}}
-$ rospack find labx
-/home/nvidia/catkin_ws/src/labx
+$ ros2 pkg prefix labx
+/home/nvidia/colcon_ws/install/labx
 {{< / highlight >}}
 
-It found the package! Which means you don't have a `teleop.launch` file in your labx package. To fix this, you would need to go to the labx package.
+It found the package! Which means you don't have a `teleop.launch.py` file installed in your labx package. To fix this, you would need to go to the labx package.
 
 {{< highlight bash >}}
-$ roscd labx/launch
+$ cd ~/colcon_ws/src/labx/launch
 {{< / highlight >}}
 
-And see if you have mispelled `teleop.launch`. If there is no file matching `teleop.launch` then you would have to make one.
+And see if you have mispelled `teleop.launch.py` (and that it is installed via `data_files` in `setup.py`). If there is no file matching `teleop.launch.py` then you would have to make one.
 
 
 #### Is the error ROS related or pure code related?
@@ -236,63 +193,63 @@ A helpful thing to determine is if the problem has anything to do with ROS. If t
 ## Debugging Tools
 ROS provides a suite of tools to help debug issues. We'll cover each a bit and when to use.
 
-#### rostopic
+#### ros2 topic
 This tool is really useful for checking if topics are publishing, get a sense of latency, see what is being published, and more info about specific topics. 
 
-| Command                    | Function                                                                        |
-|----------------------------|---------------------------------------------------------------------------------|
-| `rostopic list`            | allows you to see all the topic                                                 |
-| `rostopic echo topic_name` | allows you to see what is actually being published                              |
-| `rostopic info topic_name` | lets you see the message type and other important info about a topic            |
-| `rostopic hz topic_name`   | lets you see the publish rate of the topic. A quick way to detect a bottleneck. |
+| Command                      | Function                                                                        |
+|------------------------------|---------------------------------------------------------------------------------|
+| `ros2 topic list`            | allows you to see all the topics                                                |
+| `ros2 topic echo topic_name` | allows you to see what is actually being published                              |
+| `ros2 topic info topic_name` | lets you see the message type and other important info about a topic            |
+| `ros2 topic hz topic_name`   | lets you see the publish rate of the topic. A quick way to detect a bottleneck. |
 
 <br>
 Give this a try as you're getting acquainted with your system! <br>
 
-#### rosnode
-This tool works very similar to rostopic except on a node level. It is useful to see what nodes are publishing/subscribing to.  
+#### ros2 node
+This tool works very similar to `ros2 topic` except on a node level. It is useful to see what nodes are publishing/subscribing to.  
 
-| Command                  | Function                                                                |
-|--------------------------|-------------------------------------------------------------------------|
-| `rosnode list`           | list all the ROS nodes                                                  |
-| `rosnode info node_name` | see what the node is publishing/subscribing to and other important info |
+| Command                    | Function                                                                |
+|----------------------------|-------------------------------------------------------------------------|
+| `ros2 node list`           | list all the ROS nodes                                                  |
+| `ros2 node info node_name` | see what the node is publishing/subscribing to and other important info |
 <br>
   
-#### rosparam
+#### ros2 param
 If you have params that are set dynamically (erpm gain) then this a good tool to make sure a param is what you expect it to be and if not change it.  
 
-| Command                   | Function        |
-|---------------------------|-----------------|
-| `rosparam list`           | list all params |
-| `rosparam get param_name` | get param value |
-| `rosparam set param_name` | set param value | 
+| Command                                   | Function                  |
+|-------------------------------------------|---------------------------|
+| `ros2 param list`                         | list all params (by node) |
+| `ros2 param get node_name param_name`     | get param value           |
+| `ros2 param set node_name param_name val` | set param value           |
 <br>
 
-#### rospack
+#### ros2 pkg
 This tool is useful if you need to find a package.  
 
-| Command                     | Function                                                       |
-|-----------------------------|----------------------------------------------------------------|
-| `rospack list`              | list all packages                                              |
-| `rospack find package_name` | gives you the location of the specified package if it finds it |
+| Command                       | Function                                                       |
+|-------------------------------|----------------------------------------------------------------|
+| `ros2 pkg list`               | list all packages                                              |
+| `ros2 pkg prefix package_name`| gives you the install location of the specified package        |
 <br>
 
-#### rosrun tf
-If you are having transform issues, this tool is a good way to debug.  
+#### tf2
+If you are having transform issues, these tools are a good way to debug.  
 
-| Command                           | Function                                            |
-|-----------------------------------|-----------------------------------------------------|
-| `rosrun tf tf_echo frame1 frame2` | will output the transform from frame1 to frame2     |
-| `rosrun tf view_frame`            | will create a pdf diagram of the transforms present |
-| `rosrun tf tf_monitor`            | show all frames and publish rates                   |
+| Command                                       | Function                                            |
+|-----------------------------------------------|-----------------------------------------------------|
+| `ros2 run tf2_ros tf2_echo frame1 frame2`     | will output the transform from frame1 to frame2     |
+| `ros2 run tf2_tools view_frames`              | will create a pdf diagram of the transforms present |
+| `ros2 run tf2_ros tf2_monitor`                | show all frames and publish rates                   |
 <br>
 
 #### rqt_graph
 This will give you a sense of the overall system of nodes and topics connecting them.  
 
-| Command     | Function                                |
-|-------------|-----------------------------------------|
-| `rqt_graph` | creates pdf of nodes and topics running |
+| Command                       | Function                                |
+|-------------------------------|-----------------------------------------|
+| `ros2 run rqt_graph rqt_graph`| shows a live graph of nodes and topics  |
 <br>
 
 #### ssh
@@ -320,7 +277,7 @@ Alright, now that we know how to narrow down issues, let's look at the most comm
 #### Vesc Failure
 
 {{< highlight bash >}}
-[FATAL] [1455208235.408745600]: Failed to connect to the VESC, SerialException Failed to open the serial port to the VESC. IO Exception (2): No such file or directory, file /tmp/binarydeb/ros-kinetic-serial-1.2.1/src/impl/unix.cc, line 151. failed..
+[FATAL] [1455208235.408745600]: Failed to connect to the VESC, SerialException Failed to open the serial port to the VESC. IO Exception (2): No such file or directory, in serial port impl, line 151. failed..
 {{< / highlight >}}
 
 **Hardware/Software:** Hardware  
@@ -330,12 +287,12 @@ Alright, now that we know how to narrow down issues, let's look at the most comm
 
 #### ROS Workspace Not Setup (bash not recognizing ROS commands): 
 ```
--bash: roscore: command not found
+-bash: ros2: command not found
 ```
 **Hardware/Software:** Software  
 **Component:** ROS  
 **ROS Related:** Yes  
-**Fix:** `source ~/catkin_ws/devel/setup.bash`. We recommend putting this at the end of your `~/.bashrc` so you never experience this issue.  
+**Fix:** `source /opt/ros/humble/setup.bash` then `source ~/colcon_ws/install/setup.bash`. We recommend putting these at the end of your `~/.bashrc` so you never experience this issue.  
 
 #### Car Only Has Steering
 
@@ -349,13 +306,13 @@ This can also manifest when using a particle filter that works in sim but not on
 **Hardware/Software:** Software  
 **Component:** Vesc config  
 **ROS Related:** No  
-**Fix:** edit the `steering_angle_to_servo_offset` in  `~/catkin_ws/src/mushr/mushr_base/vesc/vesc_main/config/racecar-uw-nano/vesc.yaml` to a value that when the car is commanded straight it goes straight.  
+**Fix:** edit the `steering_angle_to_servo_offset` in  `~/colcon_ws/src/vesc/vesc_main/config/racecar-uw-nano/vesc.yaml` to a value that when the car is commanded straight it goes straight.  
 
-#### ROS Topics Not Appearing in rviz
+#### ROS Topics Not Appearing in rviz2
 **Hardware/Software:** Software  
-**Component:** Your component/rviz  
+**Component:** Your component/rviz2  
 **ROS Related:** Yes  
-**Fix:** Either your component is not publishing the topic (use rostopic to double check!) or rviz needs to be refreshed or the transform is not publishing (rosrun tf to double check!). Click "Reset" in rviz and try restarting your node. If the error says not transform from x to /map then you need to make sure the transform is being published (use rosrun tf tf_echo! See [Debugging Tools](#debugging-tools))  
+**Fix:** Either your component is not publishing the topic (use `ros2 topic` to double check!) or rviz2 needs to be refreshed or the transform is not publishing (`ros2 run tf2_ros tf2_echo` to double check!). Click "Reset" in rviz2 and try restarting your node. If the error says no transform from x to map then you need to make sure the transform is being published (use `ros2 run tf2_ros tf2_echo`! See [Debugging Tools](#debugging-tools))  
 
 #### ssh Not Connecting
 **Hardware/Software:** Hardware  
@@ -363,19 +320,15 @@ This can also manifest when using a particle filter that works in sim but not on
 **ROS Related:** No  
 **Fix:** If ssh is not working first do a dumby check to make sure your IP and username are correct. Then try to `ping` the car IP. If it does not respond, then make sure the car is powered. If powered and still not pinging, then it likely is struggling to pickup wifi. Plug a HDMI cable into the jetson and use `ifconfig` to confirm wifi. If nothing still, then use the graphical interface to try to connect to wifi. Also, make sure your base computer is on the same network as the car.  
 
-#### Roscore Already Running
+#### Nodes on Two Machines Can't See Each Other
 
 {{< highlight bash >}}
-roscore cannot run as another roscore/master is already running.
+$ ros2 topic list   # missing the topics you expect from the other machine
 {{< / highlight >}}
 
 **Hardware/Software:** Software  
-**Component:** ROS  
+**Component:** ROS / network  
 **ROS Related:** Yes  
-**Fix:** You left a ROS process running and tried to start a new roscore/node. Simply stop that process.
-
-{{< highlight bash >}}
-$ pkill ros
-{{< / highlight >}}
+**Fix:** ROS 2 discovery needs both machines on the same network with a matching `ROS_DOMAIN_ID`. Confirm `echo $ROS_DOMAIN_ID` matches on both, and that they can `ping` each other.
 
 [^1]: `CONTAINER-ID` is just a stand in for the value provided by the command `docker ps`.
